@@ -85,13 +85,14 @@ public class BaseFile {
         String workoutPlan = scanner.nextLine();
 
         System.out.print("How many exercises have you done?: ");
-        int exercisesCount = scanner.nextInt();
+        int exercisesCount = Integer.parseInt(scanner.nextLine());
+
         for (int i = 0; i < exercisesCount; i++) {
             System.out.print("Enter name of exercise " + (i + 1) + ": ");
             String exerciseName = scanner.nextLine();
 
             System.out.print("Enter number of sets for exercise " + (i + 1) + ": ");
-            int setsCount = scanner.nextInt();
+            int setsCount = Integer.parseInt(scanner.nextLine());
             for (int j = 0; j < setsCount; j++) {
                 System.out.print("Enter weight lifted for set " + (j + 1) + ": ");
                 String weightLifted = scanner.nextLine();
@@ -105,7 +106,24 @@ public class BaseFile {
         storeWorkoutData(workoutPlan, getAllExercises());
     }
 
-    public static void getViewMenu() {}
+    public static void getViewMenu() {
+        // Initialize the scanner
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please choose the data you wish to view: ");
+
+        System.out.println("1. Today's Calories");
+        System.out.println("2. Today's Workout");
+        System.out.println("3. Meal Breakdown");
+        System.out.println("4. Calories Of A Particular Meal");
+        System.out.println("5. Average Calories Per Meal");
+        System.out.println("6. Calories Consumption Snacks vs Foods");
+        System.out.println("7. Total Volume of Workout");
+        System.out.println("8. Heaviest Lift Per Exercise");
+        System.out.println("9. Calories Consumed vs. Estimated Calories Burned");
+        System.out.println("10. Performance Summary");
+
+        String option = scanner.nextLine();
+    }
 
     // Abdullah will work on this method
     public static void storeCaloriesDataEntry(String snackOrMeal, String mealType, String foodName, String calories) {}
