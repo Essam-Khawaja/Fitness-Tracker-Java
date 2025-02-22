@@ -1,8 +1,12 @@
+import javax.management.ObjectName;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class BaseFile {
+    public static ArrayList<HashMap<String, String>> calorieTrackingData = new ArrayList<HashMap<String, String>>();
+    public static ArrayList<HashMap<String, Object>> workouts = new ArrayList<>();
+
     public static void main(String[] args) {
         // Code that runs in here
         Menu();
@@ -11,17 +15,25 @@ public class BaseFile {
     public static void Menu() {
         // Test Data for the calorie tracking
         // So abdullah will be working with variables like these:
-        ArrayList<HashMap<String, String>> calorieTrackingData = new ArrayList<HashMap<String, String>>();
         HashMap<String, String> calorieData = new HashMap<>();
+        calorieData.put("calories", "100");
+        calorieData.put("type", "snack");
+        calorieTrackingData.add(calorieData);
+        HashMap<String, String> calorieData2 = new HashMap<>();
+        calorieData2.put("calories", "100");
+        calorieData2.put("type", "snack");
+        calorieTrackingData.add(calorieData2);
 
         // Test data for the workout tracking
         // So Ali will be working with data like these
-        ArrayList<HashMap<String, Object>> workouts = new ArrayList<>();
         HashMap<String, Object> workout1 = new HashMap<>();
         ArrayList<HashMap<String, Object>> exercises = new ArrayList<>();
         HashMap<String, Object> exercise1 = new HashMap<>();
         ArrayList<HashMap<String, Integer>> sets = new ArrayList<>();
         HashMap<String, Integer> set1 = new HashMap<>();
+        exercise1.put("name", "preacher curl");
+        exercise1.put("set1", set1);
+        workout1.put("exercise1", exercise1);
 
         // So this is how the function is going to work:
         getMenu();
@@ -30,29 +42,40 @@ public class BaseFile {
     public static void getMenu() {
         // Initialize the scanner
         Scanner scanner = new Scanner(System.in);
-        // Output the menu
-        System.out.println("Please choose from the following options(1-3):");
-        System.out.println("1. Calorie Tracking");
-        System.out.println("2. Workout Tracking");
-        System.out.println("3. View Progress");
-        String option = scanner.nextLine();     // Take the user input
 
-        // Check for validity of the input
-        while (!(option.equals("1") || option.equals("2") || option.equals("3"))) {
-            System.out.println("Enter valid option between 1-3:");
-            option = scanner.nextLine();
-        }
+        boolean quit = false;
 
-        switch (option) {
-            case "1":
-                getCalorieMenu();
-                break;
-            case "2":
-                getWorkoutMenu();
-                break;
-            case "3":
-                getViewMenu();
-                break;
+        while (!quit) {
+            // Output the menu
+            System.out.println("Please choose from the following options(1-3):");
+            System.out.println("1. Calorie Tracking");
+            System.out.println("2. Workout Tracking");
+            System.out.println("3. View Progress");
+            String option = scanner.nextLine();     // Take the user input
+
+            // Check for validity of the input
+            while (!(option.equals("1") || option.equals("2") || option.equals("3"))) {
+                System.out.println("Enter valid option between 1-3:");
+                option = scanner.nextLine();
+            }
+
+            switch (option) {
+                case "1":
+                    getCalorieMenu();
+                    break;
+                case "2":
+                    getWorkoutMenu();
+                    break;
+                case "3":
+                    getViewMenu();
+                    break;
+            }
+            System.out.println("Would you like to continue? (y/n): ");
+            String quitAnswer = scanner.nextLine();
+
+            if (quitAnswer.equalsIgnoreCase("n")) {
+                quit = true;
+            }
         }
     }
 
@@ -123,7 +146,70 @@ public class BaseFile {
         System.out.println("10. Performance Summary");
 
         String option = scanner.nextLine();
+        switch (option) {
+            case "1":
+                viewCalorieData();
+                break;
+            case "2":
+                viewWorkoutData();
+                break;
+            case "3":
+                viewMealBreakdown();
+                break;
+            case "4":
+                viewMealData();
+                break;
+            case "5":
+                viewAverageCaloriesPerMeal();
+                break;
+            case "6":
+                viewFoodsVsSnacks();
+                break;
+            case "7":
+                viewTotalWorkoutVolume();
+                break;
+            case "8":
+                viewHeaviestExercises();
+                break;
+            case "9":
+                viewCaloriesWorkoutComparison();
+                break;
+            case "10":
+                viewPerformanceSummary();
+                break;
+        }
     }
+
+    public static void viewCalorieData() {
+        System.out.println("Calories" + "Type");
+        for (HashMap<String, String> foodItem: calorieTrackingData){
+            System.out.println(foodItem.get("calories") + foodItem.get("type"));
+        }
+    }
+
+    public static void viewWorkoutData() {
+        for (HashMap<String, Object> workout: workouts){
+            for (HashMap<String, Object> exercise: workout.get("exercises")){
+
+            }
+        }
+    }
+
+    public static void viewMealBreakdown() {}
+
+    public static void viewMealData() {}
+
+    public static void viewAverageCaloriesPerMeal() {}
+
+    public static void viewFoodsVsSnacks() {}
+
+    public static void viewTotalWorkoutVolume() {}
+
+    public static void viewHeaviestExercises() {}
+
+    public static void viewCaloriesWorkoutComparison() {}
+
+    public static void viewPerformanceSummary() {}
 
     // Abdullah will work on this method
     public static void storeCaloriesDataEntry(String snackOrMeal, String mealType, String foodName, String calories) {}
