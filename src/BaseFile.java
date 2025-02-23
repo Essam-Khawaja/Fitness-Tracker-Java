@@ -105,7 +105,80 @@ public class BaseFile {
         storeWorkoutData(workoutPlan, getAllExercises());
     }
 
-    public static void getViewMenu() {}
+    public static void getViewMenu() {
+        System.out.println("=== View Progress ===");
+        System.out.println("Please select what you'd like to view:");
+        System.out.println("1. Calorie Tracking Data");
+        System.out.println("2. Workout Tracking Data");
+        System.out.println("3. Back to Main Menu");
+
+        Scanner scanner = new Scanner(System.in);
+        String option = scanner.nextLine();
+
+        while (!(option.equals("1") || option.equals("2") || option.equals("3"))) {
+            System.out.println("Invalid option. Please select 1, 2, or 3:");
+            option = scanner.nextLine();
+        }
+
+        switch (option) {
+            case "1":
+                viewCalorieData();
+                break;
+            case "2":
+                viewWorkoutData();
+                break;
+            case "3":
+                getMenu();
+                break;
+        }
+    }
+
+    // Method to display calorie tracking data
+    public static void viewCalorieData() {
+        System.out.println("=== Calorie Tracking Data ===");
+
+        // Assuming calorieTrackingData contains all the data
+        // Replace with actual reference to the data source
+        ArrayList<HashMap<String, String>> calorieTrackingData = new ArrayList<>(); // Test example
+        if (calorieTrackingData.isEmpty()) {
+            System.out.println("No calorie tracking data available.");
+        } else {
+            for (HashMap<String, String> entry : calorieTrackingData) {
+                System.out.println("Snack/Meal: " + entry.get("snackOrMeal"));
+                System.out.println("Meal Type: " + entry.get("mealType"));
+                System.out.println("Food Name: " + entry.get("foodName"));
+                System.out.println("Calories: " + entry.get("calories"));
+                System.out.println("-------------------------");
+            }
+        }
+        getViewMenu();
+    }
+
+    // Method to display workout tracking data
+    public static void viewWorkoutData() {
+        System.out.println("=== Workout Tracking Data ===");
+
+        // Assuming workouts contains all the workout data
+        // Replace with actual reference to the data source
+        ArrayList<HashMap<String, Object>> workouts = new ArrayList<>(); // Example data structure
+        if (workouts.isEmpty()) {
+            System.out.println("No workout tracking data available.");
+        } else {
+            for (HashMap<String, Object> workout : workouts) {
+                System.out.println("Workout Plan: " + workout.get("workoutPlan"));
+                ArrayList<HashMap<String, Object>> exercises = (ArrayList<HashMap<String, Object>>) workout.get("exercises");
+                for (HashMap<String, Object> exercise : exercises) {
+                    System.out.println("- Exercise: " + exercise.get("exerciseName"));
+                    ArrayList<HashMap<String, Integer>> sets = (ArrayList<HashMap<String, Integer>>) exercise.get("sets");
+                    for (HashMap<String, Integer> set : sets) {
+                        System.out.println("  - Set: " + set);
+                    }
+                }
+                System.out.println("-------------------------");
+            }
+        }
+        getViewMenu();
+    }
 
     // Abdullah will work on this method
     public static void storeCaloriesDataEntry(String snackOrMeal, String mealType, String foodName, String calories) {}
