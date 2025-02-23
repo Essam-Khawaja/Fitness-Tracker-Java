@@ -104,9 +104,30 @@ public class BaseFile {
         System.out.print("What workout plan are you following today (Push/Pull/Leg/Upper/Lower)?: ");
         String workoutPlan = scanner.nextLine();
 
-        // Ask for the number of exercises
-        System.out.print("How many exercises have you done?: ");
-        int exercisesCount = Integer.parseInt(scanner.nextLine());
+        while (!workoutPlan.equals("Push") && !workoutPlan.equals("Pull") && !workoutPlan.equals("Leg") && !workoutPlan.equals("Upper") && !workoutPlan.equals("Lower")) {
+            System.out.println("Invalid input. Please try again.");
+            System.out.print("What workout plan are you following today (Push/Pull/Leg/Upper/Lower)?: ");
+            workoutPlan = scanner.nextLine();
+        }
+
+        // Ask for the number of exercises with validation
+        boolean isExerciseValid  = false;
+        int exercisesCount = 0;     // Initialize exerciseCount to 0
+        while (!isExerciseValid) {
+            System.out.print("How many exercises have you done?: ");
+            String exercisesCountInput = scanner.nextLine();
+            try {
+                exercisesCount = Integer.parseInt(exercisesCountInput);
+                // Check to see if the user entered more than the max number of exercises to be stored
+                if (exercisesCount > 10) {
+                    System.out.println("Invalid input. Cannot store more than 10 exercises. Please try again.");
+                } else {
+                    isExerciseValid = true;
+                }
+            } catch (NumberFormatException e) {     // Check to see if the user did not enter a number
+                System.out.println("Invalid input. Can only be a number. Please try again.");
+            }
+        }
 
         // This will later be stored in the workouts variable
         ArrayList<HashMap<String, Object>> exercises = new ArrayList<>();
@@ -117,20 +138,56 @@ public class BaseFile {
             String exerciseName = scanner.nextLine();
 
             // Will be stored in exercise, must be initialised each new exercise
-            ArrayList<HashMap<String, String>> sets = new ArrayList<>();
+            ArrayList<HashMap<String, Integer>> sets = new ArrayList<>();
 
-            System.out.print("Enter number of sets for exercise " + (i + 1) + ": ");
-            int setsCount = Integer.parseInt(scanner.nextLine());
+            // Input number of sets with validation
+            boolean isSetValid  = false;
+            int setsCount = 0;     // Initialize setsCount to 0
+            while (!isSetValid) {
+                System.out.print("Enter number of sets for exercise " + (i + 1) + ": ");
+                String setsCountInput = scanner.nextLine();
+                try {
+                    setsCount = Integer.parseInt(setsCountInput);
+                    // Check to see if the user entered more than the max number of sets to be stored
+                    if (setsCount > 5) {
+                        System.out.println("Invalid input. Cannot store more than 5 sets. Please try again.");
+                    } else {
+                        isSetValid = true;
+                    }
+                } catch (NumberFormatException e) {     // Check to see if the user did not enter a number
+                    System.out.println("Invalid input. Can only be a number. Please try again.");
+                }
+            }
             for (int j = 0; j < setsCount; j++) {
                 // Input details for each set
-                System.out.print("Enter weight lifted for set " + (j + 1) + ": ");
-                String weightLifted = scanner.nextLine();
+                boolean isWeightValid = false;
+                int weightLifted = 0;
+                while (!isWeightValid) {
+                    System.out.print("Enter weight lifted for set " + (j + 1) + " (in kg): ");
+                    String weightLiftedInput = scanner.nextLine();
+                    try {
+                        weightLifted = Integer.parseInt(weightLiftedInput);
+                        isWeightValid = true;
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid input. Can only be a number. Please try again.");
+                    }
+                }
 
-                System.out.print("Enter number of reps for set " + (j + 1) + ": ");
-                String reps = scanner.nextLine();
+                boolean isRepsValid = false;
+                int reps = 0;
+                while (!isRepsValid) {
+                    System.out.print("Enter number of reps for set " + (j + 1) + ": ");
+                    String repsInput = scanner.nextLine();
+                    try {
+                        reps = Integer.parseInt(repsInput);
+                        isRepsValid = true;
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid input. Can only be a number. Please try again.");
+                    }
+                }
 
                 // Create new set - coded this way for easier transition into OOP
-                HashMap<String, String> newSet = createSet(weightLifted, reps);
+                HashMap<String, Integer> newSet = createSet(weightLifted, reps);
                 sets.add(newSet);
             }
 
@@ -144,14 +201,14 @@ public class BaseFile {
         storeWorkoutData(newWorkout);
     }
 
-    public static HashMap<String, String> createSet(String weightLifted, String reps) {
-        HashMap<String, String> set = new HashMap<>();
+    public static HashMap<String, Integer> createSet(int weightLifted, int reps) {
+        HashMap<String, Integer> set = new HashMap<>();
         set.put("weightLifted", weightLifted);
         set.put("reps", reps);
         return set;
     }
 
-    public static HashMap<String, Object> createExercise(String exerciseName, ArrayList<HashMap<String, String>> sets) {
+    public static HashMap<String, Object> createExercise(String exerciseName, ArrayList<HashMap<String, Integer>> sets) {
         HashMap<String, Object> exercise = new HashMap<>();
         exercise.put("exerciseName", exerciseName);
         exercise.put("sets", sets);
