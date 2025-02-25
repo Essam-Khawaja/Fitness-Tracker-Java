@@ -1,4 +1,3 @@
-import javax.management.ObjectName;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -13,69 +12,39 @@ public class BaseFile {
     }
 
     public static void Menu() {
-        // Test Data for the calorie tracking
-        // So abdullah will be working with variables like these:
-        HashMap<String, String> calorieData = new HashMap<>();
-        calorieData.put("calories", "100");
-        calorieData.put("type", "snack");
-        calorieTrackingData.add(calorieData);
-        HashMap<String, String> calorieData2 = new HashMap<>();
-        calorieData2.put("calories", "100");
-        calorieData2.put("type", "snack");
-        calorieTrackingData.add(calorieData2);
-
-        // Test data for the workout tracking
-        // So Ali will be working with data like these
-        HashMap<String, Object> workout1 = new HashMap<>();
-        ArrayList<HashMap<String, Object>> exercises = new ArrayList<>();
-        HashMap<String, Object> exercise1 = new HashMap<>();
-        ArrayList<HashMap<String, Integer>> sets = new ArrayList<>();
-        HashMap<String, Integer> set1 = new HashMap<>();
-        exercise1.put("name", "preacher curl");
-        exercise1.put("set1", set1);
-        workout1.put("exercise1", exercise1);
-
-        // So this is how the function is going to work:
         getMenu();
     }
 
     public static void getMenu() {
         // Initialize the scanner
         Scanner scanner = new Scanner(System.in);
+        // Output the menu
+        System.out.println("Please choose from the following options(1-3):");
+        System.out.println("1. Calorie Tracking");
+        System.out.println("2. Workout Tracking");
+        System.out.println("3. View Progress");
+        System.out.println("4. Exit");
+        String option = scanner.nextLine();     // Take the user input
 
-        boolean quit = false;
+        // Check for validity of the input
+        while (!(option.equals("1") || option.equals("2") || option.equals("3") || option.equals("4"))) {
+            System.out.println("Enter valid option between 1-3:");
+            option = scanner.nextLine();
+        }
 
-        while (!quit) {
-            // Output the menu
-            System.out.println("Please choose from the following options(1-3):");
-            System.out.println("1. Calorie Tracking");
-            System.out.println("2. Workout Tracking");
-            System.out.println("3. View Progress");
-            String option = scanner.nextLine();     // Take the user input
-
-            // Check for validity of the input
-            while (!(option.equals("1") || option.equals("2") || option.equals("3"))) {
-                System.out.println("Enter valid option between 1-3:");
-                option = scanner.nextLine();
-            }
-
-            switch (option) {
-                case "1":
-                    getCalorieMenu();
-                    break;
-                case "2":
-                    getWorkoutMenu();
-                    break;
-                case "3":
-                    getViewMenu();
-                    break;
-            }
-            System.out.println("Would you like to continue? (y/n): ");
-            String quitAnswer = scanner.nextLine();
-
-            if (quitAnswer.equalsIgnoreCase("n")) {
-                quit = true;
-            }
+        switch (option) {
+            case "1":
+                getCalorieMenu();
+                break;
+            case "2":
+                getWorkoutMenu();
+                break;
+            case "3":
+                getViewMenu();
+                break;
+            case "4":
+                System.out.println("Exited Program");
+                break;
         }
     }
 
@@ -97,6 +66,19 @@ public class BaseFile {
         String calories = scanner.nextLine();
 
         storeCaloriesDataEntry(snackOrMeal, mealType, foodName, calories);
+        getMenu();
+    }
+
+    // Abdullah will work on this method
+    public static void storeCaloriesDataEntry(String snackOrMeal, String mealType, String foodName, String calories) {
+        HashMap<String, String> mealEntry = new HashMap<>();
+        mealEntry.put("mealType", mealType);
+        mealEntry.put("snackOrMeal", snackOrMeal);
+        mealEntry.put("name", foodName);
+        mealEntry.put("calories", calories);
+
+        calorieTrackingData.add(mealEntry);
+        System.out.println("Calories Stored!");
     }
 
     public static void getWorkoutMenu() {
@@ -202,6 +184,7 @@ public class BaseFile {
         // Create new workout - coded this way for easier transition to OOP
         HashMap<String, Object> newWorkout = createWorkout(workoutPlan, exercises);
         storeWorkoutData(newWorkout);
+        getMenu();
     }
 
     public static HashMap<String, Integer> createSet(int weightLifted, int reps) {
@@ -227,18 +210,6 @@ public class BaseFile {
 
     public static void storeWorkoutData(HashMap<String, Object> workout) {
         workouts.add(workout);
-    }
-
-    // Abdullah will work on this method
-    public static void storeCaloriesDataEntry(String snackOrMeal, String mealType, String foodName, String calories) {
-        HashMap<String, String> mealEntry = new HashMap<>();
-        mealEntry.put("mealTime", mealType);
-        mealEntry.put("type", snackOrMeal);
-        mealEntry.put("name", foodName);
-        mealEntry.put("calories", calories);
-
-        calorieTrackingData.add(mealEntry);
-        System.out.println("Calorie Stored!");
     }
 
     public static void getViewMenu() {
@@ -273,16 +244,13 @@ public class BaseFile {
     public static void viewCalorieData() {
         System.out.println("=== Calorie Tracking Data ===");
 
-        // Assuming calorieTrackingData contains all the data
-        // Replace with actual reference to the data source
-        ArrayList<HashMap<String, String>> calorieTrackingData = new ArrayList<>(); // Test example
         if (calorieTrackingData.isEmpty()) {
             System.out.println("No calorie tracking data available.");
         } else {
             for (HashMap<String, String> entry : calorieTrackingData) {
                 System.out.println("Snack/Meal: " + entry.get("snackOrMeal"));
                 System.out.println("Meal Type: " + entry.get("mealType"));
-                System.out.println("Food Name: " + entry.get("foodName"));
+                System.out.println("Food Name: " + entry.get("name"));
                 System.out.println("Calories: " + entry.get("calories"));
                 System.out.println("-------------------------");
             }
@@ -294,9 +262,6 @@ public class BaseFile {
     public static void viewWorkoutData() {
         System.out.println("=== Workout Tracking Data ===");
 
-        // Assuming workouts contains all the workout data
-        // Replace with actual reference to the data source
-        ArrayList<HashMap<String, Object>> workouts = new ArrayList<>(); // Example data structure
         if (workouts.isEmpty()) {
             System.out.println("No workout tracking data available.");
         } else {
