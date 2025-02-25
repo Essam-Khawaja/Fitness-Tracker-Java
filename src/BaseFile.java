@@ -231,6 +231,14 @@ public class BaseFile {
 
     // Abdullah will work on this method
     public static void storeCaloriesDataEntry(String snackOrMeal, String mealType, String foodName, String calories) {
+        HashMap<String, String> mealEntry = new HashMap<>();
+        mealEntry.put("mealTime", mealType);
+        mealEntry.put("type", snackOrMeal);
+        mealEntry.put("name", foodName);
+        mealEntry.put("calories", calories);
+
+        calorieTrackingData.add(mealEntry);
+        System.out.println("Calorie Stored!");
     }
 
     public static void getViewMenu() {
