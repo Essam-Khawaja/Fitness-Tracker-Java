@@ -13,7 +13,6 @@ public class BaseFile {
         // So abdullah will be working with variables like these:
         ArrayList<HashMap<String, String>> calorieTrackingData = new ArrayList<HashMap<String, String>>();
         HashMap<String, String> calorieData = new HashMap<>();
-
         // Test data for the workout tracking
         // So Ali will be working with data like these
         ArrayList<HashMap<String, Object>> workouts = new ArrayList<>();
@@ -72,7 +71,6 @@ public class BaseFile {
 
         System.out.print("Enter calories of food: ");
         String calories = scanner.nextLine();
-
         storeCaloriesDataEntry(snackOrMeal, mealType, foodName, calories);
     }
 
@@ -108,7 +106,16 @@ public class BaseFile {
     public static void getViewMenu() {}
 
     // Abdullah will work on this method
-    public static void storeCaloriesDataEntry(String snackOrMeal, String mealType, String foodName, String calories) {}
+    public static void storeCaloriesDataEntry(String snackOrMeal, String mealType, String foodName, String calories) {
+        HashMap<String, String> mealEntry = new HashMap<>();
+        mealEntry.put("mealTime", mealType);
+        mealEntry.put("type", snackOrMeal);
+        mealEntry.put("name", foodName);
+        mealEntry.put("calories", calories);
+
+        calorieTrackingData.add(mealEntry);
+        System.out.println("Calorie Stored!");
+    }
 
     // Ali will work on the following
     // Admittedly, this is slightly more difficult, so I will help out on this part as well
