@@ -307,23 +307,4 @@ public class BaseFile {
         }
         getViewMenu();
     }
-
-    // Abdullah will work on this method
-    public static void storeCaloriesDataEntry(String snackOrMeal, String mealType, String foodName, String calories) {}
-
-    // Ali will work on the following
-    // Admittedly, this is slightly more difficult, so I will help out on this part as well
-    public static void storeWorkoutData(String workoutPlan, ArrayList<HashMap<String, String>> exercises) {}
-
-    public static ArrayList<HashMap<String, String>> getAllExercises() {
-        ArrayList<HashMap<String, String>> exercises = new ArrayList<>();
-        return exercises;
-    }
-
-    public static void addToExercise(String exerciseName, HashMap<String, String> exercise) {}
-
-    public static HashMap<String, String> makeNewSet(String weightLifted, String reps) {
-        HashMap<String, String> thisSet = new HashMap<>();
-        return thisSet;
-    }
 }
