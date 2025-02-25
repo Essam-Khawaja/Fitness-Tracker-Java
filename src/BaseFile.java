@@ -103,6 +103,8 @@ public class BaseFile {
         storeWorkoutData(workoutPlan, getAllExercises());
     }
 
+
+    //commit number 2
     public static void getViewMenu() {}
 
     // Abdullah will work on this method
