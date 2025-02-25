@@ -1,8 +1,12 @@
+import javax.management.ObjectName;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class BaseFile {
+    public static ArrayList<HashMap<String, String>> calorieTrackingData = new ArrayList<HashMap<String, String>>();
+    public static ArrayList<HashMap<String, Object>> workouts = new ArrayList<>();
+
     public static void main(String[] args) {
         // Code that runs in here
         Menu();
@@ -13,6 +17,7 @@ public class BaseFile {
         // So abdullah will be working with variables like these:
         ArrayList<HashMap<String, String>> calorieTrackingData = new ArrayList<HashMap<String, String>>();
         HashMap<String, String> calorieData = new HashMap<>();
+
         // Test data for the workout tracking
         // So Ali will be working with data like these
         ArrayList<HashMap<String, Object>> workouts = new ArrayList<>();
@@ -21,6 +26,9 @@ public class BaseFile {
         HashMap<String, Object> exercise1 = new HashMap<>();
         ArrayList<HashMap<String, Integer>> sets = new ArrayList<>();
         HashMap<String, Integer> set1 = new HashMap<>();
+        exercise1.put("name", "preacher curl");
+        exercise1.put("set1", set1);
+        workout1.put("exercise1", exercise1);
 
         // So this is how the function is going to work:
         getMenu();
@@ -29,29 +37,40 @@ public class BaseFile {
     public static void getMenu() {
         // Initialize the scanner
         Scanner scanner = new Scanner(System.in);
-        // Output the menu
-        System.out.println("Please choose from the following options(1-3):");
-        System.out.println("1. Calorie Tracking");
-        System.out.println("2. Workout Tracking");
-        System.out.println("3. View Progress");
-        String option = scanner.nextLine();     // Take the user input
 
-        // Check for validity of the input
-        while (!(option.equals("1") || option.equals("2") || option.equals("3"))) {
-            System.out.println("Enter valid option between 1-3:");
-            option = scanner.nextLine();
-        }
+        boolean quit = false;
 
-        switch (option) {
-            case "1":
-                getCalorieMenu();
-                break;
-            case "2":
-                getWorkoutMenu();
-                break;
-            case "3":
-                getViewMenu();
-                break;
+        while (!quit) {
+            // Output the menu
+            System.out.println("Please choose from the following options(1-3):");
+            System.out.println("1. Calorie Tracking");
+            System.out.println("2. Workout Tracking");
+            System.out.println("3. View Progress");
+            String option = scanner.nextLine();     // Take the user input
+
+            // Check for validity of the input
+            while (!(option.equals("1") || option.equals("2") || option.equals("3"))) {
+                System.out.println("Enter valid option between 1-3:");
+                option = scanner.nextLine();
+            }
+
+            switch (option) {
+                case "1":
+                    getCalorieMenu();
+                    break;
+                case "2":
+                    getWorkoutMenu();
+                    break;
+                case "3":
+                    getViewMenu();
+                    break;
+            }
+            System.out.println("Would you like to continue? (y/n): ");
+            String quitAnswer = scanner.nextLine();
+
+            if (quitAnswer.equalsIgnoreCase("n")) {
+                quit = true;
+            }
         }
     }
 
@@ -71,6 +90,7 @@ public class BaseFile {
 
         System.out.print("Enter calories of food: ");
         String calories = scanner.nextLine();
+
         storeCaloriesDataEntry(snackOrMeal, mealType, foodName, calories);
     }
 
@@ -83,13 +103,14 @@ public class BaseFile {
         String workoutPlan = scanner.nextLine();
 
         System.out.print("How many exercises have you done?: ");
-        int exercisesCount = scanner.nextInt();
+        int exercisesCount = Integer.parseInt(scanner.nextLine());
+
         for (int i = 0; i < exercisesCount; i++) {
             System.out.print("Enter name of exercise " + (i + 1) + ": ");
             String exerciseName = scanner.nextLine();
 
             System.out.print("Enter number of sets for exercise " + (i + 1) + ": ");
-            int setsCount = scanner.nextInt();
+            int setsCount = Integer.parseInt(scanner.nextLine());
             for (int j = 0; j < setsCount; j++) {
                 System.out.print("Enter weight lifted for set " + (j + 1) + ": ");
                 String weightLifted = scanner.nextLine();
@@ -103,8 +124,6 @@ public class BaseFile {
         storeWorkoutData(workoutPlan, getAllExercises());
     }
 
-
-    //commit number 2
     public static void getViewMenu() {}
 
     // Abdullah will work on this method
