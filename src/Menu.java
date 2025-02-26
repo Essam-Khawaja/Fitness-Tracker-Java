@@ -83,9 +83,29 @@ public class Menu {
             foodName = scanner.nextLine();
         }
 
-        // Asking the user how many calories did the food contain
-        System.out.print("Enter calories of food: ");
-        String calories = scanner.nextLine();
+        // Asking for calorie amount and validating calorie input
+        String caloriesInput = "";
+        boolean isCaloriesInputValid = false;
+        int calories = 0;
+        while (isCaloriesInputValid == false) {
+            System.out.print("Enter number of calories: ");
+            caloriesInput = scanner.nextLine();
+            try {
+                // if it's a number, check if it's within the range limit
+                calories = Integer.parseInt(caloriesInput);
+                // if it's not within the range, invalid input
+                if (calories < 0 || calories > 20000) {
+                    System.out.println("Invalid input. Has to be in range 0-20,000. Please try again.");
+                }
+                else {
+                    // if valid, then print
+                    isCaloriesInputValid = true;
+                }
+            // if imput isn't a number -> invalid input
+            } catch(NumberFormatException e) {
+                System.out.println("Invalid input. Has to be a number. Please try again.");
+            }
+        }
 
         Calories.storeCaloriesDataEntry(snackOrMeal, mealType, foodName, calories);
         getMenu();
@@ -232,7 +252,7 @@ public class Menu {
         if (Calories.calorieTrackingData.isEmpty()) {
             System.out.println("No calorie tracking data available.");
         } else {
-            for (HashMap<String, String> entry : Calories.calorieTrackingData) {
+            for (HashMap<String, Object> entry : Calories.calorieTrackingData) {
                 System.out.println("Snack/Meal: " + entry.get("snackOrMeal"));
                 System.out.println("Meal Type: " + entry.get("mealType"));
                 System.out.println("Food Name: " + entry.get("name"));
