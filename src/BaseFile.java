@@ -53,33 +53,40 @@ public class BaseFile {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please answer the following questions:");
 
+        // Asking the user if it's a meal or a snack
         System.out.print("Are you having a snack or a meal?: ");
         String snackOrMeal = scanner.nextLine();
 
+        // Checking if the user inputted the correct values
         while(!snackOrMeal.equals("snack") && !snackOrMeal.equals("meal")) {
             System.out.println("Invalid input. Please try again.");
             System.out.print("Are you having a snack or a meal?: ");
             snackOrMeal = scanner.nextLine();
         }
 
+        // Asking the user if the meal was eaten on breakfast, lunch, or lunch
         System.out.print("What type of meal is it? (Breakfast/Lunch/Dinner): ");
         String mealType = scanner.nextLine();
 
+        // Checking if the user inputted the correct values
         while(!mealType.equals("Breakfast") && !mealType.equals("Lunch") && !mealType.equals("Dinner")) {
             System.out.println("Invalid input. Please try again.");
             System.out.print("What type of meal is it? (Breakfast/Lunch/Dinner): ");
             mealType = scanner.nextLine();
         }
 
+        // Asking the user what is the food's meal
         System.out.print("Enter name of food: ");
         String foodName = scanner.nextLine();
 
+        // Checking if the user inputted the correct values
         while(!foodName.matches("[a-zA-Z]+")) {
             System.out.println("Invalid input. Food has to contain alphanumeric characters and space.");
             System.out.print("Enter name of food: ");
             foodName = scanner.nextLine();
         }
 
+        // Asking the user how many calories did the food contain
         System.out.print("Enter calories of food: ");
         String calories = scanner.nextLine();
 
