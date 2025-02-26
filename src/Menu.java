@@ -2,16 +2,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class BaseFile {
-    public static ArrayList<HashMap<String, String>> calorieTrackingData = new ArrayList<>();
-    public static ArrayList<HashMap<String, Object>> workouts = new ArrayList<>();
-
+public class Menu {
     public static void main(String[] args) {
         // Code that runs in here
-        Menu();
-    }
-
-    public static void Menu() {
         getMenu();
     }
 
@@ -94,20 +87,8 @@ public class BaseFile {
         System.out.print("Enter calories of food: ");
         String calories = scanner.nextLine();
 
-        storeCaloriesDataEntry(snackOrMeal, mealType, foodName, calories);
+        Calories.storeCaloriesDataEntry(snackOrMeal, mealType, foodName, calories);
         getMenu();
-    }
-
-    // Abdullah will work on this method
-    public static void storeCaloriesDataEntry(String snackOrMeal, String mealType, String foodName, String calories) {
-        HashMap<String, String> mealEntry = new HashMap<>();
-        mealEntry.put("mealType", mealType);
-        mealEntry.put("snackOrMeal", snackOrMeal);
-        mealEntry.put("name", foodName);
-        mealEntry.put("calories", calories);
-
-        calorieTrackingData.add(mealEntry);
-        System.out.println("Calories Stored!");
     }
 
     public static void getWorkoutMenu() {
@@ -201,44 +182,19 @@ public class BaseFile {
                 }
 
                 // Create new set - coded this way for easier transition into OOP
-                HashMap<String, Integer> newSet = createSet(weightLifted, reps);
+                HashMap<String, Integer> newSet = Workout.createSet(weightLifted, reps);
                 sets.add(newSet);
             }
 
             // Create new exercise - coded this way for easier transition to OOP
-            HashMap<String, Object> newExercise = createExercise(exerciseName, sets);
+            HashMap<String, Object> newExercise = Workout.createExercise(exerciseName, sets);
             exercises.add(newExercise);
         }
 
         // Create new workout - coded this way for easier transition to OOP
-        HashMap<String, Object> newWorkout = createWorkout(workoutPlan, exercises);
-        storeWorkoutData(newWorkout);
+        HashMap<String, Object> newWorkout = Workout.createWorkout(workoutPlan, exercises);
+        Workout.storeWorkoutData(newWorkout);
         getMenu();
-    }
-
-    public static HashMap<String, Integer> createSet(int weightLifted, int reps) {
-        HashMap<String, Integer> set = new HashMap<>();
-        set.put("weightLifted", weightLifted);
-        set.put("reps", reps);
-        return set;
-    }
-
-    public static HashMap<String, Object> createExercise(String exerciseName, ArrayList<HashMap<String, Integer>> sets) {
-        HashMap<String, Object> exercise = new HashMap<>();
-        exercise.put("exerciseName", exerciseName);
-        exercise.put("sets", sets);
-        return exercise;
-    }
-
-    public static HashMap<String, Object> createWorkout(String workoutPlan, ArrayList<HashMap<String, Object>> exercises) {
-        HashMap<String, Object> workout = new HashMap<>();
-        workout.put("workoutPlan", workoutPlan);
-        workout.put("exercises", exercises);
-        return workout;
-    }
-
-    public static void storeWorkoutData(HashMap<String, Object> workout) {
-        workouts.add(workout);
     }
 
     public static void getViewMenu() {
@@ -273,10 +229,10 @@ public class BaseFile {
     public static void viewCalorieData() {
         System.out.println("=== Calorie Tracking Data ===");
 
-        if (calorieTrackingData.isEmpty()) {
+        if (Calories.calorieTrackingData.isEmpty()) {
             System.out.println("No calorie tracking data available.");
         } else {
-            for (HashMap<String, String> entry : calorieTrackingData) {
+            for (HashMap<String, String> entry : Calories.calorieTrackingData) {
                 System.out.println("Snack/Meal: " + entry.get("snackOrMeal"));
                 System.out.println("Meal Type: " + entry.get("mealType"));
                 System.out.println("Food Name: " + entry.get("name"));
@@ -291,10 +247,10 @@ public class BaseFile {
     public static void viewWorkoutData() {
         System.out.println("=== Workout Tracking Data ===");
 
-        if (workouts.isEmpty()) {
+        if (Workout.workouts.isEmpty()) {
             System.out.println("No workout tracking data available.");
         } else {
-            for (HashMap<String, Object> workout : workouts) {
+            for (HashMap<String, Object> workout : Workout.workouts) {
                 System.out.println("Workout Plan: " + workout.get("workoutPlan"));
                 ArrayList<HashMap<String, Object>> exercises = (ArrayList<HashMap<String, Object>>) workout.get("exercises");
                 for (HashMap<String, Object> exercise : exercises) {
