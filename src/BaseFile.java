@@ -58,21 +58,25 @@ public class BaseFile {
         String snackOrMeal = scanner.nextLine();
 
         // Checking if the user inputted the correct values
-        while(!snackOrMeal.equals("snack") && !snackOrMeal.equals("meal")) {
+        while(!snackOrMeal.toLowerCase().equals("snack") && !snackOrMeal.toLowerCase().equals("meal")) {
             System.out.println("Invalid input. Please try again.");
             System.out.print("Are you having a snack or a meal?: ");
             snackOrMeal = scanner.nextLine();
         }
 
-        // Asking the user if the meal was eaten on breakfast, lunch, or lunch
-        System.out.print("What type of meal is it? (Breakfast/Lunch/Dinner): ");
-        String mealType = scanner.nextLine();
-
-        // Checking if the user inputted the correct values
-        while(!mealType.equals("Breakfast") && !mealType.equals("Lunch") && !mealType.equals("Dinner")) {
-            System.out.println("Invalid input. Please try again.");
+        // If it's a meal, we have to asking the user which type of meal did they have
+        String mealType = "";
+        if (snackOrMeal.toLowerCase().equals("meal")) {
+            // Asking the user if the meal was eaten on breakfast, lunch, or lunch
             System.out.print("What type of meal is it? (Breakfast/Lunch/Dinner): ");
             mealType = scanner.nextLine();
+
+            // Checking if the user inputted the correct values
+            while(!mealType.toLowerCase().equals("breakfast") && !mealType.toLowerCase().equals("lunch") && !mealType.toLowerCase().equals("dinner")) {
+                System.out.println("Invalid input. Please try again.");
+                System.out.print("What type of meal is it? (Breakfast/Lunch/Dinner): ");
+                mealType = scanner.nextLine();
+            }
         }
 
         // Asking the user what is the food's meal
