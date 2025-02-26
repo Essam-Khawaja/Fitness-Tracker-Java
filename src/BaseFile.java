@@ -64,7 +64,7 @@ public class BaseFile {
             snackOrMeal = scanner.nextLine();
         }
 
-        // If it's a meal, we have to asking the user which type of meal did they have
+        // If it's a meal, we have to asking the user which type of meal did they have.
         String mealType = "";
         if (snackOrMeal.toLowerCase().equals("meal")) {
             // Asking the user if the meal was eaten on breakfast, lunch, or lunch
