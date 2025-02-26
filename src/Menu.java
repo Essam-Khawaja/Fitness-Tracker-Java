@@ -119,10 +119,13 @@ public class Menu {
         System.out.print("What workout plan are you following today (Push/Pull/Leg/Upper/Lower)?: ");
         String workoutPlan = scanner.nextLine();
 
-        while (!workoutPlan.equals("Push") && !workoutPlan.equals("Pull") && !workoutPlan.equals("Leg") && !workoutPlan.equals("Upper") && !workoutPlan.equals("Lower")) {
+        boolean isWorkoutValid = Workout.validateWorkoutPlan(workoutPlan);
+
+        while (!isWorkoutValid) {
             System.out.println("Invalid input. Please try again.");
             System.out.print("What workout plan are you following today (Push/Pull/Leg/Upper/Lower)?: ");
             workoutPlan = scanner.nextLine();
+            isWorkoutValid = Workout.validateWorkoutPlan(workoutPlan);
         }
 
         // Ask for the number of exercises with validation
@@ -175,31 +178,31 @@ public class Menu {
             }
             for (int j = 0; j < setsCount; j++) {
                 // Input details for each set
-                boolean isWeightValid = false;
-                int weightLifted = 0;
+                System.out.print("Enter weight lifted for set " + (j + 1) + " (in kg): ");
+                String weightLiftedInput = scanner.nextLine();
+                boolean isWeightValid = Workout.validateWeightLifted(weightLiftedInput);
+
                 while (!isWeightValid) {
+                    System.out.println("Invalid input. Must be a number. Please try again.");
                     System.out.print("Enter weight lifted for set " + (j + 1) + " (in kg): ");
-                    String weightLiftedInput = scanner.nextLine();
-                    try {
-                        weightLifted = Integer.parseInt(weightLiftedInput);
-                        isWeightValid = true;
-                    } catch (NumberFormatException e) {
-                        System.out.println("Invalid input. Can only be a number. Please try again.");
-                    }
+                    weightLiftedInput = scanner.nextLine();
+                    isWeightValid = Workout.validateWeightLifted(weightLiftedInput);
                 }
 
-                boolean isRepsValid = false;
-                int reps = 0;
+                int weightLifted = Integer.parseInt(weightLiftedInput);
+
+                System.out.print("Enter number of reps for set " + (j + 1) + ": ");
+                String repsInput = scanner.nextLine();
+                boolean isRepsValid = Workout.validateReps(repsInput);
+
                 while (!isRepsValid) {
+                    System.out.println("Invalid input. Must be a number. Please try again.");
                     System.out.print("Enter number of reps for set " + (j + 1) + ": ");
-                    String repsInput = scanner.nextLine();
-                    try {
-                        reps = Integer.parseInt(repsInput);
-                        isRepsValid = true;
-                    } catch (NumberFormatException e) {
-                        System.out.println("Invalid input. Can only be a number. Please try again.");
-                    }
+                    repsInput = scanner.nextLine();
+                    isRepsValid = Workout.validateReps(repsInput);
                 }
+
+                int reps = Integer.parseInt(repsInput);
 
                 // Create new set - coded this way for easier transition into OOP
                 HashMap<String, Integer> newSet = Workout.createSet(weightLifted, reps);

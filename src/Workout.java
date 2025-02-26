@@ -5,6 +5,31 @@ public class Workout {
     // This is the public workouts data structure to be used to store the data
     public static ArrayList<HashMap<String, Object>> workouts = new ArrayList<>();
 
+    public static boolean validateWorkoutPlan(String workoutPlan) {
+        if (workoutPlan.equalsIgnoreCase("Push") || workoutPlan.equalsIgnoreCase("Pull") || workoutPlan.equalsIgnoreCase("Leg") || workoutPlan.equalsIgnoreCase("Upper") || workoutPlan.equalsIgnoreCase("Lower")) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean validateWeightLifted(String weightLiftedInput) {
+        try {
+            Integer.parseInt(weightLiftedInput);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static boolean validateReps(String repsInput) {
+        try {
+            Integer.parseInt(repsInput);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
     /**
      * @param weightLifted -> An int that stores the weight to be stored into the workouts array
      * @param reps -> An int that stores the number of reps to be stored into the workouts array
