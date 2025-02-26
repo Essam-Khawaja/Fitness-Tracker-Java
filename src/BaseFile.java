@@ -56,11 +56,29 @@ public class BaseFile {
         System.out.print("Are you having a snack or a meal?: ");
         String snackOrMeal = scanner.nextLine();
 
+        while(!snackOrMeal.equals("snack") && !snackOrMeal.equals("meal")) {
+            System.out.println("Invalid input. Please try again.");
+            System.out.print("Are you having a snack or a meal?: ");
+            snackOrMeal = scanner.nextLine();
+        }
+
         System.out.print("What type of meal is it? (Breakfast/Lunch/Dinner): ");
         String mealType = scanner.nextLine();
 
+        while(!mealType.equals("Breakfast") && !mealType.equals("Lunch") && !mealType.equals("Dinner")) {
+            System.out.println("Invalid input. Please try again.");
+            System.out.print("What type of meal is it? (Breakfast/Lunch/Dinner): ");
+            mealType = scanner.nextLine();
+        }
+
         System.out.print("Enter name of food: ");
         String foodName = scanner.nextLine();
+
+        while(!foodName.matches("[a-zA-Z]+")) {
+            System.out.println("Invalid input. Food has to contain alphanumeric characters and space.");
+            System.out.print("Enter name of food: ");
+            foodName = scanner.nextLine();
+        }
 
         System.out.print("Enter calories of food: ");
         String calories = scanner.nextLine();
