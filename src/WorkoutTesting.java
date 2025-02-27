@@ -27,6 +27,8 @@ public class WorkoutTesting {
         assertEquals(expected, actual);
     }
 
+    // ----------------------------------------------------------------
+
     // Testing functions for validateWeightLifted
     @Test public void testValidateWeightLiftedSmallNumber() {
         boolean expected = true;
@@ -40,7 +42,6 @@ public class WorkoutTesting {
         assertEquals(expected, actual);
     }
 
-    // Note to future self, fix the validate functions to have a lower to upper limit
     @Test public void testValidateWeightLiftedZero() {
         boolean expected = false;
         boolean actual = Workout.validateWeightLifted("0");
@@ -76,6 +77,8 @@ public class WorkoutTesting {
         boolean actual = Workout.validateWeightLifted("");
         assertEquals(expected, actual);
     }
+
+    // ----------------------------------------------------------------
 
     // Testing functions for validateReps
     @Test public void testValidateRepsSmallNumber() {
@@ -119,4 +122,17 @@ public class WorkoutTesting {
         boolean actual = Workout.validateReps("");
         assertEquals(expected, actual);
     }
+
+    // ----------------------------------------------------------------
+
+    // Test functions for createSet
+
+    // ----------------------------------------------------------------
+
+    // Test functions for createExercise
+
+    // ----------------------------------------------------------------
+
+    // Test functions for createWorkout
+
 }
