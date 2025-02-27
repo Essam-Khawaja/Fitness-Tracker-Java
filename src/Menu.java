@@ -122,7 +122,6 @@ public class Menu {
         boolean isWorkoutValid = Workout.validateWorkoutPlan(workoutPlan);
 
         while (!isWorkoutValid) {
-            System.out.println("Invalid input. Please try again.");
             System.out.print("What workout plan are you following today (Push/Pull/Leg/Upper/Lower)?: ");
             workoutPlan = scanner.nextLine();
             isWorkoutValid = Workout.validateWorkoutPlan(workoutPlan);
@@ -156,7 +155,7 @@ public class Menu {
             String exerciseName = scanner.nextLine();
 
             // Will be stored in exercise, must be initialised each new exercise
-            ArrayList<HashMap<String, Integer>> sets = new ArrayList<>();
+            ArrayList<HashMap<String, Object>> sets = new ArrayList<>();
 
             // Input number of sets with validation
             boolean isSetValid  = false;
@@ -183,20 +182,18 @@ public class Menu {
                 boolean isWeightValid = Workout.validateWeightLifted(weightLiftedInput);
 
                 while (!isWeightValid) {
-                    System.out.println("Invalid input. Must be a number. Please try again.");
                     System.out.print("Enter weight lifted for set " + (j + 1) + " (in kg): ");
                     weightLiftedInput = scanner.nextLine();
                     isWeightValid = Workout.validateWeightLifted(weightLiftedInput);
                 }
 
-                int weightLifted = Integer.parseInt(weightLiftedInput);
+                float weightLifted = Float.parseFloat(weightLiftedInput);
 
                 System.out.print("Enter number of reps for set " + (j + 1) + ": ");
                 String repsInput = scanner.nextLine();
                 boolean isRepsValid = Workout.validateReps(repsInput);
 
                 while (!isRepsValid) {
-                    System.out.println("Invalid input. Must be a number. Please try again.");
                     System.out.print("Enter number of reps for set " + (j + 1) + ": ");
                     repsInput = scanner.nextLine();
                     isRepsValid = Workout.validateReps(repsInput);
@@ -205,7 +202,7 @@ public class Menu {
                 int reps = Integer.parseInt(repsInput);
 
                 // Create new set - coded this way for easier transition into OOP
-                HashMap<String, Integer> newSet = Workout.createSet(weightLifted, reps);
+                HashMap<String, Object> newSet = Workout.createSet(weightLifted, reps);
                 sets.add(newSet);
             }
 
