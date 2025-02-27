@@ -1,30 +1,36 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Menu {
+
+    // Shared variables across functions
+    private static ArrayList<HashMap<String, String>> calorieTrackingData = new ArrayList<>();
+    private static ArrayList<HashMap<String, Object>> workouts = new ArrayList<>();
+    private static int calorieGoal = 2000; // Default calorie goal
+
     public static void main(String[] args) {
-        // Code that runs in here
         getMenu();
     }
 
     public static void getMenu() {
-        // Initialize the scanner
-        Scanner scanner = new Scanner(System.in);
-        // Output the menu
-        System.out.println("Please choose from the following options(1-3):");
+        // Displaying the main menu
+        System.out.println("=== Main Menu ===");
+        System.out.println("Please choose from the following options (1-4):");
         System.out.println("1. Calorie Tracking");
         System.out.println("2. Workout Tracking");
         System.out.println("3. View Progress");
         System.out.println("4. Exit");
-        String option = scanner.nextLine();     // Take the user input
 
-        // Check for validity of the input
+        Scanner scanner = new Scanner(System.in);
+        String option = scanner.nextLine();
+
+        // Validate the user's input
         while (!(option.equals("1") || option.equals("2") || option.equals("3") || option.equals("4"))) {
-            System.out.println("Enter valid option between 1-3:");
+            System.out.println("Invalid option, please enter a number between 1 and 4:");
             option = scanner.nextLine();
         }
 
+        // Handle the options
         switch (option) {
             case "1":
                 getCalorieMenu();
@@ -36,253 +42,365 @@ public class Menu {
                 getViewMenu();
                 break;
             case "4":
-                System.out.println("Exited Program");
-                break;
+                System.out.println("Exiting the program...");
+                return; // Exit the application
         }
     }
 
     public static void getCalorieMenu() {
-        // Initialize the scanner
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please answer the following questions:");
 
-        // Asking the user if it's a meal or a snack
+        // Ask if it's a meal or a snack
         System.out.print("Are you having a snack or a meal?: ");
         String snackOrMeal = scanner.nextLine();
 
-        // Checking if the user inputted the correct values
-        while(!snackOrMeal.toLowerCase().equals("snack") && !snackOrMeal.toLowerCase().equals("meal")) {
+        // Validate input
+        while (!snackOrMeal.toLowerCase().equals("snack") && !snackOrMeal.toLowerCase().equals("meal")) {
             System.out.println("Invalid input. Please try again.");
             System.out.print("Are you having a snack or a meal?: ");
             snackOrMeal = scanner.nextLine();
         }
 
-        // If it's a meal, we have to asking the user which type of meal did they have
+        // If it's a meal, ask for the specific type
         String mealType = "";
-        if (snackOrMeal.toLowerCase().equals("meal")) {
-            // Asking the user if the meal was eaten on breakfast, lunch, or lunch
+        if (snackOrMeal.equalsIgnoreCase("meal")) {
             System.out.print("What type of meal is it? (Breakfast/Lunch/Dinner): ");
             mealType = scanner.nextLine();
 
-            // Checking if the user inputted the correct values
-            while(!mealType.toLowerCase().equals("breakfast") && !mealType.toLowerCase().equals("lunch") && !mealType.toLowerCase().equals("dinner")) {
+            while (!mealType.toLowerCase().equals("breakfast") && !mealType.toLowerCase().equals("lunch")
+                    && !mealType.toLowerCase().equals("dinner")) {
                 System.out.println("Invalid input. Please try again.");
                 System.out.print("What type of meal is it? (Breakfast/Lunch/Dinner): ");
                 mealType = scanner.nextLine();
             }
         }
 
-        // Asking the user what is the food's meal
-        System.out.print("Enter name of food: ");
+        // Ask for the food's name
+        System.out.print("Enter the name of the food: ");
         String foodName = scanner.nextLine();
 
-        // Checking if the user inputted the correct values
-        while(!foodName.matches("[a-zA-Z]+")) {
-            System.out.println("Invalid input. Food has to contain alphanumeric characters and space.");
-            System.out.print("Enter name of food: ");
+        while (!foodName.matches("[a-zA-Z]+")) {
+            System.out.println("Invalid input. Food must contain alphabetic characters.");
+            System.out.print("Enter the name of the food: ");
             foodName = scanner.nextLine();
         }
 
-        // Asking for calorie amount and validating calorie input
+        // Ask for calorie amount with validation
         String caloriesInput = "";
         boolean isCaloriesInputValid = false;
         int calories = 0;
-        while (isCaloriesInputValid == false) {
-            System.out.print("Enter number of calories: ");
+
+        while (!isCaloriesInputValid) {
+            System.out.print("Enter the number of calories: ");
             caloriesInput = scanner.nextLine();
             try {
-                // if it's a number, check if it's within the range limit
                 calories = Integer.parseInt(caloriesInput);
-                // if it's not within the range, invalid input
                 if (calories < 0 || calories > 20000) {
-                    System.out.println("Invalid input. Has to be in range 0-20,000. Please try again.");
-                }
-                else {
-                    // if valid, then print
+                    System.out.println("Invalid input. Number must be in the range 0-20,000. Please try again.");
+                } else {
                     isCaloriesInputValid = true;
                 }
-            // if imput isn't a number -> invalid input
-            } catch(NumberFormatException e) {
-                System.out.println("Invalid input. Has to be a number. Please try again.");
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Enter a valid whole number.");
             }
         }
 
-        Calories.storeCaloriesDataEntry(snackOrMeal, mealType, foodName, calories);
+        // Log the calorie data
+        HashMap<String, String> calorieEntry = new HashMap<>();
+        calorieEntry.put("snackOrMeal", snackOrMeal);
+        calorieEntry.put("mealType", snackOrMeal.equals("meal") ? mealType : "Snack");
+        calorieEntry.put("mealName", foodName);
+        calorieEntry.put("calories", String.valueOf(calories));
+        calorieTrackingData.add(calorieEntry);
+
+        System.out.println("Calorie entry added successfully!");
         getMenu();
     }
 
     public static void getWorkoutMenu() {
-        // Initialize the scanner for user input
         Scanner scanner = new Scanner(System.in);
 
-        // Ask the user for the workout type
+        // Ask the user for the workout plan
         System.out.print("What workout plan are you following today (Push/Pull/Leg/Upper/Lower)?: ");
         String workoutPlan = scanner.nextLine();
 
-        boolean isWorkoutValid = Workout.validateWorkoutPlan(workoutPlan);
-
-        while (!isWorkoutValid) {
-            System.out.print("What workout plan are you following today (Push/Pull/Leg/Upper/Lower)?: ");
+        // Validate the workout plan
+        while (!Workout.validateWorkoutPlan(workoutPlan)) {
+            System.out.print("Invalid input. Enter a valid workout plan (Push/Pull/Leg/Upper/Lower): ");
             workoutPlan = scanner.nextLine();
-            isWorkoutValid = Workout.validateWorkoutPlan(workoutPlan);
         }
 
-        // Ask for the number of exercises with validation
-        boolean isExerciseValid  = false;
-        int exercisesCount = 0;     // Initialize exerciseCount to 0
-        while (!isExerciseValid) {
+        // Ask for the number of exercises
+        boolean isExerciseCountValid = false;
+        int exerciseCount = 0;
+        while (!isExerciseCountValid) {
             System.out.print("How many exercises have you done?: ");
-            String exercisesCountInput = scanner.nextLine();
+            String input = scanner.nextLine();
             try {
-                exercisesCount = Integer.parseInt(exercisesCountInput);
-                // Check to see if the user entered more than the max number of exercises to be stored
-                if (exercisesCount > 10) {
-                    System.out.println("Invalid input. Cannot store more than 10 exercises. Please try again.");
+                exerciseCount = Integer.parseInt(input);
+                if (exerciseCount > 10) {
+                    System.out.println("Cannot input more than 10 exercises. Try again.");
                 } else {
-                    isExerciseValid = true;
+                    isExerciseCountValid = true;
                 }
-            } catch (NumberFormatException e) {     // Check to see if the user did not enter a number
-                System.out.println("Invalid input. Can only be a number. Please try again.");
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Enter a valid number.");
             }
         }
 
-        // This will later be stored in the workouts variable
+        // Collect workout exercises
         ArrayList<HashMap<String, Object>> exercises = new ArrayList<>();
-
-        for (int i = 0; i < exercisesCount; i++) {
-            // Input details for each exercise
-            System.out.print("Enter name of exercise " + (i + 1) + ": ");
+        for (int i = 0; i < exerciseCount; i++) {
+            System.out.print("Enter the name of exercise " + (i + 1) + ": ");
             String exerciseName = scanner.nextLine();
 
-            // Will be stored in exercise, must be initialised each new exercise
-            ArrayList<HashMap<String, Object>> sets = new ArrayList<>();
-
-            // Input number of sets with validation
-            boolean isSetValid  = false;
-            int setsCount = 0;     // Initialize setsCount to 0
-            while (!isSetValid) {
-                System.out.print("Enter number of sets for exercise " + (i + 1) + ": ");
-                String setsCountInput = scanner.nextLine();
+            // Validate sets count
+            boolean isSetCountValid = false;
+            int setCount = 0;
+            while (!isSetCountValid) {
+                System.out.print("Enter the number of sets for exercise " + (i + 1) + ": ");
+                String input = scanner.nextLine();
                 try {
-                    setsCount = Integer.parseInt(setsCountInput);
-                    // Check to see if the user entered more than the max number of sets to be stored
-                    if (setsCount > 5) {
-                        System.out.println("Invalid input. Cannot store more than 5 sets. Please try again.");
+                    setCount = Integer.parseInt(input);
+                    if (setCount > 5) {
+                        System.out.println("Cannot input more than 5 sets. Try again.");
                     } else {
-                        isSetValid = true;
+                        isSetCountValid = true;
                     }
-                } catch (NumberFormatException e) {     // Check to see if the user did not enter a number
-                    System.out.println("Invalid input. Can only be a number. Please try again.");
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input. Enter a valid number.");
                 }
             }
-            for (int j = 0; j < setsCount; j++) {
-                // Input details for each set
-                System.out.print("Enter weight lifted for set " + (j + 1) + " (in kg): ");
-                String weightLiftedInput = scanner.nextLine();
-                boolean isWeightValid = Workout.validateWeightLifted(weightLiftedInput);
 
-                while (!isWeightValid) {
-                    System.out.print("Enter weight lifted for set " + (j + 1) + " (in kg): ");
-                    weightLiftedInput = scanner.nextLine();
-                    isWeightValid = Workout.validateWeightLifted(weightLiftedInput);
-                }
+            ArrayList<HashMap<String, Integer>> sets = new ArrayList<>();
+            for (int j = 0; j < setCount; j++) {
+                System.out.print("Enter the weight lifted for set " + (j + 1) + " in kg: ");
+                int weight = Integer.parseInt(scanner.nextLine());
 
-                float weightLifted = Float.parseFloat(weightLiftedInput);
+                System.out.print("Enter the number of reps for set " + (j + 1) + ": ");
+                int reps = Integer.parseInt(scanner.nextLine());
 
-                System.out.print("Enter number of reps for set " + (j + 1) + ": ");
-                String repsInput = scanner.nextLine();
-                boolean isRepsValid = Workout.validateReps(repsInput);
-
-                while (!isRepsValid) {
-                    System.out.print("Enter number of reps for set " + (j + 1) + ": ");
-                    repsInput = scanner.nextLine();
-                    isRepsValid = Workout.validateReps(repsInput);
-                }
-
-                int reps = Integer.parseInt(repsInput);
-
-                // Create new set - coded this way for easier transition into OOP
-                HashMap<String, Object> newSet = Workout.createSet(weightLifted, reps);
-                sets.add(newSet);
+                HashMap<String, Integer> setRecord = new HashMap<>();
+                setRecord.put("weight", weight);
+                setRecord.put("reps", reps);
+                sets.add(setRecord);
             }
 
-            // Create new exercise - coded this way for easier transition to OOP
-            HashMap<String, Object> newExercise = Workout.createExercise(exerciseName, sets);
-            exercises.add(newExercise);
+            HashMap<String, Object> exerciseRecord = new HashMap<>();
+            exerciseRecord.put("exerciseName", exerciseName);
+            exerciseRecord.put("sets", sets);
+            exercises.add(exerciseRecord);
         }
 
-        // Create new workout - coded this way for easier transition to OOP
-        HashMap<String, Object> newWorkout = Workout.createWorkout(workoutPlan, exercises);
-        Workout.storeWorkoutData(newWorkout);
+        // Store all workout data
+        HashMap<String, Object> workout = new HashMap<>();
+        workout.put("workoutPlan", workoutPlan);
+        workout.put("exercises", exercises);
+        workouts.add(workout);
+
+        System.out.println("Workout data recorded successfully!");
         getMenu();
     }
 
     public static void getViewMenu() {
         System.out.println("=== View Progress ===");
-        System.out.println("Please select what you'd like to view:");
-        System.out.println("1. Calorie Tracking Data");
-        System.out.println("2. Workout Tracking Data");
-        System.out.println("3. Back to Main Menu");
+        System.out.println("Select an option (1-11):");
+        System.out.println("1. View Today's Calories");
+        System.out.println("2. View Today's Workout");
+        System.out.println("3. View Meal Breakdown");
+        System.out.println("4. View Calories of a Particular Meal");
+        System.out.println("5. View Average Calories Per Meal");
+        System.out.println("6. View Calorie Consumption (Snacks/Foods)");
+        System.out.println("7. View Workout Volume");
+        System.out.println("8. View Heaviest Lift Per Exercise");
+        System.out.println("9. View Calories Consumed vs. Goal");
+        System.out.println("10. View Performance Summary");
+        System.out.println("11. Back to Main Menu");
 
         Scanner scanner = new Scanner(System.in);
         String option = scanner.nextLine();
 
-        while (!(option.equals("1") || option.equals("2") || option.equals("3"))) {
-            System.out.println("Invalid option. Please select 1, 2, or 3:");
+        while (!option.matches("[1-9]|10|11")) {
+            System.out.println("Invalid option. Please select between 1-11:");
             option = scanner.nextLine();
         }
 
         switch (option) {
             case "1":
-                viewCalorieData();
+                viewTodaysCalories();
                 break;
             case "2":
-                viewWorkoutData();
+                viewTodaysWorkout();
                 break;
             case "3":
-                getMenu();
+                viewMealBreakdown();
                 break;
+            case "4":
+                viewCaloriesOfParticularMeal();
+                break;
+            case "5":
+                viewAverageCaloriesPerMeal();
+                break;
+            case "6":
+                viewCaloriesConsumptionSnacksAndFoods();
+                break;
+            case "7":
+                viewVolumeOfWorkout();
+                break;
+            case "8":
+                viewHeaviestLiftPerExercise();
+                break;
+            case "9":
+                viewCaloriesConsumedVsGoal();
+                break;
+            case "10":
+                viewPerformanceSummary();
+                break;
+            case "11":
+                getMenu();
+                return;
         }
-    }
-
-    // Method to display calorie tracking data
-    public static void viewCalorieData() {
-        System.out.println("=== Calorie Tracking Data ===");
-
-        if (Calories.calorieTrackingData.isEmpty()) {
-            System.out.println("No calorie tracking data available.");
-        } else {
-            for (HashMap<String, Object> entry : Calories.calorieTrackingData) {
-                System.out.println("Snack/Meal: " + entry.get("snackOrMeal"));
-                System.out.println("Meal Type: " + entry.get("mealType"));
-                System.out.println("Food Name: " + entry.get("name"));
-                System.out.println("Calories: " + entry.get("calories"));
-                System.out.println("-------------------------");
-            }
-        }
+        System.out.println("Returning to View Menu...");
         getViewMenu();
     }
 
-    // Method to display workout tracking data
-    public static void viewWorkoutData() {
-        System.out.println("=== Workout Tracking Data ===");
+    private static void viewTodaysCalories() {
+        if (calorieTrackingData.isEmpty()) {
+            System.out.println("No calorie data available for today.");
+            return;
+        }
 
-        if (Workout.workouts.isEmpty()) {
-            System.out.println("No workout tracking data available.");
+        int totalCalories = calorieTrackingData.stream()
+                .mapToInt(entry -> Integer.parseInt(entry.get("calories")))
+                .sum();
+        System.out.println("Today's Total Calories: " + totalCalories + " kcal");
+    }
+
+    private static void viewTodaysWorkout() {
+        if (workouts.isEmpty()) {
+            System.out.println("No workout data available for today.");
+            return;
+        }
+
+        workouts.forEach(workout -> {
+            System.out.println("Workout Plan: " + workout.get("workoutPlan"));
+            @SuppressWarnings("unchecked")
+            ArrayList<HashMap<String, Object>> exercises = (ArrayList<HashMap<String, Object>>) workout.get("exercises");
+            exercises.forEach(exercise -> {
+                System.out.println("Exercise: " + exercise.get("exerciseName"));
+                @SuppressWarnings("unchecked")
+                ArrayList<HashMap<String, Integer>> sets = (ArrayList<HashMap<String, Integer>>) exercise.get("sets");
+                sets.forEach(set -> System.out.println(" - " + set.get("weight") + " kg x " + set.get("reps") + " reps"));
+            });
+        });
+    }
+
+    private static void viewMealBreakdown() {
+        long snacks = calorieTrackingData.stream().filter(meal -> "Snack".equals(meal.get("mealType"))).count();
+        long breakfast = calorieTrackingData.stream().filter(meal -> "Breakfast".equals(meal.get("mealType"))).count();
+        long lunch = calorieTrackingData.stream().filter(meal -> "Lunch".equals(meal.get("mealType"))).count();
+        long dinner = calorieTrackingData.stream().filter(meal -> "Dinner".equals(meal.get("mealType"))).count();
+
+        System.out.println("Snacks: " + snacks);
+        System.out.println("Breakfasts: " + breakfast);
+        System.out.println("Lunches: " + lunch);
+        System.out.println("Dinners: " + dinner);
+    }
+
+    private static void viewCaloriesOfParticularMeal() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the meal type or snack name: ");
+        String search = scanner.nextLine();
+
+        calorieTrackingData.stream()
+                .filter(meal -> meal.get("mealType").equalsIgnoreCase(search) || meal.get("mealName").equalsIgnoreCase(search))
+                .forEach(meal -> System.out.println(meal.get("mealName") + ": " + meal.get("calories") + " kcal"));
+    }
+
+    private static void viewCaloriesConsumedVsGoal() {
+        int totalCalories = calorieTrackingData.stream()
+                .mapToInt(meal -> Integer.parseInt(meal.get("calories")))
+                .sum();
+
+        System.out.println("Calories Consumed: " + totalCalories + " kcal");
+        System.out.println("Calorie Goal: " + calorieGoal + " kcal");
+
+        if (totalCalories > calorieGoal) {
+            System.out.println("You exceeded your goal by " + (totalCalories - calorieGoal) + " kcal.");
         } else {
-            for (HashMap<String, Object> workout : Workout.workouts) {
-                System.out.println("Workout Plan: " + workout.get("workoutPlan"));
-                ArrayList<HashMap<String, Object>> exercises = (ArrayList<HashMap<String, Object>>) workout.get("exercises");
-                for (HashMap<String, Object> exercise : exercises) {
-                    System.out.println("- Exercise: " + exercise.get("exerciseName"));
+            System.out.println("You are under your goal by " + (calorieGoal - totalCalories) + " kcal.");
+        }
+    }
+
+    private static void viewVolumeOfWorkout() {
+        int totalVolume = workouts.stream().mapToInt(workout -> {
+            @SuppressWarnings("unchecked")
+            ArrayList<HashMap<String, Object>> exercises = (ArrayList<HashMap<String, Object>>) workout.get("exercises");
+
+            return exercises.stream()
+                    .mapToInt(exercise -> {
+                        @SuppressWarnings("unchecked")
+                        ArrayList<HashMap<String, Integer>> sets = (ArrayList<HashMap<String, Integer>>) exercise.get("sets");
+
+                        return sets.stream()
+                                .mapToInt(set -> set.get("weight") * set.get("reps"))
+                                .sum();
+                    }).sum();
+        }).sum();
+
+        System.out.println("Total Workout Volume: " + totalVolume + " kg");
+    }
+
+    private static void viewAverageCaloriesPerMeal() {
+        Map<String, Double> averageCalories = calorieTrackingData.stream()
+                .collect(Collectors.groupingBy(
+                        meal -> meal.get("mealType"),
+                        Collectors.averagingInt(meal -> Integer.parseInt(meal.get("calories")))
+                ));
+        averageCalories.forEach((mealType, avg) -> System.out.printf("%s: %.2f kcal%n", mealType, avg));
+    }
+
+    private static void viewCaloriesConsumptionSnacksAndFoods() {
+        int snackCalories = calorieTrackingData.stream()
+                .filter(meal -> "Snack".equals(meal.get("mealType")))
+                .mapToInt(meal -> Integer.parseInt(meal.get("calories")))
+                .sum();
+
+        int mealCalories = calorieTrackingData.stream()
+                .filter(meal -> !"Snack".equals(meal.get("mealType")))
+                .mapToInt(meal -> Integer.parseInt(meal.get("calories")))
+                .sum();
+
+        System.out.println("Total Snack Calories: " + snackCalories + " kcal");
+        System.out.println("Total Meal Calories: " + mealCalories + " kcal");
+    }
+
+    private static void viewHeaviestLiftPerExercise() {
+        workouts.stream()
+                .flatMap(workout -> {
+                    @SuppressWarnings("unchecked")
+                    ArrayList<HashMap<String, Object>> exercises = (ArrayList<HashMap<String, Object>>) workout.get("exercises");
+                    return exercises.stream();
+                })
+                .forEach(exercise -> {
+                    String exerciseName = (String) exercise.get("exerciseName");
+
+                    @SuppressWarnings("unchecked")
                     ArrayList<HashMap<String, Integer>> sets = (ArrayList<HashMap<String, Integer>>) exercise.get("sets");
-                    for (HashMap<String, Integer> set : sets) {
-                        System.out.println("  - Set: " + set);
-                    }
-                }
-                System.out.println("-------------------------");
-            }
-        }
-        getViewMenu();
+                    int maxWeight = sets.stream()
+                            .mapToInt(set -> set.get("weight"))
+                            .max()
+                            .orElse(0);
+
+                    System.out.println(exerciseName + " Heaviest Lift: " + maxWeight + " kg");
+                });
+    }
+
+    private static void viewPerformanceSummary() {
+        System.out.println("=== Performance Summary ===");
+        viewTodaysCalories();
+        viewVolumeOfWorkout();
+        viewCaloriesConsumedVsGoal();
     }
 }
