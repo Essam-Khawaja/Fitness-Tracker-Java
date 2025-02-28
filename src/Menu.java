@@ -12,6 +12,11 @@ public class Menu {
         getMenu();
     }
 
+    /**
+     * Displays the main menu and handles user input for
+     * navigating between options such as calorie tracking,
+     * workout tracking, viewing progress, or exiting the program.
+     */
     public static void getMenu() {
         // Displaying the main menu
         System.out.println("=== Main Menu ===");
@@ -47,6 +52,11 @@ public class Menu {
         }
     }
 
+    /**
+     * Displays the calorie menu, collects details about a snack or meal,
+     * validates the input, logs the data, and stores it in the calorie tracking list.
+     * Prompts the user to specify the type of meal, name, and calorie count.
+     */
     public static void getCalorieMenu() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please answer the following questions:");
@@ -118,6 +128,11 @@ public class Menu {
         getMenu();
     }
 
+    /**
+     * Displays the workout menu, collects details about the workout plan,
+     * validates the input, gathers exercises, sets and repetitions, and
+     * stores them in the workout tracking list.
+     */
     public static void getWorkoutMenu() {
         Scanner scanner = new Scanner(System.in);
 
