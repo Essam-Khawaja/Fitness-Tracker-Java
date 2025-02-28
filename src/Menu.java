@@ -218,6 +218,11 @@ public class Menu {
         getMenu();
     }
 
+    /**
+     * Displays the view progress menu and handles
+     * navigation through various options such as viewing today's calories,
+     * workout data, meal breakdown, calorie summaries, and progress reports.
+     */
     public static void getViewMenu() {
         System.out.println("=== View Progress ===");
         System.out.println("Select an option (1-11):");
@@ -280,6 +285,10 @@ public class Menu {
         getViewMenu();
     }
 
+    /**
+     * Calculates and displays the total calories logged for the current day.
+     * Displays a message if no calorie data is available.
+     */
     private static void viewTodaysCalories() {
         if (calorieTrackingData.isEmpty()) {
             System.out.println("No calorie data available for today.");
@@ -292,6 +301,11 @@ public class Menu {
         System.out.println("Today's Total Calories: " + totalCalories + " kcal");
     }
 
+    /**
+     * Displays the details of today's workout including workout plans,
+     * exercise names, sets, weights, and repetitions.
+     * Displays a message if no workout data is available.
+     */
     private static void viewTodaysWorkout() {
         if (workouts.isEmpty()) {
             System.out.println("No workout data available for today.");
@@ -311,6 +325,11 @@ public class Menu {
         });
     }
 
+    /**
+     * Displays the details of today's workout including workout plans,
+     * exercise names, sets, weights, and repetitions.
+     * Displays a message if no workout data is available.
+     */
     private static void viewMealBreakdown() {
         long snacks = calorieTrackingData.stream().filter(meal -> "Snack".equals(meal.get("mealType"))).count();
         long breakfast = calorieTrackingData.stream().filter(meal -> "Breakfast".equals(meal.get("mealType"))).count();
@@ -323,6 +342,10 @@ public class Menu {
         System.out.println("Dinners: " + dinner);
     }
 
+    /**
+     * Enables the user to view calories of a specific meal or snack by name.
+     * Filters and displays matching entries from the calorie tracking data.
+     */
     private static void viewCaloriesOfParticularMeal() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the meal type or snack name: ");
@@ -333,6 +356,10 @@ public class Menu {
                 .forEach(meal -> System.out.println(meal.get("mealName") + ": " + meal.get("calories") + " kcal"));
     }
 
+    /**
+     * Displays the comparison between the total calories logged for the day
+     * and the user's calorie consumption goal. Indicates the surplus or deficit of calories.
+     */
     private static void viewCaloriesConsumedVsGoal() {
         int totalCalories = calorieTrackingData.stream()
                 .mapToInt(meal -> Integer.parseInt(meal.get("calories")))
