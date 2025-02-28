@@ -375,6 +375,10 @@ public class Menu {
         }
     }
 
+    /**
+     * Calculates and displays the total workout volume for the day (weight x reps per set).
+     * Summarizes the volume across all exercises and workouts.
+     */
     private static void viewVolumeOfWorkout() {
         int totalVolume = workouts.stream().mapToInt(workout -> {
             @SuppressWarnings("unchecked")
@@ -394,6 +398,9 @@ public class Menu {
         System.out.println("Total Workout Volume: " + totalVolume + " kg");
     }
 
+    /**
+     * Calculates and displays the average calorie intake per meal type (e.g., Snacks, Breakfast, etc.).
+     */
     private static void viewAverageCaloriesPerMeal() {
         Map<String, Double> averageCalories = calorieTrackingData.stream()
                 .collect(Collectors.groupingBy(
@@ -403,6 +410,10 @@ public class Menu {
         averageCalories.forEach((mealType, avg) -> System.out.printf("%s: %.2f kcal%n", mealType, avg));
     }
 
+    /**
+     * Displays the total calories consumed from snacks and meals separately
+     * for the current day.
+     */
     private static void viewCaloriesConsumptionSnacksAndFoods() {
         int snackCalories = calorieTrackingData.stream()
                 .filter(meal -> "Snack".equals(meal.get("mealType")))
@@ -418,6 +429,10 @@ public class Menu {
         System.out.println("Total Meal Calories: " + mealCalories + " kcal");
     }
 
+    /**
+     * Calculates and displays the heaviest weight lifted for
+     * each exercise in all recorded workouts.
+     */
     private static void viewHeaviestLiftPerExercise() {
         workouts.stream()
                 .flatMap(workout -> {
@@ -439,6 +454,11 @@ public class Menu {
                 });
     }
 
+    /**
+     * Provides a summary of performance including today's calories,
+     * workout volume, and calories consumed vs. the goal.
+     * Combines data from individual viewing functions.
+     */
     private static void viewPerformanceSummary() {
         System.out.println("=== Performance Summary ===");
         viewTodaysCalories();
