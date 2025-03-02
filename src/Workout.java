@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 public class Workout {
     // This is the public workouts data structure to be used to store the data
-    public static ArrayList<HashMap<String, Object>> workouts = new ArrayList<>();
+    private static ArrayList<HashMap<String, Object>> workouts = new ArrayList<>();
 
     /**
      * This function checks if the workout plan is one from the options
@@ -109,5 +109,9 @@ public class Workout {
      * */
     public static void storeWorkoutData(HashMap<String, Object> workout) {
         workouts.add(workout);      // Add the workout to the workouts ArrayList
+    }
+
+    public static ArrayList<HashMap<String, Object>> getWorkouts() {
+        return workouts;
     }
 }
