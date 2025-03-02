@@ -106,8 +106,20 @@ public class Menu {
         // Log the calorie data
         Calories.storeCaloriesDataEntry(snackOrMeal, mealType, foodName, calories);
 
+        // Check if the user wants to continue, with validation
         System.out.println("Calorie entry added successfully!");
-        getMenu();
+        System.out.println("Would you like to continue? (Y/N): ");
+        String returnMenuOption = scanner.nextLine();
+        while (!returnMenuOption.equalsIgnoreCase("y") && !returnMenuOption.equalsIgnoreCase("n")) {
+            System.out.println("Invalid input. Please try again.");
+            System.out.println("Would you like to continue? (Y/N): ");
+            returnMenuOption = scanner.nextLine();
+        }
+        if (returnMenuOption.equalsIgnoreCase("Y")) {
+            getCalorieMenu();
+        } else if (returnMenuOption.equalsIgnoreCase("N")) {
+            getMenu();
+        }
     }
 
     /**
@@ -245,6 +257,7 @@ public class Menu {
      * workout data, meal breakdown, calorie summaries, and progress reports.
      */
     public static void getViewMenu() {
+        // Print out the options for the menu
         System.out.println("=== View Progress ===");
         System.out.println("Select an option (1-11):");
         System.out.println("1. View Today's Calories");
@@ -259,14 +272,17 @@ public class Menu {
         System.out.println("10. View Performance Summary");
         System.out.println("11. Back to Main Menu");
 
+        // Initialize scanner and take user input
         Scanner scanner = new Scanner(System.in);
         String option = scanner.nextLine();
 
+        // Validate the user input to match one of the options
         while (!option.matches("[1-9]|10|11")) {
             System.out.println("Invalid option. Please select between 1-11:");
             option = scanner.nextLine();
         }
 
+        // Call the appropriate function for the option chosen
         switch (option) {
             case "1":
                 viewTodaysCalories();
@@ -311,14 +327,18 @@ public class Menu {
      * Displays a message if no calorie data is available.
      */
     private static void viewTodaysCalories() {
+        // Retrieve the calorie data
         ArrayList<HashMap<String, Object>> calorieTrackingData = Calories.getData();
+
+        // Check if its empty
         if (calorieTrackingData.isEmpty()) {
             System.out.println("No calorie data available for today.");
-            return;
+            return; // Go back to the view menu
         }
 
+        // Go through all the array objects and print them out in correct format
         System.out.println("Today's Calories Tracking Data:");
-        int totalCalories = 0;
+        int totalCalories = 0;  // Stores the total of all the calories stored
         for (HashMap<String, Object> entry : calorieTrackingData) {
             System.out.println("1. " + entry.get("name"));
             System.out.println("    Type:" + entry.get("snackOrMeal"));
@@ -338,19 +358,23 @@ public class Menu {
      * Displays a message if no workout data is available.
      */
     private static void viewTodaysWorkout() {
+        // Retrieve the workout data
         ArrayList<HashMap<String, Object>> workouts = Workout.getWorkouts();
+
+        // Check if its empty, and leave the function if it is
         if (workouts.isEmpty()) {
             System.out.println("No workout data available for today.");
             return;
         }
 
+        // Print out each workout stored
         workouts.forEach(workout -> {
             System.out.println("Workout Plan: " + workout.get("workoutPlan"));
             ArrayList<HashMap<String, Object>> exercises = (ArrayList<HashMap<String, Object>>) workout.get("exercises");
             exercises.forEach(exercise -> {
                 System.out.println("Exercise: " + exercise.get("exerciseName"));
                 ArrayList<HashMap<String, Integer>> sets = (ArrayList<HashMap<String, Integer>>) exercise.get("sets");
-                sets.forEach(set -> System.out.println(" - " + set.get("weight") + " kg x " + set.get("reps") + " reps"));
+                sets.forEach(set -> System.out.println(" - " + set.get("weightLifted") + " kg x " + set.get("reps") + " reps"));
             });
         });
     }
@@ -361,18 +385,22 @@ public class Menu {
      * Displays a message if no workout data is available.
      */
     private static void viewMealBreakdown() {
+        // Retrieve the calorie data
         ArrayList<HashMap<String, Object>> calorieTrackingData = Calories.getData();
 
+        // Check if data is present, if not then exit the function
         if (calorieTrackingData.isEmpty()) {
             System.out.println("No calorie data available for today.");
             return;
         }
 
+        // These array lists will store the sorted data from the original stored data
         ArrayList<HashMap<String, Object>> snacks = new ArrayList<>();
         ArrayList<HashMap<String, Object>> breakfast = new ArrayList<>();
         ArrayList<HashMap<String, Object>> lunch = new ArrayList<>();
         ArrayList<HashMap<String, Object>> dinner = new ArrayList<>();
 
+        // Store the data in the correct structure
         for (HashMap<String, Object> entry : calorieTrackingData) {
             String snackOrMeal = (String) entry.get("snackOrMeal");
             if (snackOrMeal.equals("snack")) {
@@ -393,6 +421,7 @@ public class Menu {
             }
         }
 
+        // Print out all the separate meal data separately
         System.out.println("Today, you had the following food items:");
         System.out.println("Breakfast: ");
         int totalBreakfast = 0;
@@ -440,13 +469,16 @@ public class Menu {
      * Filters and displays matching entries from the calorie tracking data.
      */
     private static void viewCaloriesOfParticularMeal() {
+        // Retrieve the calorie data
         ArrayList<HashMap<String, Object>> calorieTrackingData = Calories.getData();
 
+        // Check if empty and return if it is
         if (calorieTrackingData.isEmpty()) {
             System.out.println("No calories data found.");
             return;
         }
 
+        // Take and validate the user input of which meal they chose to view
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the meal type (Breakfast, Lunch, Dinner, Snacks): ):");
         String search = scanner.nextLine();
@@ -456,6 +488,7 @@ public class Menu {
             search = scanner.nextLine();
         }
 
+        // Depending on the search value, print out the right data
         System.out.println("==== " + search + " ====");
         int totalCalories = 0;
         for (HashMap<String, Object> entry : calorieTrackingData) {
@@ -481,13 +514,16 @@ public class Menu {
      * and the user's calorie consumption goal. Indicates the surplus or deficit of calories.
      */
     private static void viewCaloriesConsumedVsGoal() {
+        // Retrieve tge calorie data
         ArrayList<HashMap<String, Object>> calorieTrackingData = Calories.getData();
 
+        // If empty, return to View Menu
         if (calorieTrackingData.isEmpty()) {
             System.out.println("No calories data found.");
             return;
         }
 
+        // Take and validate the input of the users calorie goal
         Scanner scanner = new Scanner(System.in);
         System.out.print("What is your goal for calories consumed today: ");
         String calorieGoalInput = scanner.nextLine();
@@ -502,6 +538,7 @@ public class Menu {
             }
         }
 
+        // Find the total calories from the data
         int totalCalories = 0;
         for (HashMap<String, Object> entry : calorieTrackingData) {
             totalCalories += (int) entry.get("calories");
@@ -510,6 +547,7 @@ public class Menu {
         System.out.println("Calories Consumed: " + totalCalories + " kcal");
         System.out.println("Calorie Goal: " + calorieGoal + " kcal");
 
+        // Compare the total calories to the goal entered by the user
         if (totalCalories > calorieGoal) {
             System.out.println("You exceeded your goal by " + (totalCalories - calorieGoal) + " kcal.");
         } else {
@@ -522,10 +560,14 @@ public class Menu {
      * Summarizes the volume across all exercises and workouts.
      */
     private static void viewVolumeOfWorkout() {
+        // Retrieve the workout data
         ArrayList<HashMap<String, Object>> workouts = Workout.getWorkouts();
+
+        // If no data, do nothing
         if (workouts.isEmpty()) {
             System.out.println("No workouts found.");
         } else {
+            // Go through each exercise, do the calculation and then print it out
             for (HashMap<String, Object> entry : workouts) {
                 for (HashMap<String, Object> exercise : (ArrayList<HashMap<String, Object>>) entry.get("exercises")) {
                     System.out.println("Name of Exercise: " + exercise.get("exerciseName"));
@@ -546,13 +588,16 @@ public class Menu {
      * Calculates and displays the average calorie intake per meal type (e.g., Snacks, Breakfast, etc.).
      */
     private static void viewAverageCaloriesPerMeal() {
+        // Retrieve the calorie data
         ArrayList<HashMap<String, Object>> calorieTrackingData = Calories.getData();
 
+        // If empty, return to View Menu
         if (calorieTrackingData.isEmpty()) {
             System.out.println("No calories data found.");
             return;
         }
 
+        // Initialize all the variables needed, with the average variables storing the total as well
         float avgBreakfastCalories = 0f;
         int breakfastCount = 0;
         float avgLunchCalories = 0f;
@@ -561,6 +606,8 @@ public class Menu {
         int dinnerCount = 0;
         float avgSnackCalories = 0f;
         int snacksCount = 0;
+
+        // Add to both count and total of the corresponding meal type
         for (HashMap<String, Object> entry : calorieTrackingData) {
             String mealType = (String) entry.get("mealType");
             String snackOrMeal = (String) entry.get("snackOrMeal");
@@ -584,10 +631,13 @@ public class Menu {
                 }
             }
         }
+        // Calculate the averages
         avgBreakfastCalories /= breakfastCount;
         avgLunchCalories /= lunchCount;
         avgDinnerCalories /= dinnerCount;
         avgSnackCalories /= snacksCount;
+
+        // Output them
         System.out.println("Average Calories in Breakfast: " + avgBreakfastCalories + " kcal");
         System.out.println("Average Calories in Lunch: " + avgLunchCalories + " kcal");
         System.out.println("Average Calories in Dinner: " + avgDinnerCalories + " kcal");
@@ -599,13 +649,16 @@ public class Menu {
      * for the current day.
      */
     private static void viewCaloriesConsumptionSnacksAndFoods() {
+        // Retrieve calorie data
         ArrayList<HashMap<String, Object>> calorieTrackingData = Calories.getData();
 
+        // If empty, return to View Menu
         if (calorieTrackingData.isEmpty()) {
             System.out.println("No calories data found.");
             return;
         }
 
+        // Find the total calories of both snacks and meals
         int snackCalories = 0;
         int mealCalories = 0;
         for (HashMap<String, Object> entry : calorieTrackingData) {
@@ -617,9 +670,11 @@ public class Menu {
             }
         }
 
+        // Calculate the percentage of each consumed
         float percentageSnack = ((float) snackCalories / (mealCalories + snackCalories)) * 100;
         float percentageMeal = ((float) mealCalories / (mealCalories + snackCalories)) * 100;
 
+        // Output the calculated data
         System.out.println("Total Snack Calories: " + snackCalories + " kcal");
         System.out.println("Total Meal Calories: " + mealCalories + " kcal");
         System.out.println("Percentage Of Calories From Snacks: " + percentageSnack + " %");
@@ -631,13 +686,16 @@ public class Menu {
      * each exercise in all recorded workouts.
      */
     private static void viewHeaviestLiftPerExercise() {
+        // Retrieve the data
         ArrayList<HashMap<String, Object>> workouts = Workout.getWorkouts();
 
+        // Check if empty
         if (workouts.isEmpty()) {
             System.out.println("No workouts found.");
             return;
         }
 
+        // Go through each exercise, and print out the max weight lifted for that exercise
         for (HashMap<String, Object> entry : workouts) {
             for (HashMap<String, Object> exercise : (ArrayList<HashMap<String, Object>>) entry.get("exercises")) {
                 System.out.println("Name: " + exercise.get("exerciseName"));
@@ -659,6 +717,7 @@ public class Menu {
      * Combines data from individual viewing functions.
      */
     private static void viewPerformanceSummary() {
+        // Call all the functions needed to show the data
         System.out.println("=== Performance Summary ===");
         System.out.println("Todays Calories Consumed: ");
         viewTodaysCalories();
