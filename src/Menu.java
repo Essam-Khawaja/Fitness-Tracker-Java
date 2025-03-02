@@ -480,7 +480,7 @@ public class Menu {
 
         // Take and validate the user input of which meal they chose to view
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter the meal type (Breakfast, Lunch, Dinner, Snacks): ):");
+        System.out.print("Enter the meal type (Breakfast, Lunch, Dinner, Snacks): ");
         String search = scanner.nextLine();
         while (!(search.equalsIgnoreCase("breakfast") || search.equalsIgnoreCase("lunch") || search.equalsIgnoreCase("dinner") || search.equalsIgnoreCase("snacks"))) {
             System.out.println("Invalid input. Please try again.");
@@ -719,10 +719,9 @@ public class Menu {
     private static void viewPerformanceSummary() {
         // Call all the functions needed to show the data
         System.out.println("=== Performance Summary ===");
-        System.out.println("Todays Calories Consumed: ");
         viewTodaysCalories();
         viewCaloriesConsumedVsGoal();
-        System.out.println("Workouts Performed: ");
+        System.out.println("\nWorkouts Performed: ");
         viewVolumeOfWorkout();
     }
 }
