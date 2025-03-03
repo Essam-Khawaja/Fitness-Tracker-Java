@@ -32,4 +32,31 @@ public class CalorieTesting {
         // Ensure data starts empty
         assertTrue(Calories.getData().isEmpty());
     }
+
+    @Test
+    public void testGetDataAfterAddingMultipleEntries() {
+        // Clear data
+        Calories.calorieTrackingData.clear();
+
+        // Add multiple entries
+        Calories.storeCaloriesDataEntry("snack", "", "apple", 95);
+        Calories.storeCaloriesDataEntry("meal", "breakfast", "eggs", 150);
+
+        // Retrieve data
+        ArrayList<HashMap<String, Object>> data = Calories.getData();
+
+        // Ensure the correct number of entries
+        assertEquals(2, data.size());
+
+        // Validate first entry
+        assertEquals("snack", data.get(0).get("snackOrMeal"));
+        assertEquals("apple", data.get(0).get("name"));
+        assertEquals(95, data.get(0).get("calories"));
+
+        // Validate second entry
+        assertEquals("meal", data.get(1).get("snackOrMeal"));
+        assertEquals("breakfast", data.get(1).get("mealType"));
+        assertEquals("eggs", data.get(1).get("name"));
+        assertEquals(150, data.get(1).get("calories"));
+    }
 }
