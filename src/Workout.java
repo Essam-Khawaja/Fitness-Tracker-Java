@@ -1,9 +1,18 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This is a helper class to store all the workout data
+ * @author Syed Essam Uddin Khawaja
+ * @author Ali Gad
+ */
 public class Workout {
     // This is the public workouts data structure to be used to store the data
-    private static ArrayList<HashMap<String, Object>> workouts = new ArrayList<>();
+    static ArrayList<HashMap<String, Object>> workouts = new ArrayList<>();
+
+    private static final double MAX_WEIGHT_LIFTED = 2442.2;     // Stores the maximum weight that can be stored for a set
+    private static final double MIN_WEIGHT_LIFTED = 0.1;    // Stores the minimum weight that can be stored for a set
+    private static final int MAX_REPS = 100;        // Stores the maximum number of reps that can be stored for a single set
 
     /**
      * This function checks if the workout plan is one from the options
@@ -31,7 +40,7 @@ public class Workout {
     public static boolean validateWeightLifted(String weightLiftedInput) {
         try {
             float weightLifted = Float.parseFloat(weightLiftedInput);
-            if (weightLifted >= 0.1 && weightLifted <= 2442.2) {
+            if (weightLifted >= MIN_WEIGHT_LIFTED && weightLifted <= MAX_WEIGHT_LIFTED) {
                 return true;
             } else {
                 System.out.println("Invalid weight. Must be in the range 0.1kg - 2442.2 kg. Try again.");
@@ -55,7 +64,7 @@ public class Workout {
     public static boolean validateReps(String repsInput) {
         try {
             int reps = Integer.parseInt(repsInput);
-            if (reps > 0 && reps <= 100) {
+            if (reps > 0 && reps <= MAX_REPS) {
                 return true;
             } else {
                 System.out.println("Invalid number of reps. Must be in the range 1-100. Try again.");
@@ -68,6 +77,7 @@ public class Workout {
     }
 
     /**
+     * Returns a new Hashmap that stores all the parameters with standardised keys and values
      * @param weightLifted -> An int that stores the weight to be stored into the workouts array
      * @param reps -> An int that stores the number of reps to be stored into the workouts array
      * @return set -> Hashmap<String, Integer> storing the values of weight lifted and number of reps
@@ -80,6 +90,7 @@ public class Workout {
     }
 
     /**
+     * Returns a new Hashmap that stores all the parameters with standardised keys and values
      * @param exerciseName -> A String that stores the name of the exercise to be stored
      * @param sets -> An ArrayList of Hashmaps that stores all the sets in the exercise
      * @return exercise -> Hashmap<String, Object> that stores the name and sets of the exercise
@@ -92,6 +103,7 @@ public class Workout {
     }
 
     /**
+     * Returns a new Hashmap that stores all the parameters with standardised keys and values
      * @param workoutPlan -> A String that stores the name of the workout plan
      * @param exercises -> ArrayList of Hashmaps that store the exercises in this workout
      * @return workout -> Hashmap<String, Integer> storing the values of weight lifted and number of reps
@@ -111,6 +123,9 @@ public class Workout {
         workouts.add(workout);      // Add the workout to the workouts ArrayList
     }
 
+    /**
+     * @return -> ArrayList<HashMap<String, Object>> of all the workout data stored
+     */
     public static ArrayList<HashMap<String, Object>> getWorkouts() {
         return workouts;
     }

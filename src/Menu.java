@@ -1,6 +1,19 @@
 import java.util.*;
 
+/**
+ * This is the main class from which the program is run
+ * It also holds the menu functionality
+ * Due -> March 1st 2025
+ * Tutorial -> T01
+ * @author Syed Essam Uddin Khawaja
+ * @author Ali Gad
+ * @author Abdullah Al-Dhaibani
+ */
 public class Menu {
+    private static final int MAX_CALORIES = 20000;  // Stores the max calories that can be stored for a single item
+    private static final int MAX_EXERCISE_NUMBER = 10;  // Stores the maximum number of exercises that can be stored for a single workout
+    private static final int MAX_SET_NUMBER = 5;    // Stores the maximum number of sets that can be stored for a single exercise
+
     public static void main(String[] args) {
         getMenu();
     }
@@ -93,9 +106,9 @@ public class Menu {
             caloriesInput = scanner.nextLine();
             try {
                 calories = Integer.parseInt(caloriesInput);
-                if (calories < 0 || calories > 20000) {
+                if (calories < 0 || calories > MAX_CALORIES)
                     System.out.println("Invalid input. Number must be in the range 0-20,000. Please try again.");
-                } else {
+                else {
                     isCaloriesInputValid = true;
                 }
             } catch (NumberFormatException e) {
@@ -152,7 +165,7 @@ public class Menu {
             try {
                 exercisesCount = Integer.parseInt(exercisesCountInput);
                 // Check to see if the user entered more than the max number of exercises to be stored
-                if (exercisesCount > 10) {
+                if (exercisesCount > MAX_EXERCISE_NUMBER) {
                     System.out.println("Invalid input. Cannot store more than 10 exercises. Please try again.");
                 } else {
                     isExerciseValid = true;
@@ -165,6 +178,7 @@ public class Menu {
         // This will later be stored in the workouts variable
         ArrayList<HashMap<String, Object>> exercises = new ArrayList<>();
 
+        // Loop through exercise count times
         for (int i = 0; i < exercisesCount; i++) {
             // Input details for each exercise
             System.out.print("Enter name of exercise " + (i + 1) + ": ");
@@ -182,7 +196,7 @@ public class Menu {
                 try {
                     setsCount = Integer.parseInt(setsCountInput);
                     // Check to see if the user entered more than the max number of sets to be stored
-                    if (setsCount > 5) {
+                    if (setsCount > MAX_SET_NUMBER) {
                         System.out.println("Invalid input. Cannot store more than 5 sets. Please try again.");
                     } else {
                         isSetValid = true;
