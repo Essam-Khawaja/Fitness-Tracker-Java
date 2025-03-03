@@ -24,4 +24,12 @@ public class CalorieTesting {
         assertEquals(600, data.get(0).get("calories"));
     }
 
+    @Test
+    public void testGetDataReturnsEmptyInitially() {
+        // Clear data before testing
+        Calories.calorieTrackingData.clear();
+
+        // Ensure data starts empty
+        assertTrue(Calories.getData().isEmpty());
+    }
 }
