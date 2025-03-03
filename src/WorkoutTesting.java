@@ -1,4 +1,8 @@
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class WorkoutTesting {
@@ -126,13 +130,35 @@ public class WorkoutTesting {
     // ----------------------------------------------------------------
 
     // Test functions for createSet
+    @Test public void testCreateSet() {
+        HashMap<String, Object> expected = new HashMap<>();
+        expected.put("weightLifted", 25.2F);
+        expected.put("reps", 10);
+        HashMap<String, Object> actual = Workout.createSet(25.2F, 10);
+        assertEquals(expected, actual);
+    }
 
     // ----------------------------------------------------------------
 
     // Test functions for createExercise
+    @Test public void testCreateExercise() {
+        HashMap<String, Object> expected = new HashMap<>();
+        expected.put("exerciseName", "Preacher Curl");
+        ArrayList<HashMap<String, Object>> setsData = new ArrayList<>();
+        expected.put("sets", setsData);
+        HashMap<String, Object> actual = Workout.createExercise("Preacher Curl", setsData);
+        assertEquals(expected, actual);
+    }
 
     // ----------------------------------------------------------------
 
     // Test functions for createWorkout
-
+    @Test public void testCreateWorkout() {
+        HashMap<String, Object> expected = new HashMap<>();
+        expected.put("workoutPlan", "push");
+        ArrayList<HashMap<String, Object>> exercisesData = new ArrayList<>();
+        expected.put("exercises", exercisesData);
+        HashMap<String, Object> actual = Workout.createWorkout("push", exercisesData);
+        assertEquals(expected, actual);
+    }
 }

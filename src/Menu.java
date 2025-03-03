@@ -138,7 +138,6 @@ public class Menu {
         boolean isWorkoutValid = Workout.validateWorkoutPlan(workoutPlan);
 
         while (!isWorkoutValid) {
-            System.out.println("Invalid input. Please try again.");
             System.out.print("What workout plan are you following today (Push/Pull/Leg/Upper/Lower)?: ");
             workoutPlan = scanner.nextLine();
             isWorkoutValid = Workout.validateWorkoutPlan(workoutPlan);
@@ -340,16 +339,16 @@ public class Menu {
         System.out.println("Today's Calories Tracking Data:");
         int totalCalories = 0;  // Stores the total of all the calories stored
         for (HashMap<String, Object> entry : calorieTrackingData) {
-            System.out.println("1. " + entry.get("name"));
+            System.out.println(". " + entry.get("name"));
             System.out.println("    Type:" + entry.get("snackOrMeal"));
             if (!entry.get("snackOrMeal").equals("snack")) {
                 System.out.println("    Time:" + entry.get("mealType"));
             }
-            System.out.println("    Calories:" + entry.get("calories"));
+            System.out.println("    Calories:" + entry.get("calories") + " kcal");
             totalCalories += (int) entry.get("calories");   // Had to cast it to int for java to not show error
         }
 
-        System.out.println("Today's Total Calories: " + totalCalories + " kcal");
+        System.out.println("Today's Total Calories: " + totalCalories + " kcal\n");
     }
 
     /**
@@ -377,6 +376,7 @@ public class Menu {
                 sets.forEach(set -> System.out.println(" - " + set.get("weightLifted") + " kg x " + set.get("reps") + " reps"));
             });
         });
+        System.out.println(" ");
     }
 
     /**
@@ -506,7 +506,7 @@ public class Menu {
                 }
             }
         }
-        System.out.println("The total calories in " + search + ": " + totalCalories + " kcal");
+        System.out.println("The total calories in " + search + ": " + totalCalories + " kcal\n");
     }
 
     /**
@@ -549,9 +549,9 @@ public class Menu {
 
         // Compare the total calories to the goal entered by the user
         if (totalCalories > calorieGoal) {
-            System.out.println("You exceeded your goal by " + (totalCalories - calorieGoal) + " kcal.");
+            System.out.println("You exceeded your goal by " + (totalCalories - calorieGoal) + " kcal.\n");
         } else {
-            System.out.println("You are under your goal by " + (calorieGoal - totalCalories) + " kcal.");
+            System.out.println("You are under your goal by " + (calorieGoal - totalCalories) + " kcal.\n");
         }
     }
 
@@ -578,10 +578,11 @@ public class Menu {
                         volume *= (int) set.get("reps") *  (float) set.get("weightLifted");
                     }
                     volume *= setCount;
-                    System.out.println("Volume: " + Math.round(volume));
+                    System.out.println("Volume: " + Math.round(volume) + " kg");
                 }
             }
         }
+        System.out.println(" ");
     }
 
     /**
@@ -641,7 +642,7 @@ public class Menu {
         System.out.println("Average Calories in Breakfast: " + avgBreakfastCalories + " kcal");
         System.out.println("Average Calories in Lunch: " + avgLunchCalories + " kcal");
         System.out.println("Average Calories in Dinner: " + avgDinnerCalories + " kcal");
-        System.out.println("Average Calories in Snacks: " + avgSnackCalories + " kcal");
+        System.out.println("Average Calories in Snacks: " + avgSnackCalories + " kcal\n");
     }
 
     /**
@@ -677,8 +678,9 @@ public class Menu {
         // Output the calculated data
         System.out.println("Total Snack Calories: " + snackCalories + " kcal");
         System.out.println("Total Meal Calories: " + mealCalories + " kcal");
-        System.out.println("Percentage Of Calories From Snacks: " + percentageSnack + " %");
-        System.out.println("Percentage Of Calories From Meals: " + percentageMeal + " %");
+        System.out.printf("Percentage Of Calories From Snacks: %.2f%%\n", percentageSnack);
+        System.out.printf("Percentage Of Calories From Meals: %.2f%%\n", percentageMeal);
+        System.out.println(" ");
     }
 
     /**
@@ -706,9 +708,10 @@ public class Menu {
                         maxWeightLift = (float) set.get("weightLifted");
                     }
                 }
-                System.out.println("Max Weight Lifted : " + maxWeightLift);
+                System.out.println("Max Weight Lifted : " + maxWeightLift + " kg");
             }
         }
+        System.out.println(" ");
     }
 
     /**
