@@ -10,11 +10,14 @@ public class CalorieTesting {
         // Clear existing data to avoid test interference
         Calories.calorieTrackingData.clear();
 
-        // Store a new entry
+        // Store a new meal entry with details
         Calories.storeCaloriesDataEntry("meal", "lunch", "pasta", 600);
 
-        // Retrieve data
+        // Retrieve the stored data
         ArrayList<HashMap<String, Object>> data = Calories.getData();
+
+        // Validate that one entry has been stored
+        assertEquals(1, data.size());
 
         // Ensure data is stored correctly
         assertEquals(1, data.size());
@@ -26,34 +29,34 @@ public class CalorieTesting {
 
     @Test
     public void testGetDataReturnsEmptyInitially() {
-        // Clear data before testing
+        // Clear any existing data before testing
         Calories.calorieTrackingData.clear();
 
-        // Ensure data starts empty
+        // Ensure that the calorie tracking list is empty at the start
         assertTrue(Calories.getData().isEmpty());
     }
 
     @Test
     public void testGetDataAfterAddingMultipleEntries() {
-        // Clear data
+        // Clear existing data to prevent interference from other tests
         Calories.calorieTrackingData.clear();
 
-        // Add multiple entries
+        // Add multiple food entries (one snack and one meal)
         Calories.storeCaloriesDataEntry("snack", "", "apple", 95);
         Calories.storeCaloriesDataEntry("meal", "breakfast", "eggs", 150);
 
-        // Retrieve data
+        // Retrieve stored data
         ArrayList<HashMap<String, Object>> data = Calories.getData();
 
-        // Ensure the correct number of entries
+        // Verify that two entries were added
         assertEquals(2, data.size());
 
-        // Validate first entry
+        // Validate the first entry (snack)
         assertEquals("snack", data.get(0).get("snackOrMeal"));
         assertEquals("apple", data.get(0).get("name"));
         assertEquals(95, data.get(0).get("calories"));
 
-        // Validate second entry
+        // Validate the second entry (meal - breakfast)
         assertEquals("meal", data.get(1).get("snackOrMeal"));
         assertEquals("breakfast", data.get(1).get("mealType"));
         assertEquals("eggs", data.get(1).get("name"));
