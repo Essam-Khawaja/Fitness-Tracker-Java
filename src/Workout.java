@@ -1,3 +1,4 @@
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -6,7 +7,7 @@ import java.util.HashMap;
  * @author Syed Essam Uddin Khawaja
  * @author Ali Gad
  */
-public class Workout {
+public class Workout extends DataObject {
     // This is the public workouts data structure to be used to store the data
     static ArrayList<HashMap<String, Object>> workouts = new ArrayList<>();
 

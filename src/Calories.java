@@ -5,7 +5,7 @@ import java.util.HashMap;
  * This is a helper class to store all the calorie tracking data
  * @author Abdullah Al-Dhaibani
  */
-public class Calories {
+public class Calories extends DataObject {
     static ArrayList<HashMap<String, Object>> calorieTrackingData = new ArrayList<>();
 
     /**
