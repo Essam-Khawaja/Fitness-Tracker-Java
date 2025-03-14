@@ -25,19 +25,22 @@ public class Menu {
      */
     public static void getMenu() {
         // Displaying the main menu
-        System.out.println("=== Main Menu ===");
-        System.out.println("Please choose from the following options (1-4):");
-        System.out.println("1. Calorie Tracking");
-        System.out.println("2. Workout Tracking");
-        System.out.println("3. View Progress");
-        System.out.println("4. Exit");
+        System.out.println("\n=========================");
+        System.out.println("       MAIN MENU");
+        System.out.println("=========================");
+        System.out.println(" Please choose from the following options:");
+        System.out.println("  1. Calorie Tracking");
+        System.out.println("  2. Workout Tracking");
+        System.out.println("  3. View Progress");
+        System.out.println("  4. Exit");
+        System.out.println("-------------------------");
 
         Scanner scanner = new Scanner(System.in);
         String option = scanner.nextLine();
 
         // Validate the user's input
         while (!(option.equals("1") || option.equals("2") || option.equals("3") || option.equals("4"))) {
-            System.out.println("Invalid option, please enter a number between 1 and 4:");
+            System.out.println("Invalid choice! Please choose a number between 1 and 4.");
             option = scanner.nextLine();
         }
 
@@ -65,35 +68,39 @@ public class Menu {
      */
     public static void getCalorieMenu() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please answer the following questions:");
+        System.out.println("\n=============================");
+        System.out.println("       Calorie Tracking");
+        System.out.println("=============================");
+        System.out.println("Please answer the following questions below:");
+        System.out.println("-----------------------------");
 
         // Ask if it's a meal or a snack
-        System.out.print("Are you having a snack or a meal?: ");
+        System.out.print("\nAre you having a snack or a meal (Type 'snack' or 'meal'): ");
         String snackOrMeal = scanner.nextLine();
 
         // Validate input
         while (!snackOrMeal.equalsIgnoreCase("snack") && !snackOrMeal.equalsIgnoreCase("meal")) {
             System.out.println("Invalid input. Please try again.");
-            System.out.print("Are you having a snack or a meal?: ");
-            snackOrMeal = scanner.nextLine();
+            System.out.println("Invalid response! Please enter 'snack' or 'meal'.");
+            System.out.print("Are you having a snack or a meal (Type 'snack' or 'meal'): ");
         }
 
         // If it's a meal, ask for the specific type
         String mealType = "";
         if (snackOrMeal.equalsIgnoreCase("meal")) {
-            System.out.print("What type of meal is it? (Breakfast/Lunch/Dinner): ");
+            System.out.print("\nWhat type of meal are you tracking (Breakfast/Lunch/Dinner): ");
             mealType = scanner.nextLine();
 
             while (!mealType.equalsIgnoreCase("breakfast") && !mealType.equalsIgnoreCase("lunch")
                     && !mealType.equalsIgnoreCase("dinner")) {
-                System.out.println("Invalid input. Please try again.");
-                System.out.print("What type of meal is it? (Breakfast/Lunch/Dinner): ");
+                System.out.println("Invalid response! Choose from 'Breakfast', 'Lunch', or 'Dinner'.");
+                System.out.print("What type of meal are you tracking (Breakfast/Lunch/Dinner): ");
                 mealType = scanner.nextLine();
             }
         }
 
         // Ask for the food's name
-        System.out.print("Enter the name of the food: ");
+        System.out.print("\nEnter the name of the food item: ");
         String foodName = scanner.nextLine();
 
         // Ask for calorie amount with validation
@@ -102,12 +109,12 @@ public class Menu {
         int calories = 0;
 
         while (!isCaloriesInputValid) {
-            System.out.print("Enter the number of calories: ");
+            System.out.print("How many calories does this item have? (Enter a number): ");
             caloriesInput = scanner.nextLine();
             try {
                 calories = Integer.parseInt(caloriesInput);
                 if (calories < 0 || calories > MAX_CALORIES)
-                    System.out.println("Invalid input. Number must be in the range 0-20,000. Please try again.");
+                    System.out.println("Invalid input! Calories must be between 0 and 20,000. Try again!");
                 else {
                     isCaloriesInputValid = true;
                 }
@@ -120,8 +127,9 @@ public class Menu {
         Calories.storeCaloriesDataEntry(snackOrMeal, mealType, foodName, calories);
 
         // Check if the user wants to continue, with validation
-        System.out.println("Calorie entry added successfully!");
-        System.out.println("Would you like to continue? (Y/N): ");
+        System.out.println("\n-----------------------------");
+        System.out.println(" Calorie entry added successfully!");
+        System.out.print("Would you like to add another entry? (Y/N): ");
         String returnMenuOption = scanner.nextLine();
         while (!returnMenuOption.equalsIgnoreCase("y") && !returnMenuOption.equalsIgnoreCase("n")) {
             System.out.println("Invalid input. Please try again.");
@@ -145,13 +153,13 @@ public class Menu {
         Scanner scanner = new Scanner(System.in);
 
         // Ask the user for the workout type
-        System.out.print("What workout plan are you following today (Push/Pull/Leg/Upper/Lower)?: ");
+        System.out.print("\nWhat workout plan are you following today? (Options: Push/Pull/Leg/Upper/Lower): ");
         String workoutPlan = scanner.nextLine();
 
         boolean isWorkoutValid = Workout.validateWorkoutPlan(workoutPlan);
 
         while (!isWorkoutValid) {
-            System.out.print("What workout plan are you following today (Push/Pull/Leg/Upper/Lower)?: ");
+            System.out.print("\nInvalid option! Select from Push, Pull, Leg, Upper, or Lower: ");
             workoutPlan = scanner.nextLine();
             isWorkoutValid = Workout.validateWorkoutPlan(workoutPlan);
         }
@@ -160,13 +168,13 @@ public class Menu {
         boolean isExerciseValid  = false;
         int exercisesCount = 0;     // Initialize exerciseCount to 0
         while (!isExerciseValid) {
-            System.out.print("How many exercises have you done?: ");
+            System.out.print("\nHow many exercises have you performed today? (Enter a number): ");
             String exercisesCountInput = scanner.nextLine();
             try {
                 exercisesCount = Integer.parseInt(exercisesCountInput);
                 // Check to see if the user entered more than the max number of exercises to be stored
                 if (exercisesCount > MAX_EXERCISE_NUMBER) {
-                    System.out.println("Invalid input. Cannot store more than 10 exercises. Please try again.");
+                    System.out.println("Invalid input! You cannot log more than 10 exercises. Try again.");
                 } else {
                     isExerciseValid = true;
                 }
@@ -191,13 +199,13 @@ public class Menu {
             boolean isSetValid  = false;
             int setsCount = 0;     // Initialize setsCount to 0
             while (!isSetValid) {
-                System.out.print("Enter number of sets for exercise " + (i + 1) + ": ");
+                System.out.print("\nHow many sets did you perform for Exercise " + (i + 1) + "? ");
                 String setsCountInput = scanner.nextLine();
                 try {
                     setsCount = Integer.parseInt(setsCountInput);
                     // Check to see if the user entered more than the max number of sets to be stored
                     if (setsCount > MAX_SET_NUMBER) {
-                        System.out.println("Invalid input. Cannot store more than 5 sets. Please try again.");
+                        System.out.println("Invalid input! You cannot log more than 5 sets. Try again.");
                     } else {
                         isSetValid = true;
                     }
@@ -207,20 +215,20 @@ public class Menu {
             }
             for (int j = 0; j < setsCount; j++) {
                 // Input details for each set
-                System.out.print("Enter weight lifted for set " + (j + 1) + " (in kg): ");
+                System.out.print("Enter the weight lifted for Set " + (j + 1) + " (in kilograms): ");
                 String weightLiftedInput = scanner.nextLine();
                 boolean isWeightValid = Workout.validateWeightLifted(weightLiftedInput);
 
                 while (!isWeightValid) {
-                    System.out.println("Invalid input. Must be a number. Please try again.");
-                    System.out.print("Enter weight lifted for set " + (j + 1) + " (in kg): ");
+                    System.out.println("Invalid input! Enter a valid number for the weight lifted.");
+                    System.out.print("Enter the weight lifted for Set " + (j + 1) + " again: ");
                     weightLiftedInput = scanner.nextLine();
                     isWeightValid = Workout.validateWeightLifted(weightLiftedInput);
                 }
 
                 float weightLifted = Float.parseFloat(weightLiftedInput);
 
-                System.out.print("Enter number of reps for set " + (j + 1) + ": ");
+                System.out.print("Enter the number of repetitions for Set " + (j + 1) + ": ");
                 String repsInput = scanner.nextLine();
                 boolean isRepsValid = Workout.validateReps(repsInput);
 
