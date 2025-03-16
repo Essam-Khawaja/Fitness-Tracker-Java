@@ -16,6 +16,7 @@ public class Menu {
 
     public static void main(String[] args) {
         getMenu();
+
     }
 
     /**
@@ -30,13 +31,15 @@ public class Menu {
         System.out.println("1. Calorie Tracking");
         System.out.println("2. Workout Tracking");
         System.out.println("3. View Progress");
-        System.out.println("4. Exit");
+        System.out.println("4. Save Data");
+        System.out.println("5. Load Data");
+        System.out.println("6. Exit");
 
         Scanner scanner = new Scanner(System.in);
         String option = scanner.nextLine();
 
         // Validate the user's input
-        while (!(option.equals("1") || option.equals("2") || option.equals("3") || option.equals("4"))) {
+        while (!(option.equals("1") || option.equals("2") || option.equals("3") || option.equals("4") || option.equals("5") || option.equals("6"))) {
             System.out.println("Invalid option, please enter a number between 1 and 4:");
             option = scanner.nextLine();
         }
@@ -53,6 +56,13 @@ public class Menu {
                 getViewMenu();
                 break;
             case "4":
+                DataObject.SaveData(Calories.getData(), Workout.getWorkouts());
+                break;
+            case "5":
+                DataObject.LoadData();
+                getMenu();
+                break;
+            case "6":
                 System.out.println("Exiting the program...");
                 break;
         }
