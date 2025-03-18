@@ -4,8 +4,9 @@ public class Exercise {
     private String exerciseName;
     private ArrayList<Set> sets;
 
-    public Exercise(String exerciseName) {
+    public Exercise(String exerciseName, ArrayList<Set> sets) {
         this.exerciseName = exerciseName;
+        this.sets = sets;
     }
 
     //Getters and Setters
@@ -27,10 +28,15 @@ public class Exercise {
 
 //To-String
     public String toString() {
-        String objectString = "";
+        String objectString = "E,";
         objectString += exerciseName + ",";
+        int count = 0;
         for (Set set : sets) {
-            objectString += set.toString() + ",";
+            objectString += set.toString();
+            count++;
+            if (count != sets.size()) {
+                objectString += ",";
+            }
         }
         return objectString;
     }

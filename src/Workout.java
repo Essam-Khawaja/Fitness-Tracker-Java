@@ -1,4 +1,3 @@
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -7,14 +6,15 @@ import java.util.HashMap;
  * @author Syed Essam Uddin Khawaja
  * @author Ali Gad
  */
-public class Workout extends DataObject {
+public class Workout extends Save {
     // This is the public workouts data structure to be used to store the data
     private String workoutPlan;
     private ArrayList<Exercise> exercises;
 
     // Getters and Setters
-    public Workout(String workoutPlan) {
+    public Workout(String workoutPlan, ArrayList<Exercise> exercises) {
         this.workoutPlan = workoutPlan;
+        this.exercises = exercises;
     }
 
     public String getWorkoutPlan() {
@@ -37,8 +37,13 @@ public class Workout extends DataObject {
     public String toString() {
         String objectString = "";
         objectString += workoutPlan + ",";
+        int count = 0;
         for (Exercise exercise: exercises) {
-            objectString += exercise.toString() + ",";
+            objectString += exercise.toString();
+            count++;
+            if (count != exercises.size()) {
+                objectString += ",";
+            }
         }
         return objectString;
     }

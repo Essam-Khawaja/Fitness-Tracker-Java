@@ -56,10 +56,8 @@ public class Menu {
                 getViewMenu();
                 break;
             case "4":
-                DataObject.SaveData(Calories.getData(), Workout.getWorkouts());
                 break;
             case "5":
-                DataObject.LoadData();
                 getMenu();
                 break;
             case "6":
@@ -127,7 +125,8 @@ public class Menu {
         }
 
         // Log the calorie data
-        Calories.storeCaloriesDataEntry(snackOrMeal, mealType, foodName, calories);
+//        Calories.storeCaloriesDataEntry(snackOrMeal, mealType, foodName, calories);
+
 
         // Check if the user wants to continue, with validation
         System.out.println("Calorie entry added successfully!");
@@ -255,7 +254,7 @@ public class Menu {
 
         // Create new workout - coded this way for easier transition to OOP
         HashMap<String, Object> newWorkout = Workout.createWorkout(workoutPlan, exercises);
-        Workout.storeWorkoutData(newWorkout);
+//        Workout.storeWorkoutData(newWorkout);
         
         // Asking user whether they want to add more workout data or not
         System.out.println("Workout added successfully!");
@@ -351,7 +350,7 @@ public class Menu {
      */
     private static void viewTodaysCalories() {
         // Retrieve the calorie data
-        ArrayList<HashMap<String, Object>> calorieTrackingData = Calories.getData();
+        ArrayList<HashMap<String, Object>> calorieTrackingData = new ArrayList<>();
 
         // Check if its empty
         if (calorieTrackingData.isEmpty()) {
@@ -382,7 +381,7 @@ public class Menu {
      */
     private static void viewTodaysWorkout() {
         // Retrieve the workout data
-        ArrayList<HashMap<String, Object>> workouts = Workout.getWorkouts();
+        ArrayList<HashMap<String, Object>> workouts = new ArrayList<>();
 
         // Check if its empty, and leave the function if it is
         if (workouts.isEmpty()) {
@@ -410,7 +409,7 @@ public class Menu {
      */
     private static void viewMealBreakdown() {
         // Retrieve the calorie data
-        ArrayList<HashMap<String, Object>> calorieTrackingData = Calories.getData();
+        ArrayList<HashMap<String, Object>> calorieTrackingData = new ArrayList<>();
 
         // Check if data is present, if not then exit the function
         if (calorieTrackingData.isEmpty()) {
@@ -494,7 +493,7 @@ public class Menu {
      */
     private static void viewCaloriesOfParticularMeal() {
         // Retrieve the calorie data
-        ArrayList<HashMap<String, Object>> calorieTrackingData = Calories.getData();
+        ArrayList<HashMap<String, Object>> calorieTrackingData = new ArrayList<>();
 
         // Check if empty and return if it is
         if (calorieTrackingData.isEmpty()) {
@@ -539,7 +538,7 @@ public class Menu {
      */
     private static void viewCaloriesConsumedVsGoal() {
         // Retrieve tge calorie data
-        ArrayList<HashMap<String, Object>> calorieTrackingData = Calories.getData();
+        ArrayList<HashMap<String, Object>> calorieTrackingData = new ArrayList<>();
 
         // If empty, return to View Menu
         if (calorieTrackingData.isEmpty()) {
@@ -585,7 +584,7 @@ public class Menu {
      */
     private static void viewVolumeOfWorkout() {
         // Retrieve the workout data
-        ArrayList<HashMap<String, Object>> workouts = Workout.getWorkouts();
+        ArrayList<HashMap<String, Object>> workouts = new ArrayList<>();
 
         // If no data, do nothing
         if (workouts.isEmpty()) {
@@ -614,7 +613,7 @@ public class Menu {
      */
     private static void viewAverageCaloriesPerMeal() {
         // Retrieve the calorie data
-        ArrayList<HashMap<String, Object>> calorieTrackingData = Calories.getData();
+        ArrayList<HashMap<String, Object>> calorieTrackingData = new ArrayList<>();
 
         // If empty, return to View Menu
         if (calorieTrackingData.isEmpty()) {
@@ -675,7 +674,7 @@ public class Menu {
      */
     private static void viewCaloriesConsumptionSnacksAndFoods() {
         // Retrieve calorie data
-        ArrayList<HashMap<String, Object>> calorieTrackingData = Calories.getData();
+        ArrayList<HashMap<String, Object>> calorieTrackingData = new ArrayList<>();
 
         // If empty, return to View Menu
         if (calorieTrackingData.isEmpty()) {
@@ -713,7 +712,7 @@ public class Menu {
      */
     private static void viewHeaviestLiftPerExercise() {
         // Retrieve the data
-        ArrayList<HashMap<String, Object>> workouts = Workout.getWorkouts();
+        ArrayList<HashMap<String, Object>> workouts = new ArrayList<>();
 
         // Check if empty
         if (workouts.isEmpty()) {

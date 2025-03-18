@@ -26,6 +26,6 @@ public class Set {
 
     //To-String
     public String toString() {
-        return reps + "," + weightLifted;
+        return "S,"+ reps + "," + weightLifted;
     }
 }

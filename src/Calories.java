@@ -13,7 +13,7 @@ public class Calories {
     private int calories;
 
 
-    private Calories(String snackOrMeal, String mealTime, String foodName,int calories) {
+    public Calories(String snackOrMeal, String mealTime, String foodName,int calories) {
         this.snackOrMeal = snackOrMeal;
         this.mealTime = mealTime;
         this.foodName = foodName;

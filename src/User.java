@@ -13,12 +13,14 @@ public class User {
         this.email = email;
     }
 
-    public void addCalorieData(String mealType, String mealTime, int calories) {
+    public void addCalorieData(Calories newData) {
         // Will add the calorie stuff here
+        calorieData.add(newData);
     }
 
-    public void addWorkoutData() {
+    public void addWorkoutData(Workout newData) {
         // Will add workout stuff here in the future
+        workoutData.add(newData);
     }
 
     public void setUsername(String username) {
@@ -43,5 +45,12 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public ArrayList<Workout> getWorkoutData() {
+        return workoutData;
+    }
+    public ArrayList<Calories> getCalorieData() {
+        return calorieData;
     }
 }

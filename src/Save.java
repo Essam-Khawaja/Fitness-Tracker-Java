@@ -1,9 +1,8 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class DataObject {
-    public static void SaveData(ArrayList<Calories> saveCaloriesData, ArrayList<Workout> saveWorkoutData){
+public class Save {
+    public static void SaveData(ArrayList<Calories> saveCaloriesData, ArrayList<Workout> saveWorkoutData, User user){
             // Some code here
             File file = new File("src/Save.csv");
             File file2 = new File("src/SaveTemp.csv");
@@ -53,30 +52,55 @@ public class DataObject {
             file2.delete(); // Delete the temporary new save file
     }
 
-    public static void LoadData(){
+    public static void LoadData(User user){
         File file = new File("src/Save.csv");
         try {
-            if (!file.exists()) {
-                System.out.println("File does not exist");
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line = bufferedReader.readLine();
+            if (line.equals(null)) {
+                System.out.println("No data found");
             } else {
-                FileReader fileReader = new FileReader(file);
-                BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-                Calories.calorieTrackingData.clear();
-                Workout.workouts.clear();
-
-                String line = bufferedReader.readLine();
                 while (line != null) {
                     String[] data = line.split(",");
                     if (data[0].equals("C")) {
                         String snackOrMeal = data[1];
-                        String mealTyoe = data[2];
-                        String mealName = data[3];
-                        int mealCalories = Integer.parseInt(data[4]);
-                        Calories.storeCaloriesDataEntry(snackOrMeal, mealTyoe, mealName, mealCalories);
+                        if (snackOrMeal.equalsIgnoreCase("Snack")) {
+                            String foodName = data[2];
+                            int calories = Integer.parseInt(data[3]);
+                            Calories thisData = new Calories(snackOrMeal, "", foodName, calories);
+                            user.addCalorieData(thisData);
+                        } else {
+                            String mealTime = data[2];
+                            String foodName = data[3];
+                            int calories = Integer.parseInt(data[4]);
+                            Calories thisData = new Calories(snackOrMeal, mealTime, foodName, calories);
+                            user.addCalorieData(thisData);
+                        }
                     } else if (data[0].equals("W")) {
-                        System.out.println(data[1]);
-                        System.out.println(data[2]);
+                        String workoutPlan = data[1];
+                        ArrayList<Exercise> exercises = new ArrayList<>();
+                        ArrayList<Set> sets = new ArrayList<>();
+                        for (int i = 2; i < data.length; i++) {
+                            if (data[i].equals("E")) {
+                                int j = i + 1;
+                                String exerciseName = data[j];
+                                sets.clear();
+                                while (!(data[j].equals("E")) && (j < data.length - 1)) {
+                                    if (data[j].equals("S")) {
+                                        int reps = Integer.parseInt(data[j + 1]);
+                                        float weightLifted = Float.parseFloat(data[j + 2]);
+                                        Set thisSet = new Set(reps, weightLifted);
+                                        sets.add(thisSet);
+                                    }
+                                    j++;
+                                }
+                                Exercise exercise = new Exercise(exerciseName, sets);
+                                exercises.add(exercise);
+                            }
+                        }
+                        Workout thisWorkout = new Workout(workoutPlan, exercises);
+                        user.addWorkoutData(thisWorkout);
                     }
                     line = bufferedReader.readLine();
                 }
