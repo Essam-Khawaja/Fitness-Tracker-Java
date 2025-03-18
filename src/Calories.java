@@ -6,31 +6,56 @@ import java.util.HashMap;
  * @author Abdullah Al-Dhaibani
  */
 public class Calories {
-    static ArrayList<HashMap<String, Object>> calorieTrackingData = new ArrayList<>();
 
-    /**
-     * Takes different variables and stores them into a hashmap, and then adds the hashmap to the data ArrayList.
-     * @param snackOrMeal -> String that stores whether it is a snack or meal
-     * @param mealType -> String that stores the type of meal it is (Breakfast/Lunch/Dinner)
-     * @param foodName -> String that stores the name of the food
-     * @param calories -> Integer that stores the calories of the food
-     */
-    public static void storeCaloriesDataEntry(String snackOrMeal, String mealType, String foodName, int calories) {
-        HashMap<String, Object> mealEntry = new HashMap<>();
-        mealEntry.put("mealType", mealType.toLowerCase());
-        mealEntry.put("snackOrMeal", snackOrMeal.toLowerCase());
-        mealEntry.put("name", foodName.toLowerCase());
-        mealEntry.put("calories", calories);
+    private String snackOrMeal;
+    private String mealTime;
+    private String foodName;
+    private int calories;
 
-        calorieTrackingData.add(mealEntry);
-        System.out.println("Calories Stored!");
+
+    private Calories(String snackOrMeal, String mealTime, String foodName,int calories) {
+        this.snackOrMeal = snackOrMeal;
+        this.mealTime = mealTime;
+        this.foodName = foodName;
+        this.calories = calories;
     }
 
-    /**
-     * Meant to access the calorie tracking data
-     * @return -> An ArrayList<HashMap<String, Object>> of all the calorie data
-     */
-    public static ArrayList<HashMap<String, Object>> getData() {
-        return calorieTrackingData;
+    // Get Functions
+
+    public String getSnackOrMeal() {
+
     }
+
+    public String getMealTime() {
+
+    }
+
+    public String getFoodName() {
+
+    }
+
+    public int getCalories() {
+
+    }
+
+    // Set Functions
+
+    public String setSnackOrMeal(String snackOrMeal) {
+
+    }
+
+    public String setMealTime(String mealTime) {
+
+    }
+
+    public String setFoodName(String foodName) {
+
+    }
+
+    public int setCalories(int calories) {
+
+    }
+
+    // last this is a to-string method
+
 }
