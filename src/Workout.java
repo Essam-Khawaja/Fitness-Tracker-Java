@@ -146,19 +146,4 @@ public class Workout {
         workout.put("exercises", exercises);        // Store the collection of exercises
         return workout;     // Return the workout Hashmap
     }
-
-    /**
-     * Adds a workout onto the workouts ArrayList
-     * @param workout -> A Hashmap which stores all the data for a workout
-     * */
-    public static void storeWorkoutData(HashMap<String, Object> workout) {
-        workouts.add(workout);      // Add the workout to the workouts ArrayList
-    }
-
-    /**
-     * @return -> ArrayList<HashMap<String, Object>> of all the workout data stored
-     */
-    public static ArrayList<HashMap<String, Object>> getWorkouts() {
-        return workouts;
-    }
 }
