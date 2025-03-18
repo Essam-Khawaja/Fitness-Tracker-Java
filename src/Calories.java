@@ -20,42 +20,45 @@ public class Calories {
         this.calories = calories;
     }
 
-    // Get Functions
-
     public String getSnackOrMeal() {
+        return snackOrMeal;
+    }
 
+    public void setSnackOrMeal(String snackOrMeal) {
+        this.snackOrMeal = snackOrMeal;
     }
 
     public String getMealTime() {
+        return mealTime;
+    }
 
+    public void setMealTime(String mealTime) {
+        this.mealTime = mealTime;
     }
 
     public String getFoodName() {
+        return foodName;
+    }
 
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
     }
 
     public int getCalories() {
-
+        return calories;
     }
 
-    // Set Functions
-
-    public String setSnackOrMeal(String snackOrMeal) {
-
-    }
-
-    public String setMealTime(String mealTime) {
-
-    }
-
-    public String setFoodName(String foodName) {
-
-    }
-
-    public int setCalories(int calories) {
-
+    public void setCalories(int calories) {
+        this.calories = calories;
     }
 
     // last this is a to-string method
+    public String toString() {
+        if (snackOrMeal.equalsIgnoreCase("snack")) {
+            return snackOrMeal  + "," + foodName + "," + calories;
+        } else {
+            return snackOrMeal + "," + mealTime + "," + foodName + "," + calories;
+        }
+    }
 
 }
