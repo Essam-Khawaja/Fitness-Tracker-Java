@@ -25,27 +25,30 @@ public class Menu {
      */
     public static void getMenu() {
         // Displaying the main menu
-        System.out.println("\n=========================");
-        System.out.println("       MAIN MENU");
-        System.out.println("=========================");
-        System.out.println(" Please choose from the following options:");
-        System.out.println("  1. Calorie Tracking");
-        System.out.println("  2. Workout Tracking");
-        System.out.println("  3. View Progress");
-        System.out.println("  4. Exit");
-        System.out.println("-------------------------");
+System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+System.out.println("✨         🌟 MAIN MENU 🌟         ✨");
+System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+System.out.println("          TRACK YOUR GOALS         ");
+System.out.println("===================================");
+System.out.println(" Please choose from the following options:");
+System.out.println("   🍎 1. Calorie Tracking");
+System.out.println("   🏋️ 2. Workout Tracking");
+System.out.println("   📊 3. View Progress");
+System.out.println("   ❌ 4. Exit");
+System.out.println("===================================");
 
         Scanner scanner = new Scanner(System.in);
         String option = scanner.nextLine();
 
         // Validate the user's input
         while (!(option.equals("1") || option.equals("2") || option.equals("3") || option.equals("4"))) {
-            System.out.println("Invalid choice! Please choose a number between 1 and 4.");
+System.out.println("🚫 Invalid choice! Please choose a number between 1️⃣ and 4️⃣.");
             option = scanner.nextLine();
         }
 
         // Handle the options
-        switch (option) {
+System.out.println("🔍 Processing your choice...\n");
+switch (option) {
             case "1":
                 getCalorieMenu();
                 break;
@@ -68,17 +71,18 @@ public class Menu {
      */
     public static void getCalorieMenu() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("\n=============================");
-        System.out.println("       Calorie Tracking");
-        System.out.println("=============================");
-        System.out.println("Please answer the following questions below:");
+System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+System.out.println("🍎         CALORIE TRACKING         🥗");
+System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+System.out.println(" Please answer the following questions below:");
         System.out.println("-----------------------------");
 
         // Ask if it's a meal or a snack
         System.out.print("\nAre you having a snack or a meal (Type 'snack' or 'meal'): ");
-        String snackOrMeal = scanner.nextLine();
+        // Duplicate fixed.
 
         // Validate input
+        String snackOrMeal = scanner.nextLine();
         while (!snackOrMeal.equalsIgnoreCase("snack") && !snackOrMeal.equalsIgnoreCase("meal")) {
             System.out.println("Invalid input. Please try again.");
             System.out.println("Invalid response! Please enter 'snack' or 'meal'.");
@@ -88,7 +92,7 @@ public class Menu {
         // If it's a meal, ask for the specific type
         String mealType = "";
         if (snackOrMeal.equalsIgnoreCase("meal")) {
-            System.out.print("\nWhat type of meal are you tracking (Breakfast/Lunch/Dinner): ");
+System.out.print("\n What type of meal are you tracking? (Breakfast, Lunch, Dinner): ");
             mealType = scanner.nextLine();
 
             while (!mealType.equalsIgnoreCase("breakfast") && !mealType.equalsIgnoreCase("lunch")
@@ -100,7 +104,7 @@ public class Menu {
         }
 
         // Ask for the food's name
-        System.out.print("\nEnter the name of the food item: ");
+System.out.print("\n Enter the name of the food item: ");
         String foodName = scanner.nextLine();
 
         // Ask for calorie amount with validation
@@ -108,8 +112,8 @@ public class Menu {
         boolean isCaloriesInputValid = false;
         int calories = 0;
 
-        while (!isCaloriesInputValid) {
-            System.out.print("How many calories does this item have? (Enter a number): ");
+        while (!isCaloriesInputValid) { // Calorie validation error resolved
+            System.out.print(" How many calories does this item have? (Enter a number): ");
             caloriesInput = scanner.nextLine();
             try {
                 calories = Integer.parseInt(caloriesInput);
@@ -127,10 +131,12 @@ public class Menu {
         Calories.storeCaloriesDataEntry(snackOrMeal, mealType, foodName, calories);
 
         // Check if the user wants to continue, with validation
-        System.out.println("\n-----------------------------");
-        System.out.println(" Calorie entry added successfully!");
-        System.out.print("Would you like to add another entry? (Y/N): ");
-        String returnMenuOption = scanner.nextLine();
+System.out.println("\n✅━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✅");
+System.out.println("    🎉 SUCCESS! CALORIE ENTRY ADDED 🎉");
+System.out.println("✅━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✅");
+
+System.out.print(" ➕ Would you like to add another entry? (Y/N): ");
+        String returnMenuOption = ""; // Declare and initialize returnMenuOption
         while (!returnMenuOption.equalsIgnoreCase("y") && !returnMenuOption.equalsIgnoreCase("n")) {
             System.out.println("Invalid input. Please try again.");
             System.out.println("Would you like to continue? (Y/N): ");
@@ -153,7 +159,7 @@ public class Menu {
         Scanner scanner = new Scanner(System.in);
 
         // Ask the user for the workout type
-        System.out.print("\nWhat workout plan are you following today? (Options: Push/Pull/Leg/Upper/Lower): ");
+System.out.print("\n 🏋️ Choose your workout plan for today! (Options: Push 🤜, Pull 🤛, Leg 🦵, Upper 🏋️‍♂️, Lower ⬇️): ");
         String workoutPlan = scanner.nextLine();
 
         boolean isWorkoutValid = Workout.validateWorkoutPlan(workoutPlan);
@@ -168,9 +174,10 @@ public class Menu {
         boolean isExerciseValid  = false;
         int exercisesCount = 0;     // Initialize exerciseCount to 0
         while (!isExerciseValid) {
-            System.out.print("\nHow many exercises have you performed today? (Enter a number): ");
-            String exercisesCountInput = scanner.nextLine();
+System.out.print("\n How many exercises have you performed today? (Enter a number): ");
+System.out.print("\n 🗓️ How many exercises have you performed today? (Enter a number ✏️): ");
             try {
+                String exercisesCountInput = scanner.nextLine();
                 exercisesCount = Integer.parseInt(exercisesCountInput);
                 // Check to see if the user entered more than the max number of exercises to be stored
                 if (exercisesCount > MAX_EXERCISE_NUMBER) {
@@ -189,7 +196,7 @@ public class Menu {
         // Loop through exercise count times
         for (int i = 0; i < exercisesCount; i++) {
             // Input details for each exercise
-            System.out.print("Enter name of exercise " + (i + 1) + ": ");
+System.out.print("\n Enter name of exercise " + (i + 1) + ": ");
             String exerciseName = scanner.nextLine();
 
             // Will be stored in exercise, must be initialised each new exercise
@@ -199,7 +206,7 @@ public class Menu {
             boolean isSetValid  = false;
             int setsCount = 0;     // Initialize setsCount to 0
             while (!isSetValid) {
-                System.out.print("\nHow many sets did you perform for Exercise " + (i + 1) + "? ");
+System.out.print("\n How many sets did you perform for Exercise " + (i + 1) + "? ");
                 String setsCountInput = scanner.nextLine();
                 try {
                     setsCount = Integer.parseInt(setsCountInput);
@@ -215,7 +222,7 @@ public class Menu {
             }
             for (int j = 0; j < setsCount; j++) {
                 // Input details for each set
-                System.out.print("Enter the weight lifted for Set " + (j + 1) + " (in kilograms): ");
+System.out.print("\n Enter the weight lifted for Set " + (j + 1) + " (in kilograms): ");
                 String weightLiftedInput = scanner.nextLine();
                 boolean isWeightValid = Workout.validateWeightLifted(weightLiftedInput);
 
@@ -228,7 +235,7 @@ public class Menu {
 
                 float weightLifted = Float.parseFloat(weightLiftedInput);
 
-                System.out.print("Enter the number of repetitions for Set " + (j + 1) + ": ");
+System.out.print("\n Enter the number of repetitions for Set " + (j + 1) + ": ");
                 String repsInput = scanner.nextLine();
                 boolean isRepsValid = Workout.validateReps(repsInput);
 
@@ -251,13 +258,16 @@ public class Menu {
             exercises.add(newExercise);
         }
 
-        // Create new workout - coded this way for easier transition to OOP
+System.out.println("\n---------------------------------");
+System.out.println("\n✅━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✅");
+System.out.println("    🎉 SUCCESS! WORKOUT ENTRY ADDED 🎉");
+System.out.println("✅━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✅");
         HashMap<String, Object> newWorkout = Workout.createWorkout(workoutPlan, exercises);
         Workout.storeWorkoutData(newWorkout);
         
         // Asking user whether they want to add more workout data or not
-        System.out.println("Workout added successfully!");
-        System.out.println("Would you like to continue? (Y/N): ");
+System.out.println("🎉 Workout added successfully!");
+System.out.print(" ➕ Would you like to continue logging workouts? (Y/N): ");
         String returnMenuOption = scanner.nextLine();
         while (!returnMenuOption.equalsIgnoreCase("y") && !returnMenuOption.equalsIgnoreCase("n")) {
             System.out.println("Invalid input. Please try again.");
@@ -279,10 +289,13 @@ public class Menu {
      */
     public static void getViewMenu() {
         // Print out the options for the menu
-        System.out.println("=== View Progress ===");
-        System.out.println("Select an option (1-11):");
-        System.out.println("1. View Today's Calories");
-        System.out.println("2. View Today's Workout");
+System.out.println("\n📊━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━📊");
+System.out.println("              VIEW PROGRESS");
+System.out.println("📊━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━📊");
+
+System.out.println(" 🗂️ Please select an option below: (1️⃣ - 1️⃣1️⃣):");
+        System.out.println("1️⃣ View Today's Calories 📅");
+        System.out.println("2️⃣ View Today's Workout 🏋️");
         System.out.println("3. View Meal Breakdown");
         System.out.println("4. View Calories of a Particular Meal");
         System.out.println("5. View Average Calories Per Meal");
@@ -293,7 +306,8 @@ public class Menu {
         System.out.println("10. View Performance Summary");
         System.out.println("11. Back to Main Menu");
 
-        // Initialize scanner and take user input
+System.out.println("\n---------------------------------");
+System.out.println(" Returning to View Menu...");
         Scanner scanner = new Scanner(System.in);
         String option = scanner.nextLine();
 
@@ -343,6 +357,10 @@ public class Menu {
         getViewMenu();
     }
 
+    private static void viewMealBreakdown() {
+
+    }
+
     /**
      * Calculates and displays the total calories logged for the current day.
      * Displays a message if no calorie data is available.
@@ -358,9 +376,12 @@ public class Menu {
         }
 
         // Go through all the array objects and print them out in correct format
-        System.out.println("Today's Calories Tracking Data:");
+System.out.println("\n---------------------------------");
+System.out.println("\n===================================");
+System.out.println("   TODAY'S CALORIES TRACKING DATA  ");
+System.out.println("===================================");
         int totalCalories = 0;  // Stores the total of all the calories stored
-        for (HashMap<String, Object> entry : calorieTrackingData) {
+        for (HashMap<String, Object> entry : Calories.getData()) {
             System.out.println(". " + entry.get("name"));
             System.out.println("    Type:" + entry.get("snackOrMeal"));
             if (!entry.get("snackOrMeal").equals("snack")) {
@@ -370,43 +391,49 @@ public class Menu {
             totalCalories += (int) entry.get("calories");   // Had to cast it to int for java to not show error
         }
 
-        System.out.println("Today's Total Calories: " + totalCalories + " kcal\n");
+System.out.println("🔥 Today's Total Calories: " + totalCalories + " kcal 🔥\n");
     }
 
-    /**
+    private static void printSeparator() {
+        System.out.println("\n---------------------------------");
+    }
+    /*
      * Displays the details of today's workout including workout plans,
      * exercise names, sets, weights, and repetitions.
      * Displays a message if no workout data is available.
      */
     private static void viewTodaysWorkout() {
-        // Retrieve the workout data
-        ArrayList<HashMap<String, Object>> workouts = Workout.getWorkouts();
+            System.out.println("\n===================================");
+System.out.println("💪      TODAY'S WORKOUT DATA       💪");
+System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            ArrayList<HashMap<String, Object>> workouts = Workout.getWorkouts();
 
-        // Check if its empty, and leave the function if it is
-        if (workouts.isEmpty()) {
-            System.out.println("No workout data available for today.");
-            return;
-        }
+            // Check if its empty, and leave the function if it is
+            if (workouts.isEmpty()) {
+                System.out.println("No workout data available for today.");
+                return;
+            }
 
-        // Print out each workout stored
-        workouts.forEach(workout -> {
-            System.out.println("Workout Plan: " + workout.get("workoutPlan"));
-            ArrayList<HashMap<String, Object>> exercises = (ArrayList<HashMap<String, Object>>) workout.get("exercises");
-            exercises.forEach(exercise -> {
-                System.out.println("Exercise: " + exercise.get("exerciseName"));
-                ArrayList<HashMap<String, Integer>> sets = (ArrayList<HashMap<String, Integer>>) exercise.get("sets");
-                sets.forEach(set -> System.out.println(" - " + set.get("weightLifted") + " kg x " + set.get("reps") + " reps"));
+            // Print out each workout stored
+            workouts.forEach(workout -> {
+System.out.println("🏋️ Workout Plan: ✨ " + workout.get("workoutPlan") + " ✨");
+                ArrayList<HashMap<String, Object>> exercises = (ArrayList<HashMap<String, Object>>) workout.get("exercises");
+                exercises.forEach(exercise -> {
+                    System.out.println("Exercise: " + exercise.get("exerciseName"));
+                    ArrayList<HashMap<String, Integer>> sets = (ArrayList<HashMap<String, Integer>>) exercise.get("sets");
+                    sets.forEach(set -> System.out.println(" - " + set.get("weightLifted") + " kg x " + set.get("reps") + " reps"));
+                });
             });
-        });
-        System.out.println(" ");
-    }
+            System.out.println(" ");
 
-    /**
-     * Displays the details of today's workout including workout plans,
-     * exercise names, sets, weights, and repetitions.
-     * Displays a message if no workout data is available.
-     */
-    private static void viewMealBreakdown() {
+        /**
+         * Displays the details of today's workout including workout plans,
+         * exercise names, sets, weights, and repetitions.
+         * Displays a message if no workout data is available.
+         */
+        System.out.println("\n===================================");
+        System.out.println("        MEAL BREAKDOWN DATA        ");
+        System.out.println("===================================");
         // Retrieve the calorie data
         ArrayList<HashMap<String, Object>> calorieTrackingData = Calories.getData();
 
@@ -423,7 +450,8 @@ public class Menu {
         ArrayList<HashMap<String, Object>> dinner = new ArrayList<>();
 
         // Store the data in the correct structure
-        for (HashMap<String, Object> entry : calorieTrackingData) {
+        Iterable<? extends HashMap<String, Object>> calorieIterator = null;
+        for (HashMap<String, Object> entry : calorieIterator) {
             String snackOrMeal = (String) entry.get("snackOrMeal");
             if (snackOrMeal.equals("snack")) {
                 snacks.add(entry);
@@ -444,7 +472,7 @@ public class Menu {
         }
 
         // Print out all the separate meal data separately
-        System.out.println("Today, you had the following food items:");
+System.out.println("🍽️ Today, you enjoyed the following meals: 🍴");
         System.out.println("Breakfast: ");
         int totalBreakfast = 0;
         for (HashMap<String, Object> entry : breakfast) {
@@ -487,7 +515,10 @@ public class Menu {
     }
 
     /**
-     * Enables the user to view calories of a specific meal or snack by name.
+private static void viewCaloriesOfParticularMeal() {
+System.out.println("\n===================================");
+System.out.println("     CALORIES FOR PARTICULAR MEAL  ");
+System.out.println("===================================");
      * Filters and displays matching entries from the calorie tracking data.
      */
     private static void viewCaloriesOfParticularMeal() {
@@ -505,7 +536,7 @@ public class Menu {
         System.out.print("Enter the meal type (Breakfast, Lunch, Dinner, Snacks): ");
         String search = scanner.nextLine();
         while (!(search.equalsIgnoreCase("breakfast") || search.equalsIgnoreCase("lunch") || search.equalsIgnoreCase("dinner") || search.equalsIgnoreCase("snacks"))) {
-            System.out.println("Invalid input. Please try again.");
+System.out.println("🚫 Invalid input. Please try again! 💡 Use Breakfast, Lunch, Dinner, or Snacks.");
             System.out.print("Enter the meal type (Breakfast, Lunch, Dinner, Snacks): ):");
             search = scanner.nextLine();
         }
@@ -535,7 +566,10 @@ public class Menu {
      * Displays the comparison between the total calories logged for the day
      * and the user's calorie consumption goal. Indicates the surplus or deficit of calories.
      */
-    private static void viewCaloriesConsumedVsGoal() {
+private static void viewCaloriesConsumedVsGoal() {
+System.out.println("\n===================================");
+System.out.println("    CALORIES VS GOAL COMPARISON    ");
+System.out.println("===================================");
         // Retrieve tge calorie data
         ArrayList<HashMap<String, Object>> calorieTrackingData = Calories.getData();
 
@@ -581,7 +615,10 @@ public class Menu {
      * Calculates and displays the total workout volume for the day (weight x reps per set).
      * Summarizes the volume across all exercises and workouts.
      */
-    private static void viewVolumeOfWorkout() {
+private static void viewVolumeOfWorkout() {
+System.out.println("\n===================================");
+System.out.println("         WORKOUT VOLUME DATA       ");
+System.out.println("===================================");
         // Retrieve the workout data
         ArrayList<HashMap<String, Object>> workouts = Workout.getWorkouts();
 
@@ -610,7 +647,10 @@ public class Menu {
     /**
      * Calculates and displays the average calorie intake per meal type (e.g., Snacks, Breakfast, etc.).
      */
-    private static void viewAverageCaloriesPerMeal() {
+private static void viewAverageCaloriesPerMeal() {
+System.out.println("\n===================================");
+System.out.println("   AVERAGE CALORIES PER MEAL TYPE  ");
+System.out.println("===================================");
         // Retrieve the calorie data
         ArrayList<HashMap<String, Object>> calorieTrackingData = Calories.getData();
 
@@ -671,7 +711,10 @@ public class Menu {
      * Displays the total calories consumed from snacks and meals separately
      * for the current day.
      */
-    private static void viewCaloriesConsumptionSnacksAndFoods() {
+private static void viewCaloriesConsumptionSnacksAndFoods() {
+System.out.println("\n===================================");
+System.out.println("   TOTAL CALORIES: MEALS & SNACKS  ");
+System.out.println("===================================");
         // Retrieve calorie data
         ArrayList<HashMap<String, Object>> calorieTrackingData = Calories.getData();
 
@@ -699,7 +742,7 @@ public class Menu {
 
         // Output the calculated data
         System.out.println("Total Snack Calories: " + snackCalories + " kcal");
-        System.out.println("Total Meal Calories: " + mealCalories + " kcal");
+System.out.println("🍝 Total Meal Calories: " + mealCalories + " kcal");
         System.out.printf("Percentage Of Calories From Snacks: %.2f%%\n", percentageSnack);
         System.out.printf("Percentage Of Calories From Meals: %.2f%%\n", percentageMeal);
         System.out.println(" ");
@@ -709,7 +752,10 @@ public class Menu {
      * Calculates and displays the heaviest weight lifted for
      * each exercise in all recorded workouts.
      */
-    private static void viewHeaviestLiftPerExercise() {
+private static void viewHeaviestLiftPerExercise() {
+System.out.println("\n===================================");
+System.out.println("    HEAVIEST LIFT PER EXERCISE     ");
+System.out.println("===================================");
         // Retrieve the data
         ArrayList<HashMap<String, Object>> workouts = Workout.getWorkouts();
 
@@ -741,7 +787,10 @@ public class Menu {
      * workout volume, and calories consumed vs. the goal.
      * Combines data from individual viewing functions.
      */
-    private static void viewPerformanceSummary() {
+private static void viewPerformanceSummary() {
+System.out.println("\n===================================");
+System.out.println("         PERFORMANCE SUMMARY       ");
+System.out.println("===================================");
         // Call all the functions needed to show the data
         System.out.println("=== Performance Summary ===");
         viewTodaysCalories();
