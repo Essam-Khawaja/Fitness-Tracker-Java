@@ -9,7 +9,39 @@ import java.util.HashMap;
  */
 public class Workout extends DataObject {
     // This is the public workouts data structure to be used to store the data
-    static ArrayList<HashMap<String, Object>> workouts = new ArrayList<>();
+    private String workoutPlan;
+    private ArrayList<Exercise> exercises;
+
+    // Getters and Setters
+    public Workout(String workoutPlan) {
+        this.workoutPlan = workoutPlan;
+    }
+
+    public String getWorkoutPlan() {
+        return workoutPlan;
+    }
+
+    public void setWorkoutPlan(String workoutPlan) {
+        this.workoutPlan = workoutPlan;
+    }
+
+    public ArrayList<Exercise> getExercises() {
+        return exercises;
+    }
+
+    public void setExercises(ArrayList<Exercise> exercises) {
+        this.exercises = exercises;
+    }
+
+    //TO-String
+    public String toString() {
+        String objectString = "";
+        objectString += workoutPlan + ",";
+        for (Exercise exercise: exercises) {
+            objectString += exercise.toString() + ",";
+        }
+        return objectString;
+    }
 
     private static final double MAX_WEIGHT_LIFTED = 2442.2;     // Stores the maximum weight that can be stored for a set
     private static final double MIN_WEIGHT_LIFTED = 0.1;    // Stores the minimum weight that can be stored for a set
@@ -114,20 +146,5 @@ public class Workout extends DataObject {
         workout.put("workoutPlan", workoutPlan);        // Store the workout plan
         workout.put("exercises", exercises);        // Store the collection of exercises
         return workout;     // Return the workout Hashmap
-    }
-
-    /**
-     * Adds a workout onto the workouts ArrayList
-     * @param workout -> A Hashmap which stores all the data for a workout
-     * */
-    public static void storeWorkoutData(HashMap<String, Object> workout) {
-        workouts.add(workout);      // Add the workout to the workouts ArrayList
-    }
-
-    /**
-     * @return -> ArrayList<HashMap<String, Object>> of all the workout data stored
-     */
-    public static ArrayList<HashMap<String, Object>> getWorkouts() {
-        return workouts;
     }
 }
