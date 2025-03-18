@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Save {
-    public static void SaveData(ArrayList<Calories> saveCaloriesData, ArrayList<Workout> saveWorkoutData, User user){
+    public static void SaveData(User user){
             // Some code here
             File file = new File("src/Save.csv");
             File file2 = new File("src/SaveTemp.csv");
@@ -15,24 +15,55 @@ public class Save {
                 FileWriter fileWriter = new FileWriter(file2);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
                 String line = bufferedReader.readLine();
+                boolean userExists = false;
                 while (line != null) {
-                    bufferedWriter.write(line + "\n");
-                    bufferedWriter.flush();
-                    line = bufferedReader.readLine();
+                    String[] data = line.split(",");
+                    if (data[0].equals("U") && data[1].equals(user.getUsername())) {
+                        bufferedWriter.write("U," + user.getUsername() + ',' + user.getEmail() + ',' + user.getPassword() + '\n');
+                        // Copy new data onto new save file
+                        for (Calories dataItem : user.getCalorieData()) {
+                            bufferedWriter.write("C,");
+                            bufferedWriter.write(dataItem.toString());
+                            bufferedWriter.newLine();
+                            bufferedWriter.flush();
+                        }
+                        for (Workout dataItem : user.getWorkoutData()) {
+                            bufferedWriter.write("W,");
+                            bufferedWriter.write(dataItem.toString());
+                            bufferedWriter.newLine();
+                            bufferedWriter.flush();
+                        }
+                        line = bufferedReader.readLine();
+                        while (line != null) {
+                            if (line.startsWith("U,")) {
+                                break;
+                            }
+                            line = bufferedReader.readLine();
+                        }
+                        userExists = true;
+                    } else {
+                        bufferedWriter.write(line + "\n");
+                        bufferedWriter.flush();
+                        line = bufferedReader.readLine();
+                    }
                 }
-                // Copy new data onto new save file
-                for (Calories dataItem : saveCaloriesData) {
-                    bufferedWriter.write("C,");
-                    bufferedWriter.write(dataItem.toString());
-                    bufferedWriter.newLine();
-                    bufferedWriter.flush();
+                if (!userExists) {
+                    bufferedWriter.write("U," + user.getUsername() + ',' + user.getEmail() + ',' + user.getPassword() + '\n');
+                    // Copy new data onto new save file
+                    for (Calories dataItem : user.getCalorieData()) {
+                        bufferedWriter.write("C,");
+                        bufferedWriter.write(dataItem.toString());
+                        bufferedWriter.newLine();
+                        bufferedWriter.flush();
+                    }
+                    for (Workout dataItem : user.getWorkoutData()) {
+                        bufferedWriter.write("W,");
+                        bufferedWriter.write(dataItem.toString());
+                        bufferedWriter.newLine();
+                        bufferedWriter.flush();
+                    }
                 }
-                for (Workout dataItem : saveWorkoutData) {
-                    bufferedWriter.write("W,");
-                    bufferedWriter.write(dataItem.toString());
-                    bufferedWriter.newLine();
-                    bufferedWriter.flush();
-                }
+
                 // Replace all the content from old save file to new save file
                 FileWriter fileWriter2 = new FileWriter(file);
                 BufferedWriter bufferedWriter2 = new BufferedWriter(fileWriter2);

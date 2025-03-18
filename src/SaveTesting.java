@@ -17,14 +17,13 @@ public class SaveTesting {
         exercises.add(exercise2);
 
         Workout workout = new Workout("Push", exercises);
-        ArrayList<Workout> workouts = new ArrayList<>();
-        workouts.add(workout);
-
         Calories calorie1 = new Calories("Meal", "Breakfast", "Toast", 300);
-        ArrayList<Calories> calories = new ArrayList<>();
-        calories.add(calorie1);
 
-        Save.SaveData(calories, workouts);
+        User testUser = new User("Name2", "Password", "Email2");
+        testUser.addCalorieData(calorie1);
+        testUser.addWorkoutData(workout);
+
+        Save.SaveData(testUser);
     }
 
     @Test public void testLoad() {
