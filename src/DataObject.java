@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DataObject {
-    public static void SaveData(ArrayList<HashMap<String, Object>> saveCaloriesData, ArrayList<HashMap<String, Object>> saveWorkoutData){
+    public static void SaveData(ArrayList<Calories> saveCaloriesData, ArrayList<Workout> saveWorkoutData){
             // Some code here
             File file = new File("src/Save.csv");
             File file2 = new File("src/SaveTemp.csv");
@@ -22,19 +22,15 @@ public class DataObject {
                     line = bufferedReader.readLine();
                 }
                 // Copy new data onto new save file
-                for (HashMap<String, Object> dataItem : saveCaloriesData) {
+                for (Calories dataItem : saveCaloriesData) {
                     bufferedWriter.write("C,");
-                    for (Object key : dataItem.keySet()) {
-                        bufferedWriter.write(String.valueOf(dataItem.get(key)) + ",");
-                    }
+                    bufferedWriter.write(dataItem.toString());
                     bufferedWriter.newLine();
                     bufferedWriter.flush();
                 }
-                for (HashMap<String, Object> dataItem : saveWorkoutData) {
+                for (Workout dataItem : saveWorkoutData) {
                     bufferedWriter.write("W,");
-                    for (Object key : dataItem.keySet()) {
-                        bufferedWriter.write(String.valueOf(dataItem.get(key)) + ",");
-                    }
+                    bufferedWriter.write(dataItem.toString());
                     bufferedWriter.newLine();
                     bufferedWriter.flush();
                 }
