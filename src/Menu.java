@@ -137,15 +137,18 @@ System.out.println("✅━━━━━━━━━━━━━━━━━━━
 
 System.out.print(" ➕ Would you like to add another entry? (Y/N): ");
         String returnMenuOption = ""; // Declare and initialize returnMenuOption
-        while (!returnMenuOption.equalsIgnoreCase("y") && !returnMenuOption.equalsIgnoreCase("n")) {
-            System.out.println("Invalid input. Please try again.");
-            System.out.println("Would you like to continue? (Y/N): ");
+        while (true) {
             returnMenuOption = scanner.nextLine();
-        }
-        if (returnMenuOption.equalsIgnoreCase("Y")) {
-            getCalorieMenu();
-        } else if (returnMenuOption.equalsIgnoreCase("N")) {
-            getMenu();
+            if (returnMenuOption.equalsIgnoreCase("Y")) {
+                getCalorieMenu();
+                break;
+            } else if (returnMenuOption.equalsIgnoreCase("N")) {
+                getMenu();
+                break;
+            } else {
+                System.out.println("🚫 Invalid input. Please enter 'Y' or 'N': ");
+                System.out.print(" ➕ Would you like to add another entry? (Y/N): ");
+            }
         }
     }
 
