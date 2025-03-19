@@ -296,15 +296,15 @@ System.out.println("📊━━━━━━━━━━━━━━━━━━�
 System.out.println(" 🗂️ Please select an option below: (1️⃣ - 1️⃣1️⃣):");
         System.out.println("1️⃣ View Today's Calories 📅");
         System.out.println("2️⃣ View Today's Workout 🏋️");
-        System.out.println("3. View Meal Breakdown");
-        System.out.println("4. View Calories of a Particular Meal");
-        System.out.println("5. View Average Calories Per Meal");
-        System.out.println("6. View Calorie Consumption (Snacks/Foods)");
-        System.out.println("7. View Workout Volume");
-        System.out.println("8. View Heaviest Lift Per Exercise");
-        System.out.println("9. View Calories Consumed vs. Goal");
-        System.out.println("10. View Performance Summary");
-        System.out.println("11. Back to Main Menu");
+        System.out.println("3️⃣ View Meal Breakdown 🍽️");
+        System.out.println("4️⃣ View Calories of a Particular Meal 🍛");
+        System.out.println("5️⃣ View Average Calories Per Meal ⚖️");
+        System.out.println("6️⃣ View Calorie Consumption (Snacks/Foods) 🥗");
+        System.out.println("7️⃣ View Workout Volume 🏋️‍♂️");
+        System.out.println("8️⃣ View Heaviest Lift Per Exercise 🏋️‍♀️");
+        System.out.println("9️⃣ View Calories Consumed vs. Goal 🎯");
+        System.out.println("🔟 View Performance Summary 📊");
+        System.out.println("1️⃣1️⃣ Back to Main Menu 🔙");
 
 System.out.println("\n---------------------------------");
 System.out.println(" Returning to View Menu...");
