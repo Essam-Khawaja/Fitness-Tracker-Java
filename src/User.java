@@ -23,6 +23,11 @@ public class User {
         workoutData.add(newData);
     }
 
+    public void resetTrackingData() {
+        calorieData.clear();
+        workoutData.clear();
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }

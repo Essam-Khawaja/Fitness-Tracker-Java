@@ -92,48 +92,62 @@ public class Save {
             if (line.equals(null)) {
                 System.out.println("No data found");
             } else {
-                while (line != null) {
+                boolean userFound = false;
+                while (line != null && !userFound) {
                     String[] data = line.split(",");
-                    if (data[0].equals("C")) {
-                        String snackOrMeal = data[1];
-                        if (snackOrMeal.equalsIgnoreCase("Snack")) {
-                            String foodName = data[2];
-                            int calories = Integer.parseInt(data[3]);
-                            Calories thisData = new Calories(snackOrMeal, "", foodName, calories);
-                            user.addCalorieData(thisData);
-                        } else {
-                            String mealTime = data[2];
-                            String foodName = data[3];
-                            int calories = Integer.parseInt(data[4]);
-                            Calories thisData = new Calories(snackOrMeal, mealTime, foodName, calories);
-                            user.addCalorieData(thisData);
-                        }
-                    } else if (data[0].equals("W")) {
-                        String workoutPlan = data[1];
-                        ArrayList<Exercise> exercises = new ArrayList<>();
-                        ArrayList<Set> sets = new ArrayList<>();
-                        for (int i = 2; i < data.length; i++) {
-                            if (data[i].equals("E")) {
-                                int j = i + 1;
-                                String exerciseName = data[j];
-                                sets.clear();
-                                while (!(data[j].equals("E")) && (j < data.length - 1)) {
-                                    if (data[j].equals("S")) {
-                                        int reps = Integer.parseInt(data[j + 1]);
-                                        float weightLifted = Float.parseFloat(data[j + 2]);
-                                        Set thisSet = new Set(reps, weightLifted);
-                                        sets.add(thisSet);
-                                    }
-                                    j++;
+                    if (data[0].equals("U") && data[1].equals(user.getUsername())) {
+                        userFound = true;
+                        user.resetTrackingData();
+                        line = bufferedReader.readLine();
+                        data = line.split(",");
+                        while (line != null && !line.startsWith("U,")) {
+                            if (data[0].equals("C")) {
+                                String snackOrMeal = data[1];
+                                if (snackOrMeal.equalsIgnoreCase("Snack")) {
+                                    String foodName = data[2];
+                                    int calories = Integer.parseInt(data[3]);
+                                    Calories thisData = new Calories(snackOrMeal, "", foodName, calories);
+                                    user.addCalorieData(thisData);
+                                } else {
+                                    String mealTime = data[2];
+                                    String foodName = data[3];
+                                    int calories = Integer.parseInt(data[4]);
+                                    Calories thisData = new Calories(snackOrMeal, mealTime, foodName, calories);
+                                    user.addCalorieData(thisData);
                                 }
-                                Exercise exercise = new Exercise(exerciseName, sets);
-                                exercises.add(exercise);
+                            } else if (data[0].equals("W")) {
+                                String workoutPlan = data[1];
+                                ArrayList<Exercise> exercises = new ArrayList<>();
+                                ArrayList<Set> sets = new ArrayList<>();
+                                for (int i = 2; i < data.length; i++) {
+                                    if (data[i].equals("E")) {
+                                        int j = i + 1;
+                                        String exerciseName = data[j];
+                                        sets.clear();
+                                        while (!(data[j].equals("E")) && (j < data.length - 1)) {
+                                            if (data[j].equals("S")) {
+                                                int reps = Integer.parseInt(data[j + 1]);
+                                                float weightLifted = Float.parseFloat(data[j + 2]);
+                                                Set thisSet = new Set(reps, weightLifted);
+                                                sets.add(thisSet);
+                                            }
+                                            j++;
+                                        }
+                                        Exercise exercise = new Exercise(exerciseName, sets);
+                                        exercises.add(exercise);
+                                    }
+                                }
+                                Workout thisWorkout = new Workout(workoutPlan, exercises);
+                                user.addWorkoutData(thisWorkout);
+                            }
+                            line = bufferedReader.readLine();
+                            if (line != null) {
+                                data = line.split(",");
                             }
                         }
-                        Workout thisWorkout = new Workout(workoutPlan, exercises);
-                        user.addWorkoutData(thisWorkout);
+                    } else {
+                        line = bufferedReader.readLine();
                     }
-                    line = bufferedReader.readLine();
                 }
             }
         } catch (FileNotFoundException e) {
