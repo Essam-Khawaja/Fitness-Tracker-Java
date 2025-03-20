@@ -1,0 +1,11 @@
+U,Name,Email,Password
+C,Meal,Dinner,Toast,200
+W,Push,E,Preacher Curl,S,10,25.5,S,10,25.5,E,Bench Press,S,10,25.5,S,10,25.5
+U,Name2,Email2,Password
+C,Meal,Breakfast,Toast,300
+W,Push,E,Preacher Curl,S,10,25.5,S,10,25.5,E,Bench Press,S,10,25.5,S,10,25.5
+U,Name3,Email3,Password3
+C,Meal,Breakfast,Toast,300
+C,Meal,Lunch,Biryani,500
+W,Push,E,Preacher Curl,S,10,25.5,S,10,25.5,E,Bench Press,S,10,25.5,S,10,25.5
+W,Pull,E,Preacher Curl,S,10,25.5,S,10,25.5,E,Bench Press,S,10,25.5,S,10,25.5
