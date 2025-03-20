@@ -164,4 +164,9 @@ public class SaveTesting {
         System.out.println(expectedCalories.toString());
         System.out.println(expectedWorkouts.toString());
     }
+
+    @Test public void SaveUser() {
+        User user = new User("Name2", "Password2", "Email2");
+        Save.SaveUser(user);
+    }
 }

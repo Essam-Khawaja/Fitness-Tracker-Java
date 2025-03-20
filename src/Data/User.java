@@ -60,4 +60,8 @@ public class User {
     public ArrayList<Calories> getCalorieData() {
         return calorieData;
     }
+
+    public String toString() {
+        return username + "," + password + "," + email;
+    }
 }

@@ -290,7 +290,7 @@ switch (option) {
                 System.out.println("✅━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✅");
         HashMap<String, Object> newWorkout = Workout.createWorkout(workoutPlan, exercises);
         Workout.storeWorkoutData(newWorkout);
-        
+
         // Asking user whether they want to add more workout data or not
                 System.out.println("🎉 Data.Workout added successfully!");
                 System.out.print(" ➕ Would you like to continue logging workouts? (Y/N): ");
