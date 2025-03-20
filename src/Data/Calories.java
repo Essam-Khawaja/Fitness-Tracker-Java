@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
+package Data;
 
 /**
  * This is a helper class to store all the calorie tracking data

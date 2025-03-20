@@ -1,11 +1,15 @@
+package Save;
+
+import Data.*;
+
 import java.io.*;
 import java.util.ArrayList;
 
 public class Save {
     public static void SaveData(User user){
             // Some code here
-            File file = new File("src/Save.csv");
-            File file2 = new File("src/SaveTemp.csv");
+            File file = new File("src/Save/Save.csv");
+            File file2 = new File("src/Save/SaveTemp.csv");
             try {
                 boolean saveCreated = file.createNewFile();     // Create new file if it is not there
                 boolean tempCreated = file2.createNewFile();    // Create new file if it is not there
@@ -84,7 +88,7 @@ public class Save {
     }
 
     public static void LoadData(User user){
-        File file = new File("src/Save.csv");
+        File file = new File("src/Save/Save.csv");
         try {
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);

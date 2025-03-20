@@ -1,3 +1,5 @@
+package Data;
+
 public class Set {
     private int reps;
     private float weightLifted;

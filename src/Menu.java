@@ -1,3 +1,6 @@
+import Data.Calories;
+import Data.Workout;
+
 import java.util.*;
 
 /**
@@ -32,7 +35,7 @@ public class Menu {
                 System.out.println("===================================");
                 System.out.println(" Please choose from the following options:");
                 System.out.println("   🍎 1. Calorie Tracking");
-                System.out.println("   🏋️ 2. Workout Tracking");
+                System.out.println("   🏋️ 2. Data.Workout Tracking");
                 System.out.println("   📊 3. View Progress");
                 System.out.println("   ❌ 4. Exit");
                 System.out.println("===================================");
@@ -118,7 +121,7 @@ switch (option) {
             try {
                 calories = Integer.parseInt(caloriesInput);
                 if (calories < 0 || calories > MAX_CALORIES)
-                System.out.println("Invalid input! Calories must be between 0 and 20,000. Try again!");
+                System.out.println("Invalid input! Data.Calories must be between 0 and 20,000. Try again!");
                 else {
                     isCaloriesInputValid = true;
                 }
@@ -208,7 +211,7 @@ switch (option) {
             boolean isSetValid  = false;
             int setsCount = 0;     // Initialize setsCount to 0
             while (!isSetValid) {
-                System.out.print("\n How many sets did you perform for Exercise " + (i + 1) + "? ");
+                System.out.print("\n How many sets did you perform for Data.Exercise " + (i + 1) + "? ");
                 String setsCountInput = scanner.nextLine();
                 try {
                     setsCount = Integer.parseInt(setsCountInput);
@@ -224,7 +227,7 @@ switch (option) {
             }
             for (int j = 0; j < setsCount; j++) {
                 // Input details for each set
-                System.out.print("\n Enter the weight lifted for Set " + (j + 1) + " (e.g., 50kg or 100lb): ");
+                System.out.print("\n Enter the weight lifted for Data.Set " + (j + 1) + " (e.g., 50kg or 100lb): ");
                 String weightLiftedInput = scanner.nextLine();
                 boolean isWeightValid = false;
                 float weightLifted = 0f;
@@ -237,7 +240,7 @@ switch (option) {
                             if (!isWeightValid) throw new NumberFormatException();
                         } catch (NumberFormatException e) {
                 System.out.println("Invalid input! Enter a valid weight in kg or lb (e.g., 50kg or 100lb).");
-                System.out.print("Enter the weight lifted for Set " + (j + 1) + " again: ");
+                System.out.print("Enter the weight lifted for Data.Set " + (j + 1) + " again: ");
                             weightLiftedInput = scanner.nextLine();
                         }
                     } else if (weightLiftedInput.toLowerCase().endsWith("lb")) {
@@ -248,17 +251,17 @@ switch (option) {
                             if (!isWeightValid) throw new NumberFormatException();
                         } catch (NumberFormatException e) {
                 System.out.println("Invalid input! Enter a valid weight in kg or lb (e.g., 50kg or 100lb).");
-                System.out.print("Enter the weight lifted for Set " + (j + 1) + " again: ");
+                System.out.print("Enter the weight lifted for Data.Set " + (j + 1) + " again: ");
                             weightLiftedInput = scanner.nextLine();
                         }
                     } else {
                 System.out.println("Invalid input! Weight must end with 'kg' or 'lb'. (e.g., 50kg or 100lb)");
-                System.out.print("Enter the weight lifted for Set " + (j + 1) + " again: ");
+                System.out.print("Enter the weight lifted for Data.Set " + (j + 1) + " again: ");
                         weightLiftedInput = scanner.nextLine();
                     }
                 }
 
-                System.out.print("\n Enter the number of repetitions for Set " + (j + 1) + ": ");
+                System.out.print("\n Enter the number of repetitions for Data.Set " + (j + 1) + ": ");
                 String repsInput = scanner.nextLine();
                 boolean isRepsValid = Workout.validateReps(repsInput);
 
@@ -289,7 +292,7 @@ switch (option) {
         Workout.storeWorkoutData(newWorkout);
         
         // Asking user whether they want to add more workout data or not
-                System.out.println("🎉 Workout added successfully!");
+                System.out.println("🎉 Data.Workout added successfully!");
                 System.out.print(" ➕ Would you like to continue logging workouts? (Y/N): ");
         String returnMenuOption = scanner.nextLine();
         while (!returnMenuOption.equalsIgnoreCase("y") && !returnMenuOption.equalsIgnoreCase("n")) {
@@ -317,15 +320,15 @@ switch (option) {
                 System.out.println("📊━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━📊");
 
                 System.out.println(" 🗂️ Please select an option below: (1️⃣ - 1️⃣1️⃣):");
-                System.out.println("1️⃣ View Today's Calories 📅");
-                System.out.println("2️⃣ View Today's Workout 🏋️");
+                System.out.println("1️⃣ View Today's Data.Calories 📅");
+                System.out.println("2️⃣ View Today's Data.Workout 🏋️");
                 System.out.println("3️⃣ View Meal Breakdown 🍽️");
-                System.out.println("4️⃣ View Calories of a Particular Meal 🍛");
-                System.out.println("5️⃣ View Average Calories Per Meal ⚖️");
+                System.out.println("4️⃣ View Data.Calories of a Particular Meal 🍛");
+                System.out.println("5️⃣ View Average Data.Calories Per Meal ⚖️");
                 System.out.println("6️⃣ View Calorie Consumption (Snacks/Foods) 🥗");
-                System.out.println("7️⃣ View Workout Volume 🏋️‍♂️");
-                System.out.println("8️⃣ View Heaviest Lift Per Exercise 🏋️‍♀️");
-                System.out.println("9️⃣ View Calories Consumed vs. Goal 🎯");
+                System.out.println("7️⃣ View Data.Workout Volume 🏋️‍♂️");
+                System.out.println("8️⃣ View Heaviest Lift Per Data.Exercise 🏋️‍♀️");
+                System.out.println("9️⃣ View Data.Calories Consumed vs. Goal 🎯");
                 System.out.println("🔟 View Performance Summary 📊");
                 System.out.println("1️⃣1️⃣ Back to Main Menu 🔙");
 
@@ -472,11 +475,11 @@ private static void viewMealBreakdown() {
             if (!entry.get("snackOrMeal").equals("snack")) {
                 System.out.println("    Time:" + entry.get("mealType"));
             }
-                System.out.println("    Calories:" + entry.get("calories") + " kcal");
+                System.out.println("    Data.Calories:" + entry.get("calories") + " kcal");
             totalCalories += (int) entry.get("calories");   // Had to cast it to int for java to not show error
         }
 
-                System.out.println("🔥 Today's Total Calories: " + totalCalories + " kcal 🔥\n");
+                System.out.println("🔥 Today's Total Data.Calories: " + totalCalories + " kcal 🔥\n");
     }
 
     private static void printSeparator() {
@@ -501,10 +504,10 @@ private static void viewMealBreakdown() {
 
             // Print out each workout stored
             workouts.forEach(workout -> {
-                System.out.println("🏋️ Workout Plan: ✨ " + workout.get("workoutPlan") + " ✨");
+                System.out.println("🏋️ Data.Workout Plan: ✨ " + workout.get("workoutPlan") + " ✨");
                 ArrayList<HashMap<String, Object>> exercises = (ArrayList<HashMap<String, Object>>) workout.get("exercises");
                 exercises.forEach(exercise -> {
-                System.out.println("Exercise: " + exercise.get("exerciseName"));
+                System.out.println("Data.Exercise: " + exercise.get("exerciseName"));
                     ArrayList<HashMap<String, Integer>> sets = (ArrayList<HashMap<String, Integer>>) exercise.get("sets");
                     sets.forEach(set -> System.out.println(" - " + set.get("weightLifted") + " kg x " + set.get("reps") + " reps"));
                 });
@@ -562,7 +565,7 @@ private static void viewMealBreakdown() {
         int totalBreakfast = 0;
         for (HashMap<String, Object> entry : breakfast) {
                 System.out.println("Name: " + entry.get("name"));
-                System.out.println("Calories: " + entry.get("calories"));
+                System.out.println("Data.Calories: " + entry.get("calories"));
             totalBreakfast += (int) entry.get("calories");
         }
                 System.out.println("Total calories in breakfast: " + totalBreakfast + "kcal");
@@ -572,7 +575,7 @@ private static void viewMealBreakdown() {
         int totalLunch = 0;
         for (HashMap<String, Object> entry : lunch) {
                 System.out.println("Name: " + entry.get("name"));
-                System.out.println("Calories: " + entry.get("calories"));
+                System.out.println("Data.Calories: " + entry.get("calories"));
             totalLunch += (int) entry.get("calories");
         }
                 System.out.println("Total calories in lunch: " + totalLunch + "kcal");
@@ -582,7 +585,7 @@ private static void viewMealBreakdown() {
         int totalDinner = 0;
         for (HashMap<String, Object> entry : dinner) {
                 System.out.println("Name: " + entry.get("name"));
-                System.out.println("Calories: " + entry.get("calories"));
+                System.out.println("Data.Calories: " + entry.get("calories"));
             totalDinner += (int) entry.get("calories");
         }
                 System.out.println("Total calories in dinner: " + totalDinner + "kcal");
@@ -592,7 +595,7 @@ private static void viewMealBreakdown() {
         int totalSnacks = 0;
         for (HashMap<String, Object> entry : snacks) {
                 System.out.println("Name: " + entry.get("name"));
-                System.out.println("Calories: " + entry.get("calories"));
+                System.out.println("Data.Calories: " + entry.get("calories"));
             totalSnacks += (int) entry.get("calories");
         }
                 System.out.println("Total calories in snacks: " + totalSnacks + "kcal");
@@ -634,12 +637,12 @@ System.out.println("===================================");
                 if (entry.get("snackOrMeal").equals("snack")) {
                     totalCalories += (int) entry.get("calories");
                 System.out.println("1. " + entry.get("name"));
-                System.out.println("Calories:" + entry.get("calories"));
+                System.out.println("Data.Calories:" + entry.get("calories"));
                 }
             } else {
                 if (entry.get("mealType").equals(search.toLowerCase())) {
                 System.out.println("1. " + entry.get("name"));
-                System.out.println("Calories:" + entry.get("calories"));
+                System.out.println("Data.Calories:" + entry.get("calories"));
                     totalCalories += (int) entry.get("calories");
                 }
             }
@@ -685,7 +688,7 @@ private static void viewCaloriesConsumedVsGoal() {
             totalCalories += (int) entry.get("calories");
         }
 
-                System.out.println("Calories Consumed: " + totalCalories + " kcal");
+                System.out.println("Data.Calories Consumed: " + totalCalories + " kcal");
                 System.out.println("Calorie Goal: " + calorieGoal + " kcal");
 
         // Compare the total calories to the goal entered by the user
@@ -714,7 +717,7 @@ private static void viewVolumeOfWorkout() {
             // Go through each exercise, do the calculation and then print it out
             for (HashMap<String, Object> entry : workouts) {
                 for (HashMap<String, Object> exercise : (ArrayList<HashMap<String, Object>>) entry.get("exercises")) {
-                System.out.println("Name of Exercise: " + exercise.get("exerciseName"));
+                System.out.println("Name of Data.Exercise: " + exercise.get("exerciseName"));
                     int setCount = 0;
                     float volume = 1;
                     for (HashMap<String, Object> set : (ArrayList<HashMap<String, Object>>) exercise.get("sets")) {
@@ -786,10 +789,10 @@ private static void viewAverageCaloriesPerMeal() {
         avgSnackCalories /= snacksCount;
 
         // Output them
-                System.out.println("Average Calories in Breakfast: " + avgBreakfastCalories + " kcal");
-                System.out.println("Average Calories in Lunch: " + avgLunchCalories + " kcal");
-                System.out.println("Average Calories in Dinner: " + avgDinnerCalories + " kcal");
-                System.out.println("Average Calories in Snacks: " + avgSnackCalories + " kcal\n");
+                System.out.println("Average Data.Calories in Breakfast: " + avgBreakfastCalories + " kcal");
+                System.out.println("Average Data.Calories in Lunch: " + avgLunchCalories + " kcal");
+                System.out.println("Average Data.Calories in Dinner: " + avgDinnerCalories + " kcal");
+                System.out.println("Average Data.Calories in Snacks: " + avgSnackCalories + " kcal\n");
     }
 
     /**
@@ -826,10 +829,10 @@ private static void viewCaloriesConsumptionSnacksAndFoods() {
         float percentageMeal = ((float) mealCalories / (mealCalories + snackCalories)) * 100;
 
         // Output the calculated data
-            System.out.println("Total Snack Calories: " + snackCalories + " kcal");
-            System.out.println("🍝 Total Meal Calories: " + mealCalories + " kcal");
-            System.out.printf("Percentage Of Calories From Snacks: %.2f%%\n", percentageSnack);
-            System.out.printf("Percentage Of Calories From Meals: %.2f%%\n", percentageMeal);
+            System.out.println("Total Snack Data.Calories: " + snackCalories + " kcal");
+            System.out.println("🍝 Total Meal Data.Calories: " + mealCalories + " kcal");
+            System.out.printf("Percentage Of Data.Calories From Snacks: %.2f%%\n", percentageSnack);
+            System.out.printf("Percentage Of Data.Calories From Meals: %.2f%%\n", percentageMeal);
             System.out.println(" ");
     }
 

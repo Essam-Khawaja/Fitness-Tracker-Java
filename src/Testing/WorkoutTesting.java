@@ -1,3 +1,6 @@
+package Testing;
+
+import Data.Workout;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
