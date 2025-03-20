@@ -8,7 +8,7 @@ import java.util.HashMap;
  * @author Syed Essam Uddin Khawaja
  * @author Ali Gad
  */
-public class Workout extends Save {
+public class Workout{
     // This is the public workouts data structure to be used to store the data
     private String workoutPlan;
     private ArrayList<Exercise> exercises;
