@@ -1,6 +1,9 @@
 package Save;
 
 import Data.*;
+import Enums.MealTime;
+import Enums.MealType;
+import Enums.WorkoutPlan;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -114,21 +117,21 @@ public class Save {
                         data = line.split(",");
                         while (line != null && !line.startsWith("U,")) {
                             if (data[0].equals("C")) {
-                                String snackOrMeal = data[1];
-                                if (snackOrMeal.equalsIgnoreCase("Snack")) {
+                                MealType snackOrMeal = MealType.getTypeEnum(data[1]);
+                                if (snackOrMeal.getType() == MealType.SNACK.getType()) {
                                     String foodName = data[2];
                                     int calories = Integer.parseInt(data[3]);
-                                    Calories thisData = new Calories(snackOrMeal, "", foodName, calories);
+                                    Calories thisData = new Calories(snackOrMeal, null, foodName, calories);
                                     user.addCalorieData(thisData);
                                 } else {
-                                    String mealTime = data[2];
+                                    MealTime mealTime = MealTime.getTimeEnum(data[2]);
                                     String foodName = data[3];
                                     int calories = Integer.parseInt(data[4]);
                                     Calories thisData = new Calories(snackOrMeal, mealTime, foodName, calories);
                                     user.addCalorieData(thisData);
                                 }
                             } else if (data[0].equals("W")) {
-                                String workoutPlan = data[1];
+                                WorkoutPlan workoutPlan = WorkoutPlan.getPlanEnum(data[1]);
                                 ArrayList<Exercise> exercises = new ArrayList<>();
                                 ArrayList<Set> sets = new ArrayList<>();
                                 for (int i = 2; i < data.length; i++) {

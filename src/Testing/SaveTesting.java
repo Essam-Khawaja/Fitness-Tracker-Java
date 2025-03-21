@@ -1,6 +1,9 @@
 package Testing;
 
 import Data.*;
+import Enums.MealTime;
+import Enums.MealType;
+import Enums.WorkoutPlan;
 import Save.*;
 import org.junit.jupiter.api.Test;
 
@@ -20,8 +23,8 @@ public class SaveTesting {
         exercises.add(exercise1);
         exercises.add(exercise2);
 
-        Workout workout = new Workout("Push", exercises);
-        Calories calorie1 = new Calories("Meal", "Breakfast", "Toast", 300);
+        Workout workout = new Workout(WorkoutPlan.PUSH, exercises);
+        Calories calorie1 = new Calories(MealType.MEAL, MealTime.BREAKFAST, "Toast", 300);
 
         User testUser = new User("Name2", "Password", "Email2");
         testUser.addCalorieData(calorie1);
@@ -43,9 +46,9 @@ public class SaveTesting {
         exercises.add(exercise1);
         exercises.add(exercise2);
 
-        Workout workout = new Workout("Push", exercises);
+        Workout workout = new Workout(WorkoutPlan.PUSH, exercises);
 
-        Calories calorie1 = new Calories("Meal", "Dinner", "Toast", 200);
+        Calories calorie1 = new Calories(MealType.MEAL, MealTime.DINNER, "Toast", 200);
 
         User actualUser = new User("Name", "Password", "Email");
         User expectedUser = new User("Name", "Password", "Email");
@@ -77,9 +80,9 @@ public class SaveTesting {
         exercises.add(exercise1);
         exercises.add(exercise2);
 
-        Workout workout = new Workout("Push", exercises);
+        Workout workout = new Workout(WorkoutPlan.PUSH, exercises);
 
-        Calories calorie1 = new Calories("Meal", "Breakfast", "Toast", 300);
+        Calories calorie1 = new Calories(MealType.MEAL, MealTime.BREAKFAST, "Toast", 300);
 
         User actualUser = new User("Name2", "Password2", "Email2");
         User expectedUser = new User("Name", "Password", "Email");
@@ -111,17 +114,19 @@ public class SaveTesting {
         exercises.add(exercise1);
         exercises.add(exercise2);
 
-        Workout workout = new Workout("Push", exercises);
-        Workout workout2 = new Workout("Pull", exercises);
+        Workout workout = new Workout(WorkoutPlan.PUSH, exercises);
+        Workout workout2 = new Workout(WorkoutPlan.PULL, exercises);
 
-        Calories calorie1 = new Calories("Meal", "Breakfast", "Toast", 300);
-        Calories calorie2 = new Calories("Meal", "Lunch", "Biryani", 500);
+        Calories calorie1 = new Calories(MealType.MEAL, MealTime.BREAKFAST, "Toast", 300);
+        Calories calorie2 = new Calories(MealType.MEAL, MealTime.LUNCH, "Biryani", 500);
+        Calories calorie3 = new Calories(MealType.SNACK, null, "Oreos", 200);
 
         User actualUser = new User("Name3", "Password3", "Email3");
         actualUser.addCalorieData(calorie1);
         actualUser.addWorkoutData(workout);
         actualUser.addWorkoutData(workout2);
         actualUser.addCalorieData(calorie2);
+        actualUser.addCalorieData(calorie3);
 
         Save.SaveData(actualUser);
     }
@@ -139,17 +144,19 @@ public class SaveTesting {
         exercises.add(exercise1);
         exercises.add(exercise2);
 
-        Workout workout = new Workout("Push", exercises);
-        Workout workout2 = new Workout("Pull", exercises);
+        Workout workout = new Workout(WorkoutPlan.PUSH, exercises);
+        Workout workout2 = new Workout(WorkoutPlan.PULL, exercises);
 
-        Calories calorie1 = new Calories("Meal", "Breakfast", "Toast", 300);
-        Calories calorie2 = new Calories("Meal", "Lunch", "Biryani", 500);
+        Calories calorie1 = new Calories(MealType.MEAL, MealTime.BREAKFAST, "Toast", 300);
+        Calories calorie2 = new Calories(MealType.MEAL, MealTime.LUNCH, "Biryani", 500);
+        Calories calorie3 = new Calories(MealType.SNACK, null, "Oreos", 200);
 
         User expectedUser = new User("Name3", "Password3", "Email3");
         expectedUser.addCalorieData(calorie1);
         expectedUser.addWorkoutData(workout);
         expectedUser.addWorkoutData(workout2);
         expectedUser.addCalorieData(calorie2);
+        expectedUser.addCalorieData(calorie3);
 
         User actualUser = new User("Name3", "Password3", "Email3");
         Save.LoadData(actualUser);
@@ -167,6 +174,6 @@ public class SaveTesting {
 
     @Test public void SaveUser() {
         User user = new User("Name2", "Password2", "Email2");
-        Save.SaveUser(user);
+        Save.SaveNewUser(user);
     }
 }

@@ -1,5 +1,8 @@
 package Data;
 
+import Enums.MealTime;
+import Enums.WorkoutPlan;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,11 +14,11 @@ import java.util.HashMap;
 public class Workout{
     private static final ArrayList<HashMap<String, Object>> workoutData = new ArrayList<>();
     // This is the public workouts data structure to be used to store the data
-    private String workoutPlan;
+    private WorkoutPlan workoutPlan;
     private ArrayList<Exercise> exercises;
 
     // Getters and Setters
-    public Workout(String workoutPlan, ArrayList<Exercise> exercises) {
+    public Workout(WorkoutPlan workoutPlan, ArrayList<Exercise> exercises) {
         this.workoutPlan = workoutPlan;
         this.exercises = exercises;
     }
@@ -30,11 +33,11 @@ public static void storeWorkoutData(HashMap<String, Object> newWorkout) {
         return workoutData;
     }
 
-    public String getWorkoutPlan() {
+    public WorkoutPlan getWorkoutPlan() {
         return workoutPlan;
     }
 
-    public void setWorkoutPlan(String workoutPlan) {
+    public void setWorkoutPlan(WorkoutPlan workoutPlan) {
         this.workoutPlan = workoutPlan;
     }
 
