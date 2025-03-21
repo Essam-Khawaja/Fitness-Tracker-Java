@@ -23,7 +23,7 @@ public class Save {
                 while (line != null) {
                     String[] data = line.split(",");
                     if (data[0].equals("U") && data[1].equals(user.getUsername())) {
-                        bufferedWriter.write("U," + user.getUsername() + ',' + user.getEmail() + ',' + user.getPassword() + '\n');
+                        bufferedWriter.write("U," + user.toString() + '\n');
                         // Copy new data onto new save file
                         for (Calories dataItem : user.getCalorieData()) {
                             bufferedWriter.write("C,");
@@ -52,7 +52,7 @@ public class Save {
                     }
                 }
                 if (!userExists) {
-                    bufferedWriter.write("U," + user.getUsername() + ',' + user.getEmail() + ',' + user.getPassword() + '\n');
+                    bufferedWriter.write("U," + user.toString() + '\n');
                     // Copy new data onto new save file
                     for (Calories dataItem : user.getCalorieData()) {
                         bufferedWriter.write("C,");
@@ -67,6 +67,10 @@ public class Save {
                         bufferedWriter.flush();
                     }
                 }
+                fileReader.close();
+                bufferedReader.close();
+                fileWriter.close();
+                bufferedWriter.close();
 
                 // Replace all the content from old save file to new save file
                 FileWriter fileWriter2 = new FileWriter(file);
@@ -79,6 +83,10 @@ public class Save {
                     bufferedWriter2.flush();
                     line2 = bufferedReader2.readLine();
                 }
+                fileWriter2.close();
+                bufferedWriter2.close();
+                fileReader2.close();
+                bufferedReader2.close();
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             } catch (IOException e) {
@@ -154,6 +162,73 @@ public class Save {
                     }
                 }
             }
+            fileReader.close();
+            bufferedReader.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void SaveNewUser(User user){
+        File file = new File("src/Save/UserSave.csv");
+        File file2 = new File("src/Save/UserTempSave.csv");
+        try {
+            boolean saveCreated = file.createNewFile();
+            boolean tempCreated = file2.createNewFile();
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            FileWriter fileWriter = new FileWriter(file2);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            String line = bufferedReader.readLine();
+            while (line != null) {
+                bufferedWriter.write(line + "\n");
+                bufferedWriter.flush();
+                line = bufferedReader.readLine();
+            }
+            bufferedWriter.write(user.toString() + "\n");
+            bufferedWriter.flush();
+            bufferedWriter.close();
+            bufferedReader.close();
+            fileWriter.close();
+            fileReader.close();
+
+            FileWriter fileWriter2 = new FileWriter(file);
+            BufferedWriter bufferedWriter2 = new BufferedWriter(fileWriter2);
+            FileReader fileReader2 = new FileReader(file2);
+            BufferedReader bufferedReader2 = new BufferedReader(fileReader2);
+            String line2 = bufferedReader2.readLine();
+            while (line2 != null) {
+                bufferedWriter2.write(line2 + "\n");
+                bufferedWriter2.flush();
+                line2 = bufferedReader2.readLine();
+            }
+            fileWriter2.close();
+            bufferedReader2.close();
+            fileReader2.close();
+            bufferedWriter2.close();
+            file2.delete();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean CheckUserExists(User user){
+        File file = new File("src/Save/UserSave.csv");
+        boolean exists = false;
+        try {
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line = bufferedReader.readLine();
+            while (line != null) {
+                String[] data = line.split(",");
+                if (data[0].equals(user.getUsername()) && data[1].equals(user.getPassword()) && data[2].equals(user.getEmail())) {
+                    exists = true;
+                }
+                line = bufferedReader.readLine();
+            }
+            return exists;
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
