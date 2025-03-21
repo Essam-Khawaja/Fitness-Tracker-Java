@@ -9,6 +9,7 @@ import java.util.HashMap;
  * @author Ali Gad
  */
 public class Workout{
+    private static final ArrayList<HashMap<String, Object>> workoutData = new ArrayList<>();
     // This is the public workouts data structure to be used to store the data
     private String workoutPlan;
     private ArrayList<Exercise> exercises;
@@ -17,6 +18,16 @@ public class Workout{
     public Workout(String workoutPlan, ArrayList<Exercise> exercises) {
         this.workoutPlan = workoutPlan;
         this.exercises = exercises;
+    }
+
+public static void storeWorkoutData(HashMap<String, Object> newWorkout) {
+    synchronized (workoutData) {
+        workoutData.add(newWorkout);
+    }
+}
+
+    public static ArrayList<HashMap<String, Object>> getWorkouts() {
+        return workoutData;
     }
 
     public String getWorkoutPlan() {

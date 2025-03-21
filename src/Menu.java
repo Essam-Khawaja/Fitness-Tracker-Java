@@ -80,17 +80,16 @@ switch (option) {
                 System.out.println(" Please answer the following questions below:");
                 System.out.println("-----------------------------");
 
-        // Ask if it's a meal or a snack
-                System.out.print("\nAre you having a snack or a meal (Type 'snack' or 'meal'): ");
-        // Duplicate fixed.
-
         // Validate input
-        String snackOrMeal = scanner.nextLine();
-        while (!snackOrMeal.equalsIgnoreCase("snack") && !snackOrMeal.equalsIgnoreCase("meal")) {
-                System.out.println("Invalid input. Please try again.");
-                System.out.println("Invalid response! Please enter 'snack' or 'meal'.");
-                System.out.print("Are you having a snack or a meal (Type 'snack' or 'meal'): ");
-        }
+String snackOrMeal = "";
+while (true) {
+    System.out.print("Are you having a snack or a meal (Type 'snack' or 'meal'): ");
+    snackOrMeal = scanner.nextLine();
+    if (snackOrMeal.equalsIgnoreCase("snack") || snackOrMeal.equalsIgnoreCase("meal")) {
+        break;
+    }
+    System.out.println("🚫 Invalid input! Please enter 'snack' or 'meal'.");
+}
 
         // If it's a meal, ask for the specific type
         String mealType = "";
@@ -115,18 +114,18 @@ switch (option) {
         boolean isCaloriesInputValid = false;
         int calories = 0;
 
-        while (!isCaloriesInputValid) { // Calorie validation error resolved
-                System.out.print(" How many calories does this item have? (Enter a number): ");
-            caloriesInput = scanner.nextLine();
+        while (!isCaloriesInputValid) {
+            System.out.print(" How many calories does this item have? (Enter a number): ");
+            caloriesInput = scanner.nextLine().trim();
             try {
                 calories = Integer.parseInt(caloriesInput);
-                if (calories < 0 || calories > MAX_CALORIES)
-                System.out.println("Invalid input! Data.Calories must be between 0 and 20,000. Try again!");
-                else {
+                if (calories >= 0 && calories <= MAX_CALORIES) {
                     isCaloriesInputValid = true;
+                } else {
+                    System.out.println("🚫 Invalid input! Calories must be between 0 and " + MAX_CALORIES + ". Try again!");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Enter a valid whole number.");
+                System.out.println("🚫 Invalid input! Please enter a valid numeric value.");
             }
         }
 
@@ -230,14 +229,16 @@ switch (option) {
                 System.out.print("\n Enter the weight lifted for Data.Set " + (j + 1) + " (e.g., 50kg or 100lb): ");
                 String weightLiftedInput = scanner.nextLine();
                 boolean isWeightValid = false;
-                float weightLifted = 0f;
+                HashMap<String, Object> weightData = new HashMap<>();
 
                 while (!isWeightValid) {
                     if (weightLiftedInput.toLowerCase().endsWith("kg")) {
                         try {
-                            weightLifted = Float.parseFloat(weightLiftedInput.replace("kg", "").trim());
-                            isWeightValid = Workout.validateWeightLifted(String.valueOf(weightLifted));
+                            float weightValue = Float.parseFloat(weightLiftedInput.replace("kg", "").trim());
+                            isWeightValid = Workout.validateWeightLifted(String.valueOf(weightValue));
                             if (!isWeightValid) throw new NumberFormatException();
+                            weightData.put("value", weightValue);
+                            weightData.put("unit", "kg");
                         } catch (NumberFormatException e) {
                 System.out.println("Invalid input! Enter a valid weight in kg or lb (e.g., 50kg or 100lb).");
                 System.out.print("Enter the weight lifted for Data.Set " + (j + 1) + " again: ");
@@ -245,10 +246,11 @@ switch (option) {
                         }
                     } else if (weightLiftedInput.toLowerCase().endsWith("lb")) {
                         try {
-                            float weightInPounds = Float.parseFloat(weightLiftedInput.replace("lb", "").trim());
-                            weightLifted = weightInPounds * 0.453592f;
-                            isWeightValid = Workout.validateWeightLifted(String.valueOf(weightLifted));
+                            float weightValue = Float.parseFloat(weightLiftedInput.replace("lb", "").trim());
+                            isWeightValid = Workout.validateWeightLifted(String.valueOf(weightValue));
                             if (!isWeightValid) throw new NumberFormatException();
+                            weightData.put("value", weightValue);
+                            weightData.put("unit", "lb");
                         } catch (NumberFormatException e) {
                 System.out.println("Invalid input! Enter a valid weight in kg or lb (e.g., 50kg or 100lb).");
                 System.out.print("Enter the weight lifted for Data.Set " + (j + 1) + " again: ");
@@ -274,9 +276,17 @@ switch (option) {
 
                 int reps = Integer.parseInt(repsInput);
 
-                // Create new set - coded this way for easier transition into OOP
-                HashMap<String, Object> newSet = Workout.createSet(weightLifted, reps);
+                HashMap<String, Object> newSet = Workout.createSet((float) weightData.get("value"), reps);
+                newSet.put("weightUnit", weightData.get("unit"));
+
+                HashMap<String, Object> setWithDetails = new HashMap<>();
+                setWithDetails.put("weight", weightData.get("value"));
+                setWithDetails.put("weightUnit", weightData.get("unit"));
+                setWithDetails.put("reps", reps);
+                sets.add(setWithDetails);
+
                 sets.add(newSet);
+                newSet.put("weightUnit", weightData.get("unit"));
             }
 
             // Create new exercise - coded this way for easier transition to OOP
@@ -397,11 +407,12 @@ private static void viewMealBreakdown() {
         ArrayList<HashMap<String, Object>> dinner = new ArrayList<>();
 
         for (HashMap<String, Object> entry : calorieTrackingData) {
-            String snackOrMeal = (String) entry.get("snackOrMeal");
-            if (snackOrMeal.equals("snack")) {
+            if (entry == null || entry.get("type") == null) continue;
+            String type = entry.get("type").toString();
+            if (type.equalsIgnoreCase("snack")) {
                 snacks.add(entry);
-            } else {
-                String mealType = (String) entry.get("mealType");
+            } else if (type.equalsIgnoreCase("meal") && entry.get("mealType") != null) {
+                String mealType = entry.get("mealType").toString().toLowerCase();
                 switch (mealType) {
                     case "breakfast":
                         breakfast.add(entry);
@@ -419,32 +430,36 @@ private static void viewMealBreakdown() {
                 System.out.println("🍳 Breakfast:");
         int totalBreakfast = 0;
         for (HashMap<String, Object> entry : breakfast) {
-                System.out.println("  - " + entry.get("name") + ": " + entry.get("calories") + " kcal");
-            totalBreakfast += (int) entry.get("calories");
+            if (entry.get("itemName") == null || entry.get("calorieCount") == null) continue;
+            System.out.println("  - " + entry.get("itemName") + ": " + entry.get("calorieCount") + " kcal");
+            totalBreakfast += (entry.get("calorieCount") instanceof Integer) ? (int) entry.get("calorieCount") : 0;
         }
                 System.out.println("  Total: " + totalBreakfast + " kcal");
 
                 System.out.println("\n🥪 Lunch:");
         int totalLunch = 0;
         for (HashMap<String, Object> entry : lunch) {
-                System.out.println("  - " + entry.get("name") + ": " + entry.get("calories") + " kcal");
-            totalLunch += (int) entry.get("calories");
+            if (entry.get("itemName") == null || entry.get("calorieCount") == null) continue;
+            System.out.println("  - " + entry.get("itemName") + ": " + entry.get("calorieCount") + " kcal");
+            totalLunch += (entry.get("calorieCount") instanceof Integer) ? (int) entry.get("calorieCount") : 0;
         }
                 System.out.println("  Total: " + totalLunch + " kcal");
 
                 System.out.println("\n🍝 Dinner:");
         int totalDinner = 0;
         for (HashMap<String, Object> entry : dinner) {
-                System.out.println("  - " + entry.get("name") + ": " + entry.get("calories") + " kcal");
-            totalDinner += (int) entry.get("calories");
+            if (entry.get("itemName") == null || entry.get("calorieCount") == null) continue;
+            System.out.println("  - " + entry.get("itemName") + ": " + entry.get("calorieCount") + " kcal");
+            totalDinner += (entry.get("calorieCount") instanceof Integer) ? (int) entry.get("calorieCount") : 0;
         }
                 System.out.println("  Total: " + totalDinner + " kcal");
 
                 System.out.println("\n🍇 Snacks:");
         int totalSnacks = 0;
         for (HashMap<String, Object> entry : snacks) {
-                System.out.println("  - " + entry.get("name") + ": " + entry.get("calories") + " kcal");
-            totalSnacks += (int) entry.get("calories");
+            if (entry.get("itemName") == null || entry.get("calorieCount") == null) continue;
+            System.out.println("  - " + entry.get("itemName") + ": " + entry.get("calorieCount") + " kcal");
+            totalSnacks += (entry.get("calorieCount") instanceof Integer) ? (int) entry.get("calorieCount") : 0;
         }
                 System.out.println("  Total: " + totalSnacks + " kcal");
     }
@@ -509,7 +524,10 @@ private static void viewMealBreakdown() {
                 exercises.forEach(exercise -> {
                 System.out.println("Data.Exercise: " + exercise.get("exerciseName"));
                     ArrayList<HashMap<String, Integer>> sets = (ArrayList<HashMap<String, Integer>>) exercise.get("sets");
-                    sets.forEach(set -> System.out.println(" - " + set.get("weightLifted") + " kg x " + set.get("reps") + " reps"));
+                    sets.forEach(set -> {
+                        String enteredUnit = String.valueOf(set.get("weightUnit"));
+                        System.out.println(" - " + set.get("weightLifted") + " " + enteredUnit + " x " + set.get("reps") + " reps");
+                    });
                 });
             });
                 System.out.println(" ");
@@ -538,8 +556,7 @@ private static void viewMealBreakdown() {
         ArrayList<HashMap<String, Object>> dinner = new ArrayList<>();
 
         // Store the data in the correct structure
-        Iterable<? extends HashMap<String, Object>> calorieIterator = null;
-        for (HashMap<String, Object> entry : calorieIterator) {
+for (HashMap<String, Object> entry : Calories.getData()) {
             String snackOrMeal = (String) entry.get("snackOrMeal");
             if (snackOrMeal.equals("snack")) {
                 snacks.add(entry);
@@ -721,7 +738,8 @@ private static void viewVolumeOfWorkout() {
                     int setCount = 0;
                     float volume = 1;
                     for (HashMap<String, Object> set : (ArrayList<HashMap<String, Object>>) exercise.get("sets")) {
-                        setCount++;
+                        float weight = Float.parseFloat(set.get("value").toString());
+                        volume *= (int) set.get("reps") * weight;
                         volume *= (int) set.get("reps") *  (float) set.get("weightLifted");
                     }
                     volume *= setCount;
@@ -856,15 +874,17 @@ private static void viewHeaviestLiftPerExercise() {
         // Go through each exercise, and print out the max weight lifted for that exercise
         for (HashMap<String, Object> entry : workouts) {
             for (HashMap<String, Object> exercise : (ArrayList<HashMap<String, Object>>) entry.get("exercises")) {
-            System.out.println("Name: " + exercise.get("exerciseName"));
+                System.out.println("Name: " + exercise.get("exerciseName"));
                 float maxWeightLift = 0f;
+                String unit = null;
                 for (HashMap<String, Object> set : (ArrayList<HashMap<String, Object>>) exercise.get("sets")) {
-                    float currentWeightLift = (float) set.get("weightLifted");
+                    float currentWeightLift = Float.parseFloat(set.get("value").toString());
+                    unit = set.get("unit").toString();
                     if (maxWeightLift < currentWeightLift) {
                         maxWeightLift = (float) set.get("weightLifted");
                     }
                 }
-            System.out.println("Max Weight Lifted : " + maxWeightLift + " kg");
+                System.out.println("Max Weight Lifted : " + maxWeightLift + " " + unit);
             }
         }
             System.out.println(" ");
