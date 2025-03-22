@@ -5,9 +5,11 @@ import Enums.MealTime;
 import Enums.MealType;
 import Enums.WorkoutPlan;
 import Save.*;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SaveTesting {
     @Test public void testSave() {
@@ -48,23 +50,17 @@ public class SaveTesting {
 
         Workout workout = new Workout(WorkoutPlan.PUSH, exercises);
 
-        Calories calorie1 = new Calories(MealType.MEAL, MealTime.DINNER, "Toast", 200);
+        Calories calorie1 = new Calories(MealType.MEAL, MealTime.BREAKFAST, "Toast", 300);
 
-        User actualUser = new User("Name", "Password", "Email");
-        User expectedUser = new User("Name", "Password", "Email");
+        User actualUser = new User("Name2", "Password", "Email2");
+        User expectedUser = new User("Name2", "Password", "Email2");
         expectedUser.addCalorieData(calorie1);
         expectedUser.addWorkoutData(workout);
 
         Save.LoadData(actualUser);
-        ArrayList<Calories> actualCalories = actualUser.getCalorieData();
-        ArrayList<Workout> actualWorkouts = actualUser.getWorkoutData();
-        ArrayList<Calories> expectedCalories = expectedUser.getCalorieData();
-        ArrayList<Workout> expectedWorkouts = expectedUser.getWorkoutData();
-
-        System.out.println(actualCalories.toString());
-        System.out.println(actualWorkouts.toString());
-        System.out.println(expectedCalories.toString());
-        System.out.println(expectedWorkouts.toString());
+        boolean expected = true;
+        boolean actual = actualUser.equals(expectedUser);
+        assertEquals(expected, actual);
     }
 
     @Test public void testLoadOtherUser() {
@@ -149,7 +145,7 @@ public class SaveTesting {
 
         Calories calorie1 = new Calories(MealType.MEAL, MealTime.BREAKFAST, "Toast", 300);
         Calories calorie2 = new Calories(MealType.MEAL, MealTime.LUNCH, "Biryani", 500);
-        Calories calorie3 = new Calories(MealType.SNACK, null, "Oreos", 200);
+        Calories calorie3 = new Calories(MealType.SNACK, MealTime.NULL, "Oreos", 200);
 
         User expectedUser = new User("Name3", "Password3", "Email3");
         expectedUser.addCalorieData(calorie1);
@@ -161,15 +157,9 @@ public class SaveTesting {
         User actualUser = new User("Name3", "Password3", "Email3");
         Save.LoadData(actualUser);
 
-        ArrayList<Calories> actualCalories = actualUser.getCalorieData();
-        ArrayList<Workout> actualWorkouts = actualUser.getWorkoutData();
-        ArrayList<Calories> expectedCalories = expectedUser.getCalorieData();
-        ArrayList<Workout> expectedWorkouts = expectedUser.getWorkoutData();
-
-        System.out.println(actualCalories.toString());
-        System.out.println(actualWorkouts.toString());
-        System.out.println(expectedCalories.toString());
-        System.out.println(expectedWorkouts.toString());
+        boolean expected = true;
+        boolean actual = actualUser.equals(expectedUser);
+        assertEquals(expected, actual);
     }
 
     @Test public void SaveUser() {

@@ -5,6 +5,7 @@ import Enums.WorkoutPlan;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * This is a helper class to store all the workout data
@@ -47,6 +48,23 @@ public static void storeWorkoutData(HashMap<String, Object> newWorkout) {
 
     public void setExercises(ArrayList<Exercise> exercises) {
         this.exercises = exercises;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Workout workout = (Workout) o;
+        boolean equals = false;
+        if (this.workoutPlan.equals(workout.getWorkoutPlan()) && this.exercises.equals(workout.getExercises())) {
+            equals = true;
+        }
+        return equals;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(workoutPlan, exercises);
     }
 
     //TO-String

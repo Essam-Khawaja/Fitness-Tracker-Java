@@ -1,7 +1,7 @@
 package Enums;
 
 public enum MealTime {
-    BREAKFAST('B'), LUNCH('L'), DINNER('D');
+    BREAKFAST('B'), LUNCH('L'), DINNER('D'), NULL('N');
 
     private char time;
 
@@ -22,6 +22,6 @@ public enum MealTime {
             case "DINNER":
                 return MealTime.DINNER;
         }
-        return null;
+        return MealTime.NULL;
     }
 }

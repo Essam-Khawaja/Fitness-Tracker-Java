@@ -1,6 +1,7 @@
 package Data;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Exercise {
     private String exerciseName;
@@ -28,7 +29,20 @@ public class Exercise {
         this.sets = sets;
     }
 
-//To-String
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Exercise exercise = (Exercise) o;
+        return exerciseName.equals(exercise.exerciseName) && sets.equals(exercise.sets);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(exerciseName, sets);
+    }
+
+    //To-String
     public String toString() {
         String objectString = "E,";
         objectString += exerciseName + ",";
