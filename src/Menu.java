@@ -51,6 +51,45 @@ public class Menu {
         return;
     }
 
+    public static void commandLineStartApp(String path) {
+        System.out.println("Welcome! You have entered a file, we will load the data after you have logged in: ");
+        Scanner scanner = new Scanner(System.in);
+        // Take the inputs
+        System.out.println("Login:");
+        System.out.print("Enter Email: ");
+        String email = scanner.nextLine();
+
+        System.out.print("Enter Password: ");
+        String password = scanner.nextLine();
+
+        user.setEmail(email);
+        user.setPassword(password);
+
+        int userExists = Save.ValidateUser(user);   // Check if password or email is correct
+
+        while (userExists == 0 || userExists == -1) {
+            if (userExists == 0) {      // If password is wrong
+                System.out.println("Invalid password!");
+            } else {
+                System.out.println("Invalid email!");
+            }
+            System.out.print("Enter Email: ");
+            email = scanner.nextLine();
+
+            System.out.print("Enter Password: ");
+            password = scanner.nextLine();
+
+            user.setEmail(email);
+            user.setPassword(password);
+
+            userExists = Save.ValidateUser(user);
+        }
+        Save.LoadData(user, path);
+        System.out.println("Welcome! You have logged in, with your data loaded successfully!");
+        getMenu();
+        return;
+    }
+
     /**
      * Handles the sign-up for the user
      */
@@ -182,7 +221,7 @@ public class Menu {
                 choice = scanner.nextLine();
             }
             if (choice.equals("Y")) {
-                Save.LoadData(user);    // Load the data
+                Save.LoadData(user, "src/Save/Save.csv");    // Load the data
             }
             System.out.println("Login successful!");
         }

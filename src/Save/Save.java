@@ -122,9 +122,10 @@ public class Save {
     /**
      * Goes through the save file and finds the corresponding user and copies all the data into the user object
      * @param user -> The user in which we have to load the data
+     * @param path -> The path to the file
      */
-    public static void LoadData(User user){
-        File file = new File("src/Save/Save.csv");  // Open the file
+    public static void LoadData(User user, String path){
+        File file = new File(path);  // Open the file
         try {
             FileReader fileReader = new FileReader(file);       // Open the file for reading
             BufferedReader bufferedReader = new BufferedReader(fileReader);
