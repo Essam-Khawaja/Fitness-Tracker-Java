@@ -24,16 +24,6 @@ public class Workout{
         this.exercises = exercises;
     }
 
-public static void storeWorkoutData(HashMap<String, Object> newWorkout) {
-    synchronized (workoutData) {
-        workoutData.add(newWorkout);
-    }
-}
-
-    public static ArrayList<HashMap<String, Object>> getWorkouts() {
-        return workoutData;
-    }
-
     public WorkoutPlan getWorkoutPlan() {
         return workoutPlan;
     }
@@ -93,10 +83,10 @@ public static void storeWorkoutData(HashMap<String, Object> newWorkout) {
      * @return -> A boolean that represents whether the workout plan is valid
      * */
     public static boolean validateWorkoutPlan(String workoutPlan) {
-        if (workoutPlan.equalsIgnoreCase("Push") || workoutPlan.equalsIgnoreCase("Pull") || workoutPlan.equalsIgnoreCase("Leg") || workoutPlan.equalsIgnoreCase("Upper") || workoutPlan.equalsIgnoreCase("Lower")) {
+        if (workoutPlan.equalsIgnoreCase("1") || workoutPlan.equalsIgnoreCase("2") || workoutPlan.equalsIgnoreCase("3") || workoutPlan.equalsIgnoreCase("4") || workoutPlan.equalsIgnoreCase("5")|| workoutPlan.equalsIgnoreCase("6")) {
             return true;
         }
-        System.out.println("Invalid workout plan. Try again.");
+        System.out.println("Invalid input. Try again.");
         return false;
     }
 
@@ -146,44 +136,5 @@ public static void storeWorkoutData(HashMap<String, Object> newWorkout) {
             System.out.println("Invalid number of reps. Must be a whole number. Try again.");
             return false;
         }
-    }
-
-    /**
-     * Returns a new Hashmap that stores all the parameters with standardised keys and values
-     * @param weightLifted -> An int that stores the weight to be stored into the workouts array
-     * @param reps -> An int that stores the number of reps to be stored into the workouts array
-     * @return set -> Hashmap<String, Integer> storing the values of weight lifted and number of reps
-     * */
-    public static HashMap<String, Object> createSet(float weightLifted, int reps) {
-        HashMap<String, Object> set = new HashMap<>();     // Initialize a new Hashmap
-        set.put("weightLifted", weightLifted);      // Store the weightLifted
-        set.put("reps", reps);      // Store the reps
-        return set;     // Return the set Hashmap
-    }
-
-    /**
-     * Returns a new Hashmap that stores all the parameters with standardised keys and values
-     * @param exerciseName -> A String that stores the name of the exercise to be stored
-     * @param sets -> An ArrayList of Hashmaps that stores all the sets in the exercise
-     * @return exercise -> Hashmap<String, Object> that stores the name and sets of the exercise
-     * */
-    public static HashMap<String, Object> createExercise(String exerciseName, ArrayList<HashMap<String, Object>> sets) {
-        HashMap<String, Object> exercise = new HashMap<>();     // Initialize a new Hashmap
-        exercise.put("exerciseName", exerciseName);     // Store the exercise name
-        exercise.put("sets", sets);     // Store the collection of sets
-        return exercise;        // Return the exercise Hashmap
-    }
-
-    /**
-     * Returns a new Hashmap that stores all the parameters with standardised keys and values
-     * @param workoutPlan -> A String that stores the name of the workout plan
-     * @param exercises -> ArrayList of Hashmaps that store the exercises in this workout
-     * @return workout -> Hashmap<String, Integer> storing the values of weight lifted and number of reps
-     * */
-    public static HashMap<String, Object> createWorkout(String workoutPlan, ArrayList<HashMap<String, Object>> exercises) {
-        HashMap<String, Object> workout = new HashMap<>();      // Initialize a new Hashmap
-        workout.put("workoutPlan", workoutPlan);        // Store the workout plan
-        workout.put("exercises", exercises);        // Store the collection of exercises
-        return workout;     // Return the workout Hashmap
     }
 }
