@@ -6,6 +6,7 @@ import Data.Workout;
 import Enums.MealTime;
 import Enums.MealType;
 import Enums.WorkoutPlan;
+import Save.Save;
 
 import java.util.*;
 
@@ -56,9 +57,54 @@ public class Menu {
         System.out.print("Enter Username: ");
         String username = scanner.nextLine();
 
-        user = new User(email, password, username);
-        save.saveuser(user);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setUsername(username);
+        Save.SaveNewUser(user);
         System.out.println("Account created successfully!");
+    }
+
+    private static void handleLogin(Scanner scanner) {
+        System.out.println("Login:");
+        System.out.print("Enter Email: ");
+        String email = scanner.nextLine();
+
+        System.out.print("Enter Password: ");
+        String password = scanner.nextLine();
+
+        user.setEmail(email);
+        user.setPassword(password);
+
+        boolean userExists = Save.CheckUserExists(user);
+
+        while (!userExists) {
+            System.out.println("Invalid Email or Password!");
+            System.out.println("Do you want to continue or sign up? (Y/N)");
+            String choice = scanner.nextLine();
+
+            while (!choice.equals("Y") && !choice.equals("N")) {
+                System.out.println("Invalid input! Please enter Y or N.");
+                choice = scanner.nextLine();
+            }
+
+            if (choice.equals("Y")) {
+                System.out.println("Login:");
+                System.out.print("Enter Email: ");
+                email = scanner.nextLine();
+
+                System.out.print("Enter Password: ");
+                password = scanner.nextLine();
+
+                user.setEmail(email);
+                user.setPassword(password);
+
+                userExists = Save.CheckUserExists(user);
+            }
+            else {
+                startApp();
+                break;
+            }
+        }
     }
 
     /**
