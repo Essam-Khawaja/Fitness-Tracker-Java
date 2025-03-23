@@ -24,6 +24,43 @@ public class Menu {
     private static final int MAX_SET_NUMBER = 5;    // Stores the maximum number of sets that can be stored for a single exercise
     private static User user = new User("", "", "");
 
+    public static void startApp() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome! Please choose an option:");
+        System.out.println("1. Sign Up");
+        System.out.println("2. Log In");
+
+        String choice = scanner.nextLine();
+        while (!choice.equals("1") && !choice.equals("2")) {
+            System.out.println("Invalid input! Please enter 1 or 2.");
+            choice = scanner.nextLine();
+        }
+
+        if (choice.equals("1")) {
+            handleSignUp(scanner);
+        } else {
+            handleLogin(scanner);
+        }
+
+        getMenu();
+    }
+
+    private static void handleSignUp(Scanner scanner) {
+        System.out.println("Sign Up:");
+        System.out.print("Enter Email: ");
+        String email = scanner.nextLine();
+
+        System.out.print("Enter Password: ");
+        String password = scanner.nextLine();
+
+        System.out.print("Enter Username: ");
+        String username = scanner.nextLine();
+
+        user = new User(email, password, username);
+        save.saveuser(user);
+        System.out.println("Account created successfully!");
+    }
+
     /**
      * Displays the main menu and handles user input for
      * navigating between options such as calorie tracking,
