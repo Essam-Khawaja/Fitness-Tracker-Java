@@ -23,30 +23,40 @@ public class Menu {
     private static final int MAX_CALORIES = 20000;  // Stores the max calories that can be stored for a single item
     private static final int MAX_EXERCISE_NUMBER = 10;  // Stores the maximum number of exercises that can be stored for a single workout
     private static final int MAX_SET_NUMBER = 5;    // Stores the maximum number of sets that can be stored for a single exercise
-    private static User user = new User("", "", "");
+    private static User user = new User("", "", "");    // This is the user of the menu
 
+    /**
+     * This is where the app starts from, by asking the user to sign up or log in
+     */
     public static void startApp() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome! Please choose an option:");
         System.out.println("1. Sign Up");
         System.out.println("2. Log In");
 
-        String choice = scanner.nextLine();
+        String choice = scanner.nextLine();     // Takes the input
+        // Validates the input
         while (!choice.equals("1") && !choice.equals("2")) {
             System.out.println("Invalid input! Please enter 1 or 2.");
             choice = scanner.nextLine();
         }
 
+        // Corresponding method called from choice
         if (choice.equals("1")) {
-            handleSignUp(scanner);
+            handleSignUp();
         } else {
-            handleLogin(scanner);
+            handleLogin();
         }
-
         getMenu();
+        return;
     }
 
-    private static void handleSignUp(Scanner scanner) {
+    /**
+     * Handles the sign-up for the user
+     */
+    private static void handleSignUp() {
+        Scanner scanner = new Scanner(System.in);
+        // Take all the data in
         System.out.println("Sign Up:");
         System.out.print("Enter Email: ");
         String email = scanner.nextLine();
@@ -60,11 +70,55 @@ public class Menu {
         user.setEmail(email);
         user.setPassword(password);
         user.setUsername(username);
-        Save.SaveNewUser(user);
+
+        int userExists = Save.ValidateUser(user);   // Check if a user with same email exists
+        while (userExists == 0) {
+            // Warn and check whether the user wants to login instead
+            System.out.println("This user already exists!");
+            System.out.println("Do you want to continue or log in? (Y/N)");
+            String choice = scanner.nextLine();
+
+            while (!choice.equals("Y") && !choice.equals("N")) {
+                System.out.println("Invalid input! Please enter Y or N.");
+                choice = scanner.nextLine();
+            }
+
+            // Try signing in again
+            if (choice.equals("Y")) {
+                System.out.println("Sign Up:");
+                System.out.print("Enter Email: ");
+                email = scanner.nextLine();
+
+                System.out.print("Enter Password: ");
+                password = scanner.nextLine();
+
+                System.out.print("Enter Username: ");
+                username = scanner.nextLine();
+
+                user.setEmail(email);
+                user.setPassword(password);
+                user.setUsername(username);
+                userExists = Save.ValidateUser(user);
+            } else {    // Otherwise go back to start app
+                startApp();
+                return;
+            }
+        }
+        // Confirm we have the right details
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setUsername(username);
+
+        Save.SaveNewUser(user);     // Save the new user
         System.out.println("Account created successfully!");
     }
 
-    private static void handleLogin(Scanner scanner) {
+    /**
+     * Handles the login of the user
+     */
+    private static void handleLogin() {
+        Scanner scanner = new Scanner(System.in);
+        // Take the inputs
         System.out.println("Login:");
         System.out.print("Enter Email: ");
         String email = scanner.nextLine();
@@ -75,20 +129,11 @@ public class Menu {
         user.setEmail(email);
         user.setPassword(password);
 
-        boolean userExists = Save.CheckUserExists(user);
+        int userExists = Save.ValidateUser(user);   // Check if password or email is correct
 
-        while (!userExists) {
-            System.out.println("Invalid Email or Password!");
-            System.out.println("Do you want to continue or sign up? (Y/N)");
-            String choice = scanner.nextLine();
-
-            while (!choice.equals("Y") && !choice.equals("N")) {
-                System.out.println("Invalid input! Please enter Y or N.");
-                choice = scanner.nextLine();
-            }
-
-            if (choice.equals("Y")) {
-                System.out.println("Login:");
+        while (userExists == 0 || userExists == -1) {
+            if (userExists == 0) {      // If password is wrong, take input again
+                System.out.println("Invalid password!");
                 System.out.print("Enter Email: ");
                 email = scanner.nextLine();
 
@@ -98,12 +143,48 @@ public class Menu {
                 user.setEmail(email);
                 user.setPassword(password);
 
-                userExists = Save.CheckUserExists(user);
+                userExists = Save.ValidateUser(user);
+            } else {    // If email is wrong, then ask whether they want to signup instead
+                System.out.println("Email does not exist!");
+                System.out.println("Do you want to continue or sign up? (Y/N)");
+                String choice = scanner.nextLine();
+
+                while (!choice.equals("Y") && !choice.equals("N")) {
+                    System.out.println("Invalid input! Please enter Y or N.");
+                    choice = scanner.nextLine();
+                }
+
+                if (choice.equals("Y")) {
+                    System.out.println("Login:");
+                    System.out.print("Enter Email: ");
+                    email = scanner.nextLine();
+
+                    System.out.print("Enter Password: ");
+                    password = scanner.nextLine();
+
+                    user.setEmail(email);
+                    user.setPassword(password);
+
+                    userExists = Save.ValidateUser(user);
+                }
+                else {
+                    startApp();
+                    return;
+                }
             }
-            else {
-                startApp();
-                break;
+        }
+        // If we have both correct email and password
+        if (userExists == 1) {
+            System.out.println("Do you want to load old data? (Y/N)");  // Ask if they want to load in old data
+            String choice = scanner.nextLine();
+            while (!choice.equals("Y") && !choice.equals("N")) {
+                System.out.println("Invalid input! Please enter Y or N.");
+                choice = scanner.nextLine();
             }
+            if (choice.equals("Y")) {
+                Save.LoadData(user);    // Load the data
+            }
+            System.out.println("Login successful!");
         }
     }
 
@@ -123,15 +204,16 @@ public class Menu {
         System.out.println("   🍎 1. Calorie Tracking");
         System.out.println("   🏋️ 2. Workout Tracking");
         System.out.println("   📊 3. View Progress");
-        System.out.println("   ❌ 4. Exit");
+        System.out.println("   💾 4. Save Data");
+        System.out.println("   ❌ 5. Exit");
         System.out.println("===================================");
 
         Scanner scanner = new Scanner(System.in);
         String option = scanner.nextLine();
 
         // Validate the user's input
-        while (!(option.equals("1") || option.equals("2") || option.equals("3") || option.equals("4"))) {
-            System.out.println("🚫 Invalid choice! Please choose a number between 1️⃣ and 4️⃣.");
+        while (!(option.equals("1") || option.equals("2") || option.equals("3") || option.equals("4") || option.equals("5"))){
+            System.out.println("🚫 Invalid choice! Please choose a number between 1️⃣ and 5️⃣.");
             option = scanner.nextLine();
         }
 
@@ -148,6 +230,10 @@ public class Menu {
                 getViewMenu();
                 break;
             case "4":
+                Save.SaveData(user);
+                getMenu();
+                break;
+            case "5":
                 System.out.println("Exiting the program...");
                 break;
         }

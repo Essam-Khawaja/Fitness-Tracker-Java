@@ -263,19 +263,24 @@ public class Save {
     /**
      * This method checks if a user already exists with that email
      * @param user -> The user object from the menu
-     * @return -> A boolean of whether another user with same email already exists
+     * @return -> An integer with 3 values: -1: Does not exist, 0: Email correct, not password, 1: Both email and password correct
      */
-    public static boolean CheckUserExists(User user){
+    public static int ValidateUser(User user){
         File file = new File("src/Save/UserSave.csv");  // Open the user save file
-        boolean exists = false;
+        int exists = -1;
         try {
             FileReader fileReader = new FileReader(file);   // Open the save for reading
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line = bufferedReader.readLine();
-            while (line != null && !exists) {
+            while (line != null && exists == -1) {
                 String[] data = line.split(",");    // Split the line by commas
                 if (data[2].equals(user.getEmail())) {  // Compare emails
-                    exists = true;
+                    exists = 0;
+                    if (data[1].equals(user.getPassword())) {
+                        exists = 1;
+                        user.setUsername(data[0]);
+                        break;
+                    }
                 }
                 line = bufferedReader.readLine();
             }
