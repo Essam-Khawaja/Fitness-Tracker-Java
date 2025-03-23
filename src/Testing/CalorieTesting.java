@@ -1,68 +1,64 @@
 package Testing;
 
 import Data.Calories;
+import Enums.MealType;
+import Enums.MealTime;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CalorieTesting {
 
     @Test
-    public void testStoreCaloriesDataEntry() {
-        // Clear existing data to avoid test interference
-        Calories.calorieTrackingData.clear();
+    public void testCaloriesObjectCreation() {
+        // Create a meal-type Calories object
+        Calories entry = new Calories(MealType.MEAL, MealTime.LUNCH, "pasta", 600);
 
-        // Store a new meal entry with details
-        Calories.storeCaloriesDataEntry("meal", "lunch", "pasta", 600);
-
-        // Retrieve the stored data
-        ArrayList<HashMap<String, Object>> data = Calories.getData();
-
-        // Validate that one entry has been stored
-        assertEquals(1, data.size());
-
-        // Ensure data is stored correctly
-        assertEquals(1, data.size());
-        assertEquals("lunch", data.get(0).get("mealType"));
-        assertEquals("meal", data.get(0).get("snackOrMeal"));
-        assertEquals("pasta", data.get(0).get("name"));
-        assertEquals(600, data.get(0).get("calories"));
+        // Validate fields
+        assertEquals(MealType.MEAL, entry.getSnackOrMeal());
+        assertEquals(MealTime.LUNCH, entry.getMealTime());
+        assertEquals("pasta", entry.getFoodName());
+        assertEquals(600, entry.getCalories());
     }
 
     @Test
-    public void testGetDataReturnsEmptyInitially() {
-        // Clear any existing data before testing
-        Calories.calorieTrackingData.clear();
+    public void testSnackEntryToString() {
+        // Create a snack-type entry
+        Calories entry = new Calories(MealType.SNACK, MealTime.NULL, "apple", 95);
 
-        // Ensure that the calorie tracking list is empty at the start
-        assertTrue(Calories.getData().isEmpty());
+        // Validate toString output (based on logic in class)
+        String expected = "SNACK,apple,95";
+        assertEquals(expected, entry.toString());
     }
 
     @Test
-    public void testGetDataAfterAddingMultipleEntries() {
-        // Clear existing data to prevent interference from other tests
-        Calories.calorieTrackingData.clear();
+    public void testMealEntryToString() {
+        // Create a breakfast meal entry
+        Calories entry = new Calories(MealType.MEAL, MealTime.BREAKFAST, "eggs", 150);
 
-        // Add multiple food entries (one snack and one meal)
-        Calories.storeCaloriesDataEntry("snack", "", "apple", 95);
-        Calories.storeCaloriesDataEntry("meal", "breakfast", "eggs", 150);
+        // Validate toString output
+        String expected = "MEAL,BREAKFAST,eggs,150";
+        assertEquals(expected, entry.toString());
+    }
 
-        // Retrieve stored data
-        ArrayList<HashMap<String, Object>> data = Calories.getData();
+    @Test
+    public void testCaloriesEquality() {
+        // Two identical entries
+        Calories entry1 = new Calories(MealType.MEAL, MealTime.LUNCH, "chicken", 500);
+        Calories entry2 = new Calories(MealType.MEAL, MealTime.LUNCH, "chicken", 500);
 
-        // Verify that two entries were added
-        assertEquals(2, data.size());
+        // Should be equal
+        assertEquals(entry1, entry2);
+        assertEquals(entry1.hashCode(), entry2.hashCode());
+    }
 
-        // Validate the first entry (snack)
-        assertEquals("snack", data.get(0).get("snackOrMeal"));
-        assertEquals("apple", data.get(0).get("name"));
-        assertEquals(95, data.get(0).get("calories"));
+    @Test
+    public void testCaloriesInequality() {
+        // Different calorie values
+        Calories entry1 = new Calories(MealType.MEAL, MealTime.LUNCH, "chicken", 500);
+        Calories entry2 = new Calories(MealType.MEAL, MealTime.LUNCH, "chicken", 600);
 
-        // Validate the second entry (meal - breakfast)
-        assertEquals("meal", data.get(1).get("snackOrMeal"));
-        assertEquals("breakfast", data.get(1).get("mealType"));
-        assertEquals("eggs", data.get(1).get("name"));
-        assertEquals(150, data.get(1).get("calories"));
+        // Should not be equal
+        assertNotEquals(entry1, entry2);
     }
 }
