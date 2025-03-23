@@ -24,10 +24,6 @@ public class Menu {
     private static final int MAX_SET_NUMBER = 5;    // Stores the maximum number of sets that can be stored for a single exercise
     private static User user = new User("", "", "");
 
-    public static void main(String[] args) {
-        getMenu();
-    }
-
     /**
      * Displays the main menu and handles user input for
      * navigating between options such as calorie tracking,
