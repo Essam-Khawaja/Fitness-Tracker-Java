@@ -1,6 +1,9 @@
 package Testing;
 
+import Data.Exercise;
+import Data.Set;
 import Data.Workout;
+import Enums.WorkoutPlan;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -12,19 +15,19 @@ public class WorkoutTesting {
     // Testing functions for validateWorkoutPlan()
     @Test public void testValidateWorkoutPlanPush() {
         boolean expected = true;
-        boolean actual = Workout.validateWorkoutPlan("push");
+        boolean actual = Workout.validateWorkoutPlan("1");
         assertEquals(expected, actual);
     }
 
     @Test public void testValidateWorkoutPlanUpperAllLower() {
         boolean expected = true;
-        boolean actual = Workout.validateWorkoutPlan("upper");
+        boolean actual = Workout.validateWorkoutPlan("3");
         assertEquals(expected, actual);
     }
 
     @Test public void testValidateWorkoutPlanLegAllUpper() {
         boolean expected = true;
-        boolean actual = Workout.validateWorkoutPlan("LEG");
+        boolean actual = Workout.validateWorkoutPlan("2");
         assertEquals(expected, actual);
     }
 
@@ -132,35 +135,42 @@ public class WorkoutTesting {
 
     // ----------------------------------------------------------------
 
-    // Test functions for createSet
-    @Test public void testCreateSet() {
-        HashMap<String, Object> actual = Workout.createSet(25.2F, 10);
-        assertNotNull(actual);
-        assertEquals(25.2F, (Float) actual.get("weightLifted"), 0.0001);
-        assertEquals(10, (Integer) actual.get("reps"));
-    }
+    // Testing functions for equals()
+    @Test public void testWorkoutEqual() {
+        Set set1 = new Set(10, 25.5F);
+        Set set2 = new Set(10, 25.5F);
+        ArrayList<Set> sets = new ArrayList<>();
+        sets.add(set1);
+        sets.add(set2);
 
-    // ----------------------------------------------------------------
-
-    // Test functions for createExercise
-    @Test public void testCreateExercise() {
-        HashMap<String, Object> expected = new HashMap<>();
-        expected.put("exerciseName", "Preacher Curl");
-        ArrayList<HashMap<String, Object>> setsData = new ArrayList<>();
-        expected.put("sets", setsData);
-        HashMap<String, Object> actual = Workout.createExercise("Preacher Curl", setsData);
+        Exercise exercise1 = new Exercise("Preacher Curl", sets);
+        Exercise exercise2 = new Exercise("Bench Press", sets);
+        ArrayList<Exercise> exercises = new ArrayList<>();
+        exercises.add(exercise1);
+        exercises.add(exercise2);
+        Workout workout1 = new Workout(WorkoutPlan.PUSH, exercises);
+        Workout workout2 = new Workout(WorkoutPlan.PUSH, exercises);
+        boolean actual = workout1.equals(workout2);
+        boolean expected = true;
         assertEquals(expected, actual);
     }
 
-    // ----------------------------------------------------------------
+    @Test public void testWorkoutNotEqual() {
+        Set set1 = new Set(10, 25.5F);
+        Set set2 = new Set(10, 25.5F);
+        ArrayList<Set> sets = new ArrayList<>();
+        sets.add(set1);
+        sets.add(set2);
 
-    // Test functions for createWorkout
-    @Test public void testCreateWorkout() {
-        HashMap<String, Object> expected = new HashMap<>();
-        expected.put("workoutPlan", "push");
-        ArrayList<HashMap<String, Object>> exercisesData = new ArrayList<>();
-        expected.put("exercises", exercisesData);
-        HashMap<String, Object> actual = Workout.createWorkout("push", exercisesData);
+        Exercise exercise1 = new Exercise("Preacher Curl", sets);
+        Exercise exercise2 = new Exercise("Bench Press", sets);
+        ArrayList<Exercise> exercises = new ArrayList<>();
+        exercises.add(exercise1);
+        exercises.add(exercise2);
+        Workout workout1 = new Workout(WorkoutPlan.PUSH, exercises);
+        Workout workout2 = new Workout(WorkoutPlan.PULL, exercises);
+        boolean actual = workout1.equals(workout2);
+        boolean expected = false;
         assertEquals(expected, actual);
     }
 }

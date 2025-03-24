@@ -7,3 +7,6 @@ C,MEAL,LUNCH,Biryani,500
 C,SNACK,Oreos,200
 W,PUSH,E,Preacher Curl,S,10,25.5,S,10,25.5,E,Bench Press,S,10,25.5,S,10,25.5
 W,PULL,E,Preacher Curl,S,10,25.5,S,10,25.5,E,Bench Press,S,10,25.5,S,10,25.5
+U,Name,Password,Email
+C,SNACK,Oreos,200
+W,LOWER,E,Squats,S,10,25.0,S,10,25.0,E,Deadlift,S,10,25.0,S,10,25.0

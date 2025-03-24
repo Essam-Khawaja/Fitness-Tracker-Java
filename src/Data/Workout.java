@@ -12,7 +12,6 @@ import java.util.Objects;
  * @author Ali Gad
  */
 public class Workout{
-    private static final ArrayList<HashMap<String, Object>> workoutData = new ArrayList<>();
     // This is the public workouts data structure to be used to store the data
     private WorkoutPlan workoutPlan;
     private ArrayList<Exercise> exercises;
@@ -21,45 +20,6 @@ public class Workout{
     public Workout(WorkoutPlan workoutPlan, ArrayList<Exercise> exercises) {
         this.workoutPlan = WorkoutPlan.valueOf(String.valueOf(workoutPlan));
         this.exercises = exercises;
-    }
-
-    public Workout(String running, int i) {
-    }
-
-    public static HashMap<String, Object> createSet(float v, int i) {
-        if (v >= MIN_WEIGHT_LIFTED && v <= MAX_WEIGHT_LIFTED && i > 0 && i <= MAX_REPS) {
-            HashMap<String, Object> set = new HashMap<>();
-            set.put("weight", v);
-            set.put("reps", i);
-            return set;
-        } else {
-            System.out.println("Invalid input. Weight must be between " + MIN_WEIGHT_LIFTED + "kg and " + MAX_WEIGHT_LIFTED + "kg. Reps must be between 1 and " + MAX_REPS + ".");
-            return null;
-        }
-    }
-
-    public static HashMap<String, Object> createExercise(String preacherCurl, ArrayList<HashMap<String, Object>> setsData) {
-        if (preacherCurl != null && !preacherCurl.isEmpty() && setsData != null && !setsData.isEmpty()) {
-            HashMap<String, Object> exercise = new HashMap<>();
-            exercise.put("exerciseName", preacherCurl);
-            exercise.put("sets", setsData);
-            return exercise;
-        } else {
-            System.out.println("Invalid input. Exercise name cannot be empty. Sets cannot be empty.");
-            return null;
-        }
-    }
-
-    public static HashMap<String, Object> createWorkout(String push, ArrayList<HashMap<String, Object>> exercisesData) {
-        if (push != null && !push.isEmpty() && exercisesData != null && !exercisesData.isEmpty()) {
-            HashMap<String, Object> workout = new HashMap<>();
-            workout.put("workoutPlan", push);
-            workout.put("exercises", exercisesData);
-            return workout;
-        } else {
-            System.out.println("Invalid input. Workout plan cannot be empty. Exercises cannot be empty.");
-            return null;
-        }
     }
 
     public WorkoutPlan getWorkoutPlan() {

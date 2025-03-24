@@ -270,11 +270,12 @@ public class Menu {
                 break;
             case "4":
                 Save.SaveData(user);
+                System.out.println("Data saved successfully!");
                 getMenu();
                 break;
             case "5":
                 System.out.println("Exiting the program...");
-                break;
+                return;
         }
     }
 

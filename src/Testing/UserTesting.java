@@ -1,10 +1,10 @@
 package Testing;
 
+import Data.*;
+import Enums.WorkoutPlan;
 import org.junit.jupiter.api.Test;
 
-import Data.User;
-import Data.Calories;
-import Data.Workout;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,8 +30,19 @@ public class UserTesting {
     @Test
     public void testAddWorkoutData(){
         User user = new User("user1", "password123", "user1@example.com");
-        Workout workoutEntry = new Workout("Running", 300);
-                user.addWorkoutData(workoutEntry);
+        Set set1 = new Set(10, 25.5F);
+        Set set2 = new Set(10, 25.5F);
+        ArrayList<Set> sets = new ArrayList<>();
+        sets.add(set1);
+        sets.add(set2);
+
+        Exercise exercise1 = new Exercise("Preacher Curl", sets);
+        Exercise exercise2 = new Exercise("Bench Press", sets);
+        ArrayList<Exercise> exercises = new ArrayList<>();
+        exercises.add(exercise1);
+        exercises.add(exercise2);
+        Workout workoutEntry = new Workout(WorkoutPlan.PUSH, exercises);
+        user.addWorkoutData(workoutEntry);
         assertEquals(1, user.getWorkoutData().size());
         assertEquals(workoutEntry, user.getWorkoutData().get(0));
     }
@@ -40,7 +51,18 @@ public class UserTesting {
     public void testResetTrackingData(){
         User user = new User("user1", "password123", "user1@example.com");
         user.addCalorieData(new Calories(300, "Breakfast"));
-        user.addWorkoutData(new Workout("Yoga", 200));
+        Set set1 = new Set(10, 25.5F);
+        Set set2 = new Set(10, 25.5F);
+        ArrayList<Set> sets = new ArrayList<>();
+        sets.add(set1);
+        sets.add(set2);
+
+        Exercise exercise1 = new Exercise("Preacher Curl", sets);
+        Exercise exercise2 = new Exercise("Bench Press", sets);
+        ArrayList<Exercise> exercises = new ArrayList<>();
+        exercises.add(exercise1);
+        exercises.add(exercise2);
+        user.addWorkoutData(new Workout(WorkoutPlan.PUSH, exercises));
         user.resetTrackingData();
         assertTrue(user.getCalorieData().isEmpty());
         assertTrue(user.getWorkoutData().isEmpty());
