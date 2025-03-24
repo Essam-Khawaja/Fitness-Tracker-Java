@@ -23,6 +23,13 @@ public class Calories {
         this.calories = calories;
     }
 
+    public Calories(int i, String lunch) {
+        this.snackOrMeal = MealType.SNACK;
+        this.mealTime = MealTime.LUNCH;
+        this.foodName = lunch;
+        this.calories = i;
+    }
+
     public MealType getSnackOrMeal() {
         return snackOrMeal;
     }

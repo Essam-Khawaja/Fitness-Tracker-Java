@@ -14,13 +14,13 @@ public class UserTesting {
     public void testUserCreation(){
         User user = new User("user1", "password123", "user1@example.com");
         assertEquals("user1", user.getUsername());
-        assertEquals("password123", user.getpassword());
+        assertEquals("password123", user.getPassword());
         assertEquals("user1@example.com", user.getEmail());
     }
 
     @Test
     public void testAddCalorieData(){
-        User user = new User("user1", "password123", "user1@example.com")
+        User user = new User("user1", "password123", "user1@example.com");
                 Calories calorieEntry = new Calories(500,"Lunch");
         user.addCalorieData(calorieEntry);
         assertEquals(1, user.getCalorieData().size());
@@ -30,7 +30,7 @@ public class UserTesting {
     @Test
     public void testAddWorkoutData(){
         User user = new User("user1", "password123", "user1@example.com");
-        Workout workoutEntry = new Workout("Running", 300)
+        Workout workoutEntry = new Workout("Running", 300);
                 user.addWorkoutData(workoutEntry);
         assertEquals(1, user.getWorkoutData().size());
         assertEquals(workoutEntry, user.getWorkoutData().get(0));
@@ -39,7 +39,7 @@ public class UserTesting {
     @Test
     public void testResetTrackingData(){
         User user = new User("user1", "password123", "user1@example.com");
-        user.addCalorieData(new Calorie(300, "Breakfast"));
+        user.addCalorieData(new Calories(300, "Breakfast"));
         user.addWorkoutData(new Workout("Yoga", 200));
         user.resetTrackingData();
         assertTrue(user.getCalorieData().isEmpty());
@@ -47,14 +47,14 @@ public class UserTesting {
     }
 
     @Test
-    public void testEqualsMethodForEquality(){
+    public void testEqualsMethodForIdenticalUsers(){
         User user1 = new User("user1", "password123", "user1@example.com");
         User user2 = new User("user1", "password123", "user1@example.com");
         assertTrue(user1.equals(user2));
     }
 
     @Test
-    public void testEqualsMethodForEquality() {
+    public void testEqualsMethodForDifferentUsers() {
         User user1 = new User("user1", "password123", "user1@example.com");
         User user2 = new User("user2", "differentPassword", "differentEmail@example.com");
         assertFalse(user1.equals(user2));

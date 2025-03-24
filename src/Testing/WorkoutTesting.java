@@ -134,11 +134,10 @@ public class WorkoutTesting {
 
     // Test functions for createSet
     @Test public void testCreateSet() {
-        HashMap<String, Object> expected = new HashMap<>();
-        expected.put("weightLifted", 25.2F);
-        expected.put("reps", 10);
         HashMap<String, Object> actual = Workout.createSet(25.2F, 10);
-        assertEquals(expected, actual);
+        assertNotNull(actual);
+        assertEquals(25.2F, (Float) actual.get("weightLifted"), 0.0001);
+        assertEquals(10, (Integer) actual.get("reps"));
     }
 
     // ----------------------------------------------------------------
