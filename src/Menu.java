@@ -30,14 +30,18 @@ public class Menu {
      */
     public static void startApp() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome! Please choose an option:");
-        System.out.println("1. Sign Up");
-        System.out.println("2. Log In");
+        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("✨ WELCOME TO YOUR FITNESS JOURNEY ✨");
+        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("🌟 Please choose an option to continue: 🌟");
+        System.out.println("1️⃣ Sign Up - Join us and step into your fitness journey! ✍️");
+        System.out.println("2️⃣ Log In - Welcome back, let's get moving! 🔑");
+        System.out.println("---------------------------------------");
 
         String choice = scanner.nextLine();     // Takes the input
         // Validates the input
         while (!choice.equals("1") && !choice.equals("2")) {
-            System.out.println("Invalid input! Please enter 1 or 2.");
+            System.out.println("🚨 Invalid input! Please enter 1️⃣ or 2️⃣.");
             choice = scanner.nextLine();
         }
 
@@ -51,20 +55,21 @@ public class Menu {
         return;
     }
 
-    /**
-     * This function is the starting point if the user has entered a file path for the parameter
-     * @param path -> the path to the file
-     */
     public static void commandLineStartApp(String path) {
-        System.out.println("Welcome! You have entered a file, we will load the data after you have logged in: ");
+        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("✨ Welcome! File detected. 🌟");
+        System.out.println("📂 We will load your data after you log in. 📂");
+        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+
         Scanner scanner = new Scanner(System.in);
         // Take the inputs
-        System.out.println("Login:");
-        System.out.print("Enter Email: ");
+        System.out.println("🔑 Login:");
+        System.out.print("📧 Enter Email: ");
         String email = scanner.nextLine();
 
-        System.out.print("Enter Password: ");
+        System.out.print("🔒 Enter Password: ");
         String password = scanner.nextLine();
+
 
         user.setEmail(email);
         user.setPassword(password);
@@ -73,14 +78,14 @@ public class Menu {
 
         while (userExists == 0 || userExists == -1) {
             if (userExists == 0) {      // If password is wrong
-                System.out.println("Invalid password!");
+                System.out.println("🚨 Invalid password! Please try again.");
             } else {
-                System.out.println("Invalid email!");
+                System.out.println("🚨 Invalid email! Please try again.");
             }
-            System.out.print("Enter Email: ");
+            System.out.print("📧 Enter Email: ");
             email = scanner.nextLine();
 
-            System.out.print("Enter Password: ");
+            System.out.print("🔒 Enter Password: ");
             password = scanner.nextLine();
 
             user.setEmail(email);
@@ -88,9 +93,9 @@ public class Menu {
 
             userExists = Save.ValidateUser(user);
         }
-        // Save the user
         Save.LoadData(user, path);
-        System.out.println("Welcome! You have logged in, with your data loaded successfully!");
+        System.out.println("\n🎉 Welcome! You are successfully logged in and your data has been loaded! 🎉");
+        System.out.println("---------------------------------------");
         getMenu();
         return;
     }
@@ -101,14 +106,16 @@ public class Menu {
     private static void handleSignUp() {
         Scanner scanner = new Scanner(System.in);
         // Take all the data in
-        System.out.println("Sign Up:");
-        System.out.print("Enter Email: ");
+        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("✨ CREATE A NEW ACCOUNT ✨");
+        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.print("📧 Enter Email: ");
         String email = scanner.nextLine();
 
-        System.out.print("Enter Password: ");
+        System.out.print("🔒 Enter Password: ");
         String password = scanner.nextLine();
 
-        System.out.print("Enter Username: ");
+        System.out.print("👤 Enter Username: ");
         String username = scanner.nextLine();
 
         user.setEmail(email);
@@ -118,25 +125,25 @@ public class Menu {
         int userExists = Save.ValidateUser(user);   // Check if a user with same email exists
         while (userExists == 0) {
             // Warn and check whether the user wants to login instead
-            System.out.println("This user already exists!");
-            System.out.println("Do you want to continue or log in? (Y/N)");
+            System.out.println("🚨 This user already exists!");
+            System.out.println("🔁 Do you want to log in instead? (Y/N)");
             String choice = scanner.nextLine();
 
-            while (!choice.equalsIgnoreCase("Y") && !choice.equalsIgnoreCase("N")) {
-                System.out.println("Invalid input! Please enter Y or N.");
+            while (!choice.equals("Y") && !choice.equals("N")) {
+                System.out.println("🚨 Invalid input! Please enter ✅ Y or ❌ N.");
                 choice = scanner.nextLine();
             }
 
             // Try signing in again
             if (choice.equals("Y")) {
-                System.out.println("Sign Up:");
-                System.out.print("Enter Email: ");
+                System.out.println("\n🔁 SIGN UP AGAIN:");
+                System.out.print("📧 Enter Email: ");
                 email = scanner.nextLine();
 
-                System.out.print("Enter Password: ");
+                System.out.print("🔒 Enter Password: ");
                 password = scanner.nextLine();
 
-                System.out.print("Enter Username: ");
+                System.out.print("👤 Enter Username: ");
                 username = scanner.nextLine();
 
                 user.setEmail(email);
@@ -154,7 +161,8 @@ public class Menu {
         user.setUsername(username);
 
         Save.SaveNewUser(user);     // Save the new user
-        System.out.println("Account created successfully!");
+        System.out.println("\n🎊 Account created successfully! You're all set to begin! 🎊");
+        System.out.println("---------------------------------------");
     }
 
     /**
@@ -163,11 +171,13 @@ public class Menu {
     private static void handleLogin() {
         Scanner scanner = new Scanner(System.in);
         // Take the inputs
-        System.out.println("Login:");
-        System.out.print("Enter Email: ");
+        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("✨ LOG IN TO YOUR ACCOUNT ✨");
+        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.print("📧 Enter Email: ");
         String email = scanner.nextLine();
 
-        System.out.print("Enter Password: ");
+        System.out.print("🔒 Enter Password: ");
         String password = scanner.nextLine();
 
         user.setEmail(email);
@@ -177,41 +187,31 @@ public class Menu {
 
         while (userExists == 0 || userExists == -1) {
             if (userExists == 0) {      // If password is wrong, take input again
-                System.out.println("Invalid password!");
-                System.out.print("Enter Email: ");
+                System.out.println("🚨 Invalid password! Please try again.");
+                System.out.print("📧 Enter Email: ");
                 email = scanner.nextLine();
 
-                System.out.print("Enter Password: ");
+                System.out.print("🔒 Enter Password: ");
                 password = scanner.nextLine();
 
                 user.setEmail(email);
                 user.setPassword(password);
 
                 userExists = Save.ValidateUser(user);
-            } else {    // If email is wrong, then ask whether they want to signup instead
-                System.out.println("Email does not exist!");
-                System.out.println("Do you want to continue or sign up? (Y/N)");
+            } else {    // If email is wrong, then ask whether they want to sign up instead
+                System.out.println("🚨 Email does not exist.");
+                System.out.println("🔁 Would you like to sign up instead? (Y/N)");
                 String choice = scanner.nextLine();
 
-                while (!choice.equalsIgnoreCase("Y") && !choice.equalsIgnoreCase("N")) {
-                    System.out.println("Invalid input! Please enter Y or N.");
+                while (!choice.equals("Y") && !choice.equals("N")) {
+                    System.out.println("🚨 Invalid input! Please enter ✅ Y or ❌ N.");
                     choice = scanner.nextLine();
                 }
 
                 if (choice.equals("Y")) {
-                    System.out.println("Login:");
-                    System.out.print("Enter Email: ");
-                    email = scanner.nextLine();
-
-                    System.out.print("Enter Password: ");
-                    password = scanner.nextLine();
-
-                    user.setEmail(email);
-                    user.setPassword(password);
-
-                    userExists = Save.ValidateUser(user);
-                }
-                else {
+                    handleSignUp();
+                    return;
+                } else {
                     startApp();
                     return;
                 }
@@ -219,19 +219,20 @@ public class Menu {
         }
         // If we have both correct email and password
         if (userExists == 1) {
-            System.out.println("Do you want to load old data? (Y/N)");  // Ask if they want to load in old data
+            System.out.println("📂 Do you want to load your previously saved data? (Y/N)");
             String choice = scanner.nextLine();
-            while (!choice.equalsIgnoreCase("Y") && !choice.equalsIgnoreCase("N")) {
-                System.out.println("Invalid input! Please enter Y or N.");
+            while (!choice.equals("Y") && !choice.equals("N")) {
+                System.out.println("🚨 Invalid input! Please enter ✅ Y or ❌ N.");
                 choice = scanner.nextLine();
             }
             if (choice.equals("Y")) {
                 Save.LoadData(user, "src/Save/Save.csv");    // Load the data
+                System.out.println("\n📈 Your data has been successfully loaded!");
             }
-            System.out.println("Login successful!");
+            System.out.println("\n🎉 Login successful! Welcome back! 🎉");
+            System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         }
     }
-
     /**
      * Displays the main menu and handles user input for
      * navigating between options such as calorie tracking,
