@@ -15,7 +15,14 @@ public class Calories {
     private String foodName;
     private int calories;
 
-
+    /**
+     * Constructs a Calories object with all relevant fields.
+     *
+     * @param snackOrMeal Specifies whether it's a snack or meal.
+     * @param mealTime    Time of the meal (e.g., BREAKFAST, LUNCH).
+     * @param foodName    Name of the food item.
+     * @param calories    Number of calories for the food item.
+     */
     public Calories(MealType snackOrMeal, MealTime mealTime, String foodName,int calories) {
         this.snackOrMeal = snackOrMeal;
         this.mealTime = mealTime;
@@ -74,6 +81,11 @@ public class Calories {
         return equals;
     }
 
+    /**
+     * Returns a string representation of this Calories object.
+     *
+     * @return String formatted with relevant fields.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(snackOrMeal, mealTime, foodName, calories);
