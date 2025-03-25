@@ -51,6 +51,10 @@ public class Menu {
         return;
     }
 
+    /**
+     * This function is the starting point if the user has entered a file path for the parameter
+     * @param path -> the path to the file
+     */
     public static void commandLineStartApp(String path) {
         System.out.println("Welcome! You have entered a file, we will load the data after you have logged in: ");
         Scanner scanner = new Scanner(System.in);
@@ -84,6 +88,7 @@ public class Menu {
 
             userExists = Save.ValidateUser(user);
         }
+        // Save the user
         Save.LoadData(user, path);
         System.out.println("Welcome! You have logged in, with your data loaded successfully!");
         getMenu();
