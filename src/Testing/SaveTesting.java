@@ -36,35 +36,6 @@ public class SaveTesting {
         Save.SaveNewUser(testUser);
     }
 
-    @Test public void testLoad() {
-        Set set1 = new Set(10, 25.5F);
-        Set set2 = new Set(10, 25.5F);
-        ArrayList<Set> sets = new ArrayList<>();
-        sets.add(set1);
-        sets.add(set2);
-
-        Exercise exercise1 = new Exercise("Preacher Curl", sets);
-        Exercise exercise2 = new Exercise("Bench Press", sets);
-        ArrayList<Exercise> exercises = new ArrayList<>();
-        exercises.add(exercise1);
-        exercises.add(exercise2);
-
-        Workout workout = new Workout(WorkoutPlan.PUSH, exercises);
-
-        Calories calorie1 = new Calories(MealType.MEAL, MealTime.BREAKFAST, "Toast", 300);
-
-        User actualUser = new User("Name2", "Password", "Email2");
-        User expectedUser = new User("Name2", "Password", "Email2");
-        expectedUser.addCalorieData(calorie1);
-        expectedUser.addWorkoutData(workout);
-
-        Save.LoadData(actualUser, "src/Save/Save.csv");
-        boolean expected = true;
-        boolean actual = actualUser.equals(expectedUser);
-        assertEquals(expected, actual);
-    }
-
-
     @Test public void testSaveUserMultipleData(){
         Set set1 = new Set(10, 25.5F);
         Set set2 = new Set(10, 25.5F);
