@@ -117,7 +117,7 @@ public class Menu {
             System.out.println("Do you want to continue or log in? (Y/N)");
             String choice = scanner.nextLine();
 
-            while (!choice.equals("Y") && !choice.equals("N")) {
+            while (!choice.equalsIgnoreCase("Y") && !choice.equalsIgnoreCase("N")) {
                 System.out.println("Invalid input! Please enter Y or N.");
                 choice = scanner.nextLine();
             }
@@ -188,7 +188,7 @@ public class Menu {
                 System.out.println("Do you want to continue or sign up? (Y/N)");
                 String choice = scanner.nextLine();
 
-                while (!choice.equals("Y") && !choice.equals("N")) {
+                while (!choice.equalsIgnoreCase("Y") && !choice.equalsIgnoreCase("N")) {
                     System.out.println("Invalid input! Please enter Y or N.");
                     choice = scanner.nextLine();
                 }
@@ -216,7 +216,7 @@ public class Menu {
         if (userExists == 1) {
             System.out.println("Do you want to load old data? (Y/N)");  // Ask if they want to load in old data
             String choice = scanner.nextLine();
-            while (!choice.equals("Y") && !choice.equals("N")) {
+            while (!choice.equalsIgnoreCase("Y") && !choice.equalsIgnoreCase("N")) {
                 System.out.println("Invalid input! Please enter Y or N.");
                 choice = scanner.nextLine();
             }
@@ -506,6 +506,7 @@ public class Menu {
                 while (!isWeightLiftedValid) {
                     System.out.print(" Enter the weight lifted for set " + (j + 1) + " (in kg): ");
                     weightLiftedInput = scanner.nextLine();
+                    isWeightLiftedValid = Workout.validateWeightLifted(weightLiftedInput);
                 }
                 Float weightLifted = Float.parseFloat(weightLiftedInput);
 
