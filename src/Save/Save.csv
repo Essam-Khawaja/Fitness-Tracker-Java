@@ -1,12 +1,4 @@
-U,Name2,Password,Email2
-C,MEAL,BREAKFAST,Toast,300
-W,PUSH,E,Preacher Curl,S,10,25.5,S,10,25.5,E,Bench Press,S,10,25.5,S,10,25.5
-U,Name3,Password3,Email3
-C,MEAL,BREAKFAST,Toast,300
-C,MEAL,LUNCH,Biryani,500
-C,SNACK,Oreos,200
-W,PUSH,E,Preacher Curl,S,10,25.5,S,10,25.5,E,Bench Press,S,10,25.5,S,10,25.5
-W,PULL,E,Preacher Curl,S,10,25.5,S,10,25.5,E,Bench Press,S,10,25.5,S,10,25.5
-U,Name,Password,Email
-C,SNACK,Oreos,200
-W,LOWER,E,Squats,S,10,25.0,S,10,25.0,E,Deadlift,S,10,25.0,S,10,25.0
+U,Maxwinner,CPSC233,abdullah@gmail.com
+C,SNACK,Milk,150
+C,MEAL,LUNCH,Steak,305
+W,PUSH,E,Pull Ups,S,7,55.0,S,13,35.0,E,Push Ups,S,7,55.0,S,13,35.0,E,Rat,S,7,55.0,S,13,35.0,E,Deez Nuts,S,7,55.0,S,13,35.0
