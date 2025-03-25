@@ -539,7 +539,7 @@ public class Menu {
         System.out.println("✅━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✅");
 
         // Asking user whether they want to add more workout data or not
-        System.out.println("🎉 Data.Workout added successfully!");
+        System.out.println("🎉 Workout added successfully!");
         System.out.print(" ➕ Would you like to continue logging workouts? (Y/N): ");
         String returnMenuOption = scanner.nextLine();
         while (!returnMenuOption.equalsIgnoreCase("y") && !returnMenuOption.equalsIgnoreCase("n")) {
@@ -574,8 +574,8 @@ public class Menu {
         System.out.println("5️⃣ View Average Calories Per Meal ⚖️");
         System.out.println("6️⃣ View Calorie Consumption (Snacks/Foods) 🥗");
         System.out.println("7️⃣ View Workout Volume 🏋️‍♂️");
-        System.out.println("8️⃣ View Heaviest Lift Per Data.Exercise 🏋️‍♀️");
-        System.out.println("9️⃣ View Data.Calories Consumed vs. Goal 🎯");
+        System.out.println("8️⃣ View Heaviest Lift Per Exercise 🏋️‍♀️");
+        System.out.println("9️⃣ View Calories Consumed vs. Goal 🎯");
         System.out.println("🔟 View Performance Summary 📊");
         System.out.println("1️⃣1️⃣ Back to Main Menu 🔙");
 
@@ -712,7 +712,7 @@ private static void viewMealBreakdown() {
             if (!(data.getSnackOrMeal() == MealType.SNACK)) {
                 System.out.println("    Time:" + data.getMealTime());
             }
-            System.out.println("    Data.Calories:" + data.getCalories() + " kcal");
+            System.out.println("    Calories:" + data.getCalories() + " kcal");
             totalCalories += data.getCalories();
         }
         System.out.println("🔥 Today's Total Calories: " + totalCalories + " kcal 🔥\n");
@@ -856,6 +856,8 @@ private static void viewMealBreakdown() {
                 goalValid = true;
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please try again.");
+                System.out.print("What is your goal for calories consumed today: ");
+                calorieGoalInput = scanner.nextLine();
             }
         }
 
