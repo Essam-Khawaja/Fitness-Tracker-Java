@@ -27,6 +27,10 @@ public class Save {
      * @param user -> The user of which to save the data for
      */
     public static void SaveData(User user){
+        if (user.getCalorieData().isEmpty() && user.getWorkoutData().isEmpty()){
+            System.out.println("Nothing to Save.");
+            return;
+        }
             File file = new File("src/Save/Save.csv");  // Open the save file
             File file2 = new File("src/Save/SaveTemp.csv"); // Create a new temporary save file
             try {
