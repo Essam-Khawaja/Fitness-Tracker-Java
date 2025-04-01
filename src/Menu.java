@@ -292,11 +292,11 @@ public class Menu {
      */
     public static void getCalorieMenu() {
         Scanner scanner = new Scanner(System.in);
-                System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-                System.out.println("🍎         CALORIE TRACKING         🥗");
-                System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-                System.out.println(" Please answer the following questions below:");
-                System.out.println("-----------------------------");
+        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("🍎         CALORIE TRACKING         🥗");
+        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println(" Please answer the following questions below:");
+        System.out.println("-----------------------------");
 
         // Validate input
         String snackOrMealInput = "";
@@ -378,11 +378,11 @@ public class Menu {
         user.addCalorieData(newCalorieData);
 
         // Check if the user wants to continue, with validation
-                System.out.println("\n✅━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✅");
-                System.out.println("    🎉 SUCCESS! CALORIE ENTRY ADDED 🎉");
-                System.out.println("✅━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✅");
+        System.out.println("\n✅━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✅");
+        System.out.println("    🎉 SUCCESS! CALORIE ENTRY ADDED 🎉");
+        System.out.println("✅━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━✅");
 
-                System.out.print(" ➕ Would you like to add another entry? (Y/N): ");
+        System.out.print(" ➕ Would you like to add another entry? (Y/N): ");
         String returnMenuOption = ""; // Declare and initialize returnMenuOption
         while (true) {
             returnMenuOption = scanner.nextLine();
@@ -459,13 +459,13 @@ public class Menu {
         boolean isExerciseValid  = false;
         int exercisesCount = 0;     // Initialize exerciseCount to 0
         while (!isExerciseValid) {
-                System.out.print("\n 🗓️ How many exercises have you performed today? (Enter a number ✏️): ");
+            System.out.print("\n 🗓️ How many exercises have you performed today? (Enter a number ✏️): ");
             try {
                 String exercisesCountInput = scanner.nextLine();
                 exercisesCount = Integer.parseInt(exercisesCountInput);
                 // Check to see if the user entered more than the max number of exercises to be stored
                 if (exercisesCount > MAX_EXERCISE_NUMBER) {
-                System.out.println("Invalid input! You cannot log more than 10 exercises. Try again.");
+                    System.out.println("Invalid input! You cannot log more than 10 exercises. Try again.");
                 } else {
                     isExerciseValid = true;
                 }
@@ -496,12 +496,12 @@ public class Menu {
                     setsCount = Integer.parseInt(setsCountInput);
                     // Check to see if the user entered more than the max number of sets to be stored
                     if (setsCount > MAX_SET_NUMBER) {
-                System.out.println("Invalid input! You cannot log more than 5 sets. Try again.");
+                        System.out.println("Invalid input! You cannot log more than 5 sets. Try again.");
                     } else {
                         isSetValid = true;
                     }
                 } catch (NumberFormatException e) {     // Check to see if the user did not enter a number
-                System.out.println("Invalid input. Can only be a number. Please try again.");
+                    System.out.println("Invalid input. Can only be a number. Please try again.");
                 }
             }
             for (int j = 0; j < setsCount; j++) {
@@ -549,8 +549,8 @@ public class Menu {
         System.out.print(" ➕ Would you like to continue logging workouts? (Y/N): ");
         String returnMenuOption = scanner.nextLine();
         while (!returnMenuOption.equalsIgnoreCase("y") && !returnMenuOption.equalsIgnoreCase("n")) {
-                System.out.println("Invalid input. Please try again.");
-                System.out.println("Would you like to continue? (Y/N): ");
+            System.out.println("Invalid input. Please try again.");
+            System.out.println("Would you like to continue? (Y/N): ");
             returnMenuOption = scanner.nextLine();
         }
         if (returnMenuOption.equalsIgnoreCase("Y")) {
@@ -631,11 +631,11 @@ public class Menu {
                 getMenu();
                 return;
         }
-                System.out.println("Returning to View Menu...");
+        System.out.println("Returning to View Menu...");
         getViewMenu();
     }
 
-private static void viewMealBreakdown() {
+    private static void viewMealBreakdown() {
         ArrayList<Calories> calorieTrackingData = user.getCalorieData();
 
         if (calorieTrackingData.isEmpty()) {
@@ -846,7 +846,7 @@ private static void viewMealBreakdown() {
 
         // If empty, return to View Menu
         if (calorieTrackingData.isEmpty()) {
-                System.out.println("No calories data found.");
+            System.out.println("No calories data found.");
             return;
         }
 
@@ -878,9 +878,9 @@ private static void viewMealBreakdown() {
 
         // Compare the total calories to the goal entered by the user
         if (totalCalories > calorieGoal) {
-                System.out.println("You exceeded your goal by " + (totalCalories - calorieGoal) + " kcal.\n");
+            System.out.println("You exceeded your goal by " + (totalCalories - calorieGoal) + " kcal.\n");
         } else {
-                System.out.println("You are under your goal by " + (calorieGoal - totalCalories) + " kcal.\n");
+            System.out.println("You are under your goal by " + (calorieGoal - totalCalories) + " kcal.\n");
         }
     }
 
@@ -903,14 +903,14 @@ private static void viewMealBreakdown() {
             for (Workout data : workouts) {
                 for (Exercise exercise : data.getExercises()) {
                     System.out.println("Name of exercise: " + exercise.getExerciseName());
-                        int setCount = 0;
-                        float volume = 1;
-                        for (Set set : exercise.getSets()) {
-                            float weight = set.getWeightLifted();
-                            volume *= set.getReps() * weight;
-                            setCount++;
-                        }
-                        volume *= setCount;
+                    int setCount = 0;
+                    float volume = 1;
+                    for (Set set : exercise.getSets()) {
+                        float weight = set.getWeightLifted();
+                        volume *= set.getReps() * weight;
+                        setCount++;
+                    }
+                    volume *= setCount;
                     System.out.println("Volume: " + Math.round(volume) + " kg");
                 }
             }
@@ -1061,7 +1061,7 @@ private static void viewMealBreakdown() {
                 System.out.println("Max Weight Lifted : " + maxWeightLift + "kg");
             }
         }
-            System.out.println(" ");
+        System.out.println(" ");
     }
 
     /**
