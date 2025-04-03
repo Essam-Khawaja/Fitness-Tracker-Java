@@ -5,11 +5,11 @@ import Enums.MealTime;
 import Enums.MealType;
 import Enums.WorkoutPlan;
 import Save.*;
-import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class SaveTesting {
     @Test public void testSave() {

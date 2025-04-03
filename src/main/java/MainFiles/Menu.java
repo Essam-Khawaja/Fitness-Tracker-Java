@@ -1,3 +1,5 @@
+package MainFiles;
+
 import Data.Calories;
 import Data.Exercise;
 import Data.User;
@@ -583,7 +585,7 @@ public class Menu {
         System.out.println("8️⃣ View Heaviest Lift Per Exercise 🏋️‍♀️");
         System.out.println("9️⃣ View Calories Consumed vs. Goal 🎯");
         System.out.println("🔟 View Performance Summary 📊");
-        System.out.println("1️⃣1️⃣ Back to Main Menu 🔙");
+        System.out.println("1️⃣1️⃣ Back to MainFiles.Main MainFiles.Menu 🔙");
 
         System.out.println("\n---------------------------------");
         Scanner scanner = new Scanner(System.in);
@@ -631,7 +633,7 @@ public class Menu {
                 getMenu();
                 return;
         }
-        System.out.println("Returning to View Menu...");
+        System.out.println("Returning to View MainFiles.Menu...");
         getViewMenu();
     }
 
@@ -844,7 +846,7 @@ public class Menu {
         // Retrieve the calorie data
         ArrayList<Calories> calorieTrackingData = user.getCalorieData();
 
-        // If empty, return to View Menu
+        // If empty, return to View MainFiles.Menu
         if (calorieTrackingData.isEmpty()) {
             System.out.println("No calories data found.");
             return;
@@ -928,7 +930,7 @@ public class Menu {
         // Retrieve the calorie data
         ArrayList<Calories> calorieTrackingData = user.getCalorieData();
 
-        // If empty, return to View Menu
+        // If empty, return to View MainFiles.Menu
         if (calorieTrackingData.isEmpty()) {
             System.out.println("No calories data found.");
             return;
@@ -1000,7 +1002,7 @@ public class Menu {
         // Retrieve calorie data
         ArrayList<Calories> calorieTrackingData = user.getCalorieData();
 
-        // If empty, return to View Menu
+        // If empty, return to View MainFiles.Menu
         if (calorieTrackingData.isEmpty()) {
             System.out.println("No calories data found.");
             return;

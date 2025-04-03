@@ -4,12 +4,12 @@ import Data.Exercise;
 import Data.Set;
 import Data.Workout;
 import Enums.WorkoutPlan;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class WorkoutTesting {
     // Testing functions for validateWorkoutPlan()

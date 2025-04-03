@@ -1,3 +1,5 @@
+package MainFiles;
+
 /**
  * This is the main class from which the program is run
  * It also holds the menu functionality
@@ -7,7 +9,7 @@
  * @author Ali Gad
  * @author Abdullah Al-Dhaibani
  */
-public class Main {
+public class MainShell {
     public static void main(String[] args) {
         if (args.length == 0) {
             Menu.startApp();
