@@ -3,8 +3,9 @@ package Testing;
 import Data.Calories;
 import Enums.MealType;
 import Enums.MealTime;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class CalorieTesting {

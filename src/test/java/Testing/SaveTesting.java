@@ -1,18 +1,22 @@
 package Testing;
 
 import Data.*;
+import Save.Save;
+
 import Enums.MealTime;
 import Enums.MealType;
 import Enums.WorkoutPlan;
-import Save.*;
+import org.junit.jupiter.api.Test;
+
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
+
 
 public class SaveTesting {
-    @Test public void testSave() {
+    @Test
+    public void testSave() {
         Set set1 = new Set(10, 25.5F);
         Set set2 = new Set(10, 25.5F);
         ArrayList<Set> sets = new ArrayList<>();

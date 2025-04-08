@@ -1,6 +1,7 @@
 package Data;
 
-import Enums.*;
+import Enums.MealTime;
+import Enums.MealType;
 
 import java.util.Objects;
 

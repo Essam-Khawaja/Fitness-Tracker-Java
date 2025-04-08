@@ -6,7 +6,6 @@ import Data.Workout;
 import Enums.WorkoutPlan;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
