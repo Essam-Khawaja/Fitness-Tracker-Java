@@ -1,0 +1,27 @@
+.root {
+    -fx-font-family: "Segoe UI";
+    -fx-background-color: #1E1E2E;
+}
+
+.label {
+    -fx-text-fill: #E0E0E0;
+}
+
+#loginStatusLabel {
+    -fx-text-fill: #FF6B6B;
+    -fx-text-alignment: center;
+}
+
+.button {
+    -fx-background-color: #6A4C93;
+    -fx-text-fill: #E0E0E0;
+    -fx-cursor: hand;
+    -fx-background-radius: 6px;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+
+.button:hover {
+    -fx-background-color: #7B2CBF;
+    -fx-cursor: hand;
+}
