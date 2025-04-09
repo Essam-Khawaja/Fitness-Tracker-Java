@@ -272,7 +272,7 @@ public class Save {
      * @return -> An integer with 3 values: -1: Does not exist, 0: Email correct, not password, 1: Both email and password correct
      */
     public static int ValidateUser(User user){
-        File file = new File("src/Save/UserSave.csv");  // Open the user save file
+        File file = new File("src/main/java/Save/UserSave.csv");  // Open the user save file
         int exists = -1;
         try {
             FileReader fileReader = new FileReader(file);   // Open the save for reading

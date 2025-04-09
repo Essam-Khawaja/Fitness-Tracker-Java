@@ -12,7 +12,8 @@ public class MainApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("Main.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 800);
-        stage.setTitle("Hello!");
+        scene.getStylesheets().add(MainApplication.class.getResource("Main.css").toExternalForm());
+        stage.setTitle("Fitness Tracker!");
         stage.setScene(scene);
         stage.show();
     }

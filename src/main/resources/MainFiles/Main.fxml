@@ -40,100 +40,159 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 
 <VBox prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainFiles.ProjectController">
   <children>
-    <MenuBar VBox.vgrow="NEVER">
-      <menus>
-        <Menu mnemonicParsing="false" text="File">
-          <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <VBox prefHeight="770.0" prefWidth="290.0" spacing="20.0" style="-fx-background-color: #2A2A3C;">
+            <AnchorPane fx:id="LoginPage" prefHeight="816.0" prefWidth="1003.0" style="-fx-background-color: #1E1E2E;">
                <children>
-                  <Label text="Choose an Option:" textFill="#e0e0e0">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Accordion prefHeight="725.0" prefWidth="299.0" style="-fx-border-width: 0;">
-                    <panes>
-                      <TitledPane animated="false" style="-fx-background-color: #2A2A3C;" text="Calories">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #2A2A3C;">
-                                 <children>
-                                    <Label layoutX="14.0" layoutY="14.0" text="Pick An Option:" textFill="#b0b0c0" />
-                                    <Button layoutX="-3.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="292.0" style="-fx-background-color: #6A4C93;" text="Add New Data" />
-                                    <Button layoutX="-1.0" layoutY="75.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="290.0" style="-fx-background-color: #6A4C93;" text="View Calories Breakdown" />
-                                 </children>
-                              </AnchorPane>
-                        </content>
-                      </TitledPane>
-                      <TitledPane animated="false" text="Workout">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <Label layoutX="12.0" layoutY="14.0" text="Pick An Option: " />
-                                    <Button layoutX="-1.0" layoutY="49.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="290.0" style="-fx-background-color: #6A4C93;" text="Add New Workout Data" />
-                                    <Button layoutX="-1.0" layoutY="72.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="290.0" style="-fx-background-color: #6A4C93;" text="View Workout Breakdown" />
-                                 </children>
-                              </AnchorPane>
-                        </content>
-                      </TitledPane>
-                      <TitledPane animated="false" prefHeight="622.0" prefWidth="189.0" text="View Menu">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="646.0" prefWidth="278.0">
-                                 <children>
-                                    <Label layoutX="13.0" layoutY="14.0" text="Pick An Option:" />
-                                    <Button layoutX="-1.0" layoutY="46.0" mnemonicParsing="false" onAction="#showCalorieView" prefHeight="25.0" prefWidth="290.0" style="-fx-background-color: #6A4C93;" text="View Today's Calories" />
-                                 </children>
-                              </AnchorPane>
-                        </content>
-                      </TitledPane>
-                    </panes>
-                  </Accordion>
+                  <VBox layoutX="362.0" layoutY="244.0" prefHeight="278.0" prefWidth="289.0" spacing="20.0">
+                     <children>
+                        <VBox prefHeight="45.0" prefWidth="289.0">
+                           <children>
+                              <Label text="Email" />
+                              <TextField fx:id="emailInput" />
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="51.0" prefWidth="289.0">
+                           <children>
+                              <Label text="Username" />
+                              <TextField fx:id="usernameInput" />
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="44.0" prefWidth="289.0">
+                           <children>
+                              <Label text="Password" />
+                              <TextField fx:id="passwordInput" />
+                           </children>
+                        </VBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                           <children>
+                              <Button fx:id="loginButton" mnemonicParsing="false" onAction="#logIn" style="-fx-pref-width: 100;" text="Log In" />
+                              <Button fx:id="signupButton" mnemonicParsing="false" onAction="#signUp" style="-fx-pref-width: 100;" text="Sign Up" />
+                           </children>
+                        </HBox>
+                        <Label fx:id="loginStatusLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="307.0" style="-fx-text-alignment: center;" textAlignment="CENTER" textFill="RED" />
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
-            <VBox fx:id="mainView" layoutX="289.0" layoutY="-3.0" prefHeight="776.0" prefWidth="714.0" />
+            </AnchorPane>
+            <AnchorPane fx:id="MainMenu" disable="true" prefHeight="816.0" prefWidth="1003.0" visible="false">
+               <children>
+                <MenuBar>
+                  <menus>
+                    <Menu mnemonicParsing="false" text="File">
+                      <items>
+                        <MenuItem mnemonicParsing="false" text="New" />
+                        <MenuItem mnemonicParsing="false" text="Open…" />
+                        <Menu mnemonicParsing="false" text="Open Recent" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem mnemonicParsing="false" text="Save" />
+                        <MenuItem mnemonicParsing="false" text="Save As…" />
+                        <MenuItem mnemonicParsing="false" text="Revert" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Preferences…" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Quit" />
+                      </items>
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Edit">
+                      <items>
+                        <MenuItem mnemonicParsing="false" text="Undo" />
+                        <MenuItem mnemonicParsing="false" text="Redo" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Cut" />
+                        <MenuItem mnemonicParsing="false" text="Copy" />
+                        <MenuItem mnemonicParsing="false" text="Paste" />
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Select All" />
+                        <MenuItem mnemonicParsing="false" text="Unselect All" />
+                      </items>
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Help">
+                      <items>
+                        <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+                      </items>
+                    </Menu>
+                        <Menu mnemonicParsing="false" text="User">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Log Out" />
+                          </items>
+                        </Menu>
+                  </menus>
+                </MenuBar>
+                <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0">
+                     <children>
+                        <VBox prefHeight="770.0" prefWidth="290.0" spacing="20.0" style="-fx-background-color: #2A2A3C;">
+                           <children>
+                              <Label text="Choose an Option:" textFill="#e0e0e0">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Accordion prefHeight="725.0" prefWidth="299.0" style="-fx-border-width: 0;">
+                                <panes>
+                                  <TitledPane animated="false" style="-fx-background-color: #2A2A3C;" text="Calories">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #2A2A3C;">
+                                             <children>
+                                                <Label layoutX="14.0" layoutY="14.0" text="Pick An Option:" textFill="#b0b0c0" />
+                                                <Button layoutX="-3.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="292.0" style="-fx-background-color: #6A4C93;" text="Add New Data" />
+                                                <Button layoutX="-1.0" layoutY="75.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="290.0" style="-fx-background-color: #6A4C93;" text="View Calories Breakdown" />
+                                             </children>
+                                          </AnchorPane>
+                                    </content>
+                                  </TitledPane>
+                                  <TitledPane animated="false" text="Workout">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <Label layoutX="12.0" layoutY="14.0" text="Pick An Option: " />
+                                                <Button layoutX="-1.0" layoutY="49.0" mnemonicParsing="false" onAction="#showWorkoutInputPane" prefHeight="25.0" prefWidth="290.0" style="-fx-background-color: #6A4C93;" text="Add New Workout Data" />
+                                                <Button layoutX="-1.0" layoutY="72.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="290.0" style="-fx-background-color: #6A4C93;" text="View Workout Breakdown" />
+                                             </children>
+                                          </AnchorPane>
+                                    </content>
+                                  </TitledPane>
+                                  <TitledPane animated="false" prefHeight="622.0" prefWidth="189.0" text="View Menu">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="646.0" prefWidth="278.0">
+                                             <children>
+                                                <Label layoutX="13.0" layoutY="14.0" text="Pick An Option:" />
+                                                <Button layoutX="-1.0" layoutY="46.0" mnemonicParsing="false" onAction="#showCalorieView" prefHeight="25.0" prefWidth="290.0" style="-fx-background-color: #6A4C93;" text="View Today's Calories" />
+                                             </children>
+                                          </AnchorPane>
+                                    </content>
+                                  </TitledPane>
+                                </panes>
+                              </Accordion>
+                           </children>
+                        </VBox>
+                        <VBox fx:id="mainView" layoutX="289.0" layoutY="-3.0" prefHeight="776.0" prefWidth="714.0" visible="false">
+                           <children>
+                              <Label text="Label" />
+                           </children>
+                        </VBox>
+                        <AnchorPane fx:id="newWorkoutDataPane" layoutX="286.0" layoutY="-2.0" prefHeight="777.0" prefWidth="714.0" visible="false">
+                           <children>
+                              <Circle fill="DODGERBLUE" layoutX="128.0" layoutY="138.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Button layoutX="101.0" layoutY="291.0" mnemonicParsing="false" text="Button" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                </AnchorPane>
+               </children>
+            </AnchorPane>
          </children>
-    </AnchorPane>
+      </AnchorPane>
   </children>
 </VBox>
