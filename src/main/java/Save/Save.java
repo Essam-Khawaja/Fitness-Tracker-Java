@@ -32,8 +32,8 @@ public class Save {
             System.out.println("Nothing to Save.");
             return;
         }
-            File file = new File("src/Save/Save.csv");  // Open the save file
-            File file2 = new File("src/Save/SaveTemp.csv"); // Create a new temporary save file
+            File file = new File("src/main/java/Save/Save.csv");  // Open the save file
+            File file2 = new File("src/main/java/Save/SaveTemp.csv"); // Create a new temporary save file
             try {
                 boolean saveCreated = file.createNewFile();     // Create new file if it is not there
                 boolean tempCreated = file2.createNewFile();    // Create new file if it is not there
@@ -216,8 +216,8 @@ public class Save {
      * @param user -> The new user to be saved
      */
     public static void SaveNewUser(User user){
-        File file = new File("src/Save/UserSave.csv");      // Opens the user save file
-        File file2 = new File("src/Save/UserTempSave.csv");     // Creates a temporary save user file
+        File file = new File("src/main/java/Save/UserSave.csv");      // Opens the user save file
+        File file2 = new File("src/main/java/Save/UserTempSave.csv");     // Creates a temporary save user file
         try {
             boolean saveCreated = file.createNewFile();     // Create a new file if not present
             boolean tempCreated = file2.createNewFile();    // Create a new file if not present
