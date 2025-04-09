@@ -267,6 +267,34 @@ public class Save {
     }
 
     /**
+     * This method saves a
+     */
+    public static void SaveSeparateFile(File file, User user){
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter(file);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write("U," + user.toString() + "\n");
+            for (Calories dataItem : user.getCalorieData()) {       // Add the calorie data
+                bufferedWriter.write("C,");
+                bufferedWriter.write(dataItem.toString());
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
+            for (Workout dataItem : user.getWorkoutData()) {    // Add the workout data
+                bufferedWriter.write("W,");
+                bufferedWriter.write(dataItem.toString());
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
+            fileWriter.close();
+            bufferedWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * This method checks if a user already exists with that email
      * @param user -> The user object from the menu
      * @return -> An integer with 3 values: -1: Does not exist, 0: Email correct, not password, 1: Both email and password correct

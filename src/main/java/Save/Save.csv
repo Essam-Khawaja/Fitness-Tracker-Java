@@ -11,3 +11,8 @@ C,MEAL,LUNCH,Biryani,500
 C,SNACK,Oreos,200
 W,PUSH,E,Preacher Curl,S,10,25.5,S,10,25.5,E,Bench Press,S,10,25.5,S,10,25.5
 W,PULL,E,Preacher Curl,S,10,25.5,S,10,25.5,E,Bench Press,S,10,25.5,S,10,25.5
+U,kai,1234,kai@gmail.com
+C,MEAL,BREAKFAST,eggs and bacon,400
+C,SNACK,apple,10
+C,MEAL,LUNCH,steak,1200
+W,PUSH,E,bench,S,3,100.0,E,,S,3,3.0,S,3,3.0,E,3,S,3,3.0,S,3,3.0,S,3,3.0,E,3,S,3,3.0,S,3,3.0,S,3,3.0,E,3,S,3,3.0,S,3,3.0,S,3,3.0,E,3,S,3,3.0,S,3,3.0,S,3,3.0,E,3,S,3,3.0,S,3,3.0,S,3,3.0,E,3,S,3,3.0,S,3,3.0,S,3,33.0,E,3,S,3,3.0,S,3,33.0,S,3,3.0
