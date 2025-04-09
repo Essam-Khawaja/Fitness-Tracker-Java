@@ -49,31 +49,75 @@
 
 <VBox prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainFiles.ProjectController">
   <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+    <MenuBar fx:id="menuBar" prefHeight="40.0" prefWidth="1006.0">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" text="New" />
+            <MenuItem mnemonicParsing="false" text="Open…" />
+            <Menu mnemonicParsing="false" text="Open Recent" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Close" />
+            <MenuItem mnemonicParsing="false" text="Save" />
+            <MenuItem mnemonicParsing="false" text="Save As…" />
+            <MenuItem mnemonicParsing="false" text="Revert" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Preferences…" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Quit" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Undo" />
+            <MenuItem mnemonicParsing="false" text="Redo" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Cut" />
+            <MenuItem mnemonicParsing="false" text="Copy" />
+            <MenuItem mnemonicParsing="false" text="Paste" />
+            <MenuItem mnemonicParsing="false" text="Delete" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Select All" />
+            <MenuItem mnemonicParsing="false" text="Unselect All" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+          </items>
+        </Menu>
+            <Menu mnemonicParsing="false" text="User">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Log Out" />
+              </items>
+            </Menu>
+      </menus>
+    </MenuBar>
+      <AnchorPane maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <children>
-            <AnchorPane fx:id="LoginPage" prefHeight="816.0" prefWidth="1003.0" style="-fx-background-color: #1E1E2E;">
+            <AnchorPane fx:id="LoginPage" prefHeight="816.0" prefWidth="1003.0" style="-fx-background-color: #1E1E2E;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <VBox layoutX="362.0" layoutY="244.0" prefHeight="278.0" prefWidth="289.0" spacing="20.0">
+                  <VBox alignment="CENTER" fillWidth="false" layoutX="362.0" layoutY="244.0" prefHeight="278.0" prefWidth="289.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <VBox prefHeight="45.0" prefWidth="289.0">
+                        <VBox alignment="CENTER_LEFT" fillWidth="false" prefHeight="45.0" prefWidth="289.0">
                            <children>
                               <Label text="Email" />
-                              <TextField fx:id="emailInput" />
+                              <TextField fx:id="emailInput" prefHeight="26.0" prefWidth="351.0" />
                            </children>
                         </VBox>
-                        <VBox prefHeight="51.0" prefWidth="289.0">
+                        <VBox alignment="CENTER_LEFT" fillWidth="false" prefHeight="51.0" prefWidth="289.0">
                            <children>
                               <Label text="Username" />
-                              <TextField fx:id="usernameInput" />
+                              <TextField fx:id="usernameInput" prefHeight="26.0" prefWidth="351.0" />
                            </children>
                         </VBox>
-                        <VBox prefHeight="44.0" prefWidth="289.0">
+                        <VBox alignment="CENTER_LEFT" fillWidth="false" prefHeight="44.0" prefWidth="289.0">
                            <children>
                               <Label text="Password" />
-                              <TextField fx:id="passwordInput" />
+                              <TextField fx:id="passwordInput" prefWidth="351.0" />
                            </children>
                         </VBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                        <HBox alignment="CENTER" fillHeight="false" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                            <children>
                               <Button fx:id="loginButton" mnemonicParsing="false" onAction="#logIn" style="-fx-pref-width: 100;" text="Log In" />
                               <Button fx:id="signupButton" mnemonicParsing="false" onAction="#signUp" style="-fx-pref-width: 100;" text="Sign Up" />
@@ -84,52 +128,23 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="MainMenu" disable="true" prefHeight="816.0" prefWidth="1003.0" visible="false">
+            <AnchorPane fx:id="loginDataPane" disable="true" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                <MenuBar>
-                  <menus>
-                    <Menu mnemonicParsing="false" text="File">
-                      <items>
-                        <MenuItem mnemonicParsing="false" text="New" />
-                        <MenuItem mnemonicParsing="false" text="Open…" />
-                        <Menu mnemonicParsing="false" text="Open Recent" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Close" />
-                        <MenuItem mnemonicParsing="false" text="Save" />
-                        <MenuItem mnemonicParsing="false" text="Save As…" />
-                        <MenuItem mnemonicParsing="false" text="Revert" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Preferences…" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Quit" />
-                      </items>
-                    </Menu>
-                    <Menu mnemonicParsing="false" text="Edit">
-                      <items>
-                        <MenuItem mnemonicParsing="false" text="Undo" />
-                        <MenuItem mnemonicParsing="false" text="Redo" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Cut" />
-                        <MenuItem mnemonicParsing="false" text="Copy" />
-                        <MenuItem mnemonicParsing="false" text="Paste" />
-                        <MenuItem mnemonicParsing="false" text="Delete" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Select All" />
-                        <MenuItem mnemonicParsing="false" text="Unselect All" />
-                      </items>
-                    </Menu>
-                    <Menu mnemonicParsing="false" text="Help">
-                      <items>
-                        <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
-                      </items>
-                    </Menu>
-                        <Menu mnemonicParsing="false" text="User">
-                          <items>
-                            <MenuItem mnemonicParsing="false" text="Log Out" />
-                          </items>
-                        </Menu>
-                  </menus>
-                </MenuBar>
+                  <VBox alignment="CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label text="Do you wish to load previous data?" />
+                        <HBox alignment="CENTER" fillHeight="false" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#loadPreviousData" prefWidth="50.0" text="Yes" />
+                              <Button mnemonicParsing="false" onAction="#moveToMainMenu" prefWidth="50.0" text="No" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="MainMenu" disable="true" prefHeight="816.0" prefWidth="1003.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
                 <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0">
                      <children>
                         <VBox prefHeight="770.0" prefWidth="290.0" spacing="20.0" style="-fx-background-color: #2A2A3C;">

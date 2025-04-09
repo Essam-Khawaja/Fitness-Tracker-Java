@@ -1,6 +1,13 @@
 .root {
     -fx-font-family: "Segoe UI";
     -fx-background-color: #1E1E2E;
+    -fx-text-fill: #E0E0E0;
+}
+
+.menu-bar {
+    -fx-background-color: #2A2A3C;
+    -fx-border-width: 0 0 2px 0;
+    -fx-border-color: #3F2E56;
 }
 
 .label {

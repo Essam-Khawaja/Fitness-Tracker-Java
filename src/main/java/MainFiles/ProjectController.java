@@ -8,6 +8,7 @@ import Save.Save;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -26,10 +27,16 @@ public class ProjectController {
     private VBox mainView;
 
     @FXML
+    private MenuBar menuBar;
+
+    @FXML
     private AnchorPane newWorkoutDataPane;
 
     @FXML
     private AnchorPane LoginPage;
+
+    @FXML
+    private AnchorPane loginDataPane;
 
     @FXML
     private AnchorPane MainMenu;
@@ -48,8 +55,6 @@ public class ProjectController {
 
     @FXML
     public void showCalorieView() {
-        user.addCalorieData(new Calories(MealType.MEAL, MealTime.LUNCH, "Biryani", 1200));
-        user.addCalorieData(new Calories(MealType.MEAL, MealTime.LUNCH, "Biryani", 1200));
         TextArea textArea = new TextArea();
         textArea.setEditable(false);
         textArea.setWrapText(true);
@@ -80,7 +85,6 @@ public class ProjectController {
             outputText += "\n🔥 Today's Total Calories: " + totalCalories + " kcal 🔥\n";
         }
         textArea.setText(outputText);
-        mainView.getChildren().add(textArea);
     }
 
     @FXML
@@ -111,19 +115,67 @@ public class ProjectController {
         if (loggedIn) {
             LoginPage.setVisible(false);
             LoginPage.setDisable(true);
-            MainMenu.setVisible(true);
-            MainMenu.setDisable(false);
+            loginDataPane.setVisible(true);
+            loginDataPane.setDisable(false);
         }
     }
 
     @FXML
     public void signUp(ActionEvent actionEvent) {
-        return;
+        boolean signedUp = false;
+
+        String username = usernameInput.getText();
+        String password = passwordInput.getText();
+        String email = emailInput.getText();
+
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
+        int validateUser = Save.ValidateUser(user);
+        if (validateUser == -1) {
+            Save.SaveNewUser(user);
+            signedUp = true;
+        } else {
+            loginStatusLabel.setText("User with this email already exists.");
+            emailInput.requestFocus();
+        }
+
+        if (signedUp) {
+            LoginPage.setVisible(false);
+            LoginPage.setDisable(true);
+            MainMenu.setVisible(true);
+            MainMenu.setDisable(false);
+            menuBar.setDisable(false);
+        }
+    }
+
+    @FXML
+    public void loadPreviousData(ActionEvent actionEvent) {
+        Save.LoadData(user, "src/main/java/Save/Save.csv");
+        loginDataPane.setVisible(false);
+        loginDataPane.setDisable(true);
+        MainMenu.setVisible(true);
+        MainMenu.setDisable(false);
+        menuBar.setDisable(false);
+    }
+
+    @FXML
+    public void moveToMainMenu(ActionEvent actionEvent) {
+        loginDataPane.setVisible(false);
+        loginDataPane.setDisable(true);
+        MainMenu.setVisible(true);
+        MainMenu.setDisable(false);
+        menuBar.setDisable(false);
     }
 
     @FXML
     public void showWorkoutInputPane() {
         newWorkoutDataPane.setVisible(true);
+    }
+
+    @FXML
+    public void initialize() {
+        menuBar.setDisable(true);
     }
 
 }
