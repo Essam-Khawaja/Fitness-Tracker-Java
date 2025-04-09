@@ -45,7 +45,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <VBox prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainFiles.ProjectController">
@@ -54,16 +53,10 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
+            <MenuItem mnemonicParsing="false" onAction="#Load" text="Open…" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
+            <MenuItem mnemonicParsing="false" onAction="#Save" text="Save" />
+            <MenuItem mnemonicParsing="false" onAction="#SaveSeparateFile" text="Save As…" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Quit" />
           </items>
@@ -96,7 +89,7 @@
     </MenuBar>
       <AnchorPane maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <children>
-            <AnchorPane fx:id="LoginPage" prefHeight="816.0" prefWidth="1003.0" style="-fx-background-color: #1E1E2E;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="LoginPage" prefHeight="816.0" prefWidth="1003.0" style="-fx-background-color: #1E1E2E;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="CENTER" fillWidth="false" layoutX="362.0" layoutY="244.0" prefHeight="278.0" prefWidth="289.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -148,7 +141,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="MainMenu" disable="true" prefHeight="816.0" prefWidth="1003.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="MainMenu" disable="true" prefHeight="816.0" prefWidth="1003.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                 <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0">
                      <children>
@@ -197,17 +190,7 @@
                               </Accordion>
                            </children>
                         </VBox>
-                        <VBox fx:id="mainView" layoutX="289.0" layoutY="-3.0" prefHeight="776.0" prefWidth="714.0" visible="false">
-                           <children>
-                              <Label text="Label" />
-                           </children>
-                        </VBox>
-                        <AnchorPane fx:id="newWorkoutDataPane" layoutX="286.0" layoutY="-2.0" prefHeight="777.0" prefWidth="714.0" visible="false">
-                           <children>
-                              <Circle fill="DODGERBLUE" layoutX="128.0" layoutY="138.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
-                              <Button layoutX="101.0" layoutY="291.0" mnemonicParsing="false" text="Button" />
-                           </children>
-                        </AnchorPane>
+                        <VBox fx:id="mainView" layoutX="289.0" layoutY="-3.0" prefHeight="776.0" prefWidth="714.0" visible="false" />
                      </children>
                 </AnchorPane>
                </children>

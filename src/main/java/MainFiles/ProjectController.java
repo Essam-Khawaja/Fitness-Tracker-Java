@@ -13,7 +13,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -25,31 +27,22 @@ public class ProjectController {
 
     @FXML
     private VBox mainView;
-
     @FXML
     private MenuBar menuBar;
-
     @FXML
     private AnchorPane newWorkoutDataPane;
-
     @FXML
     private AnchorPane LoginPage;
-
     @FXML
     private AnchorPane loginDataPane;
-
     @FXML
     private AnchorPane MainMenu;
-
     @FXML
     private TextField usernameInput;
-
     @FXML
     private TextField passwordInput;
-
     @FXML
     private TextField emailInput;
-
     @FXML
     private Label loginStatusLabel;
 
@@ -88,6 +81,39 @@ public class ProjectController {
     }
 
     @FXML
+    public void Load() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Load File");
+        File file = fileChooser.showSaveDialog(mainView.getScene().getWindow());
+        if (file != null) {
+            Save.LoadData(user, file.getPath());
+        }
+    }
+
+    @FXML
+    public void Save(ActionEvent event) {
+        Save.SaveData(user);
+    }
+
+    @FXML
+    public void SaveSeparateFile(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save File");
+        File file = fileChooser.showSaveDialog(mainView.getScene().getWindow());
+        if (file != null) {
+            if (!file.getName().endsWith(".txt")) {
+                file = new File(file.getAbsolutePath() + ".txt");
+            }
+            Save.SaveSeparateFile(file, user);
+        }
+    }
+
+    /**
+     *
+     * @param actionEvent
+     * @author Syed Essam Uddin Khawaja
+     */
+    @FXML
     public void logIn(ActionEvent actionEvent) {
         boolean loggedIn = false;
         String username = usernameInput.getText();
@@ -97,6 +123,17 @@ public class ProjectController {
         user.setUsername(username);
         user.setPassword(password);
         user.setEmail(email);
+
+        if (username.equals("")) {
+            loginStatusLabel.setText("Username is required.");
+            return;
+        } else if (password.equals("")) {
+            loginStatusLabel.setText("Password is required.");
+            return;
+        } else if (email.equals("")) {
+            loginStatusLabel.setText("Email is required.");
+            return;
+        }
 
         int validateUser = Save.ValidateUser(user);
 
@@ -120,6 +157,11 @@ public class ProjectController {
         }
     }
 
+    /**
+     *
+     * @param actionEvent
+     * @author Syed Essam Uddin Khawaja
+     */
     @FXML
     public void signUp(ActionEvent actionEvent) {
         boolean signedUp = false;
@@ -127,6 +169,17 @@ public class ProjectController {
         String username = usernameInput.getText();
         String password = passwordInput.getText();
         String email = emailInput.getText();
+
+        if (username.equals("")) {
+            loginStatusLabel.setText("Username is required.");
+            return;
+        } else if (password.equals("")) {
+            loginStatusLabel.setText("Password is required.");
+            return;
+        } else if (email.equals("")) {
+            loginStatusLabel.setText("Email is required.");
+            return;
+        }
 
         user.setUsername(username);
         user.setPassword(password);
@@ -149,6 +202,11 @@ public class ProjectController {
         }
     }
 
+    /**
+     *
+     * @param actionEvent
+     * @author Syed Essam Uddin Khawaja
+     */
     @FXML
     public void loadPreviousData(ActionEvent actionEvent) {
         Save.LoadData(user, "src/main/java/Save/Save.csv");
@@ -159,6 +217,11 @@ public class ProjectController {
         menuBar.setDisable(false);
     }
 
+    /**
+     *
+     * @param actionEvent
+     * @author Syed Essam Uddin Khawaja
+     */
     @FXML
     public void moveToMainMenu(ActionEvent actionEvent) {
         loginDataPane.setVisible(false);
@@ -168,11 +231,17 @@ public class ProjectController {
         menuBar.setDisable(false);
     }
 
+    /**
+     * @author Syed Essam Uddin Khawaja
+     */
     @FXML
     public void showWorkoutInputPane() {
         newWorkoutDataPane.setVisible(true);
     }
 
+    /**
+     * @author Syed Essam Uddin Khawaja
+     */
     @FXML
     public void initialize() {
         menuBar.setDisable(true);
