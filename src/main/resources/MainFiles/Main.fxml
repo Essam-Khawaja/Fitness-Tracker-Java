@@ -58,38 +58,24 @@
             <MenuItem mnemonicParsing="false" onAction="#Save" text="Save" />
             <MenuItem mnemonicParsing="false" onAction="#SaveSeparateFile" text="Save As…" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
+            <MenuItem mnemonicParsing="false" onAction="#Exit" text="Quit" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
           <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+            <MenuItem mnemonicParsing="false" text="About  Fitness Tracker" />
           </items>
         </Menu>
             <Menu mnemonicParsing="false" text="User">
               <items>
-                <MenuItem mnemonicParsing="false" text="Log Out" />
+                <MenuItem mnemonicParsing="false" onAction="#logout" text="Log Out" />
               </items>
             </Menu>
       </menus>
     </MenuBar>
       <AnchorPane maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <children>
-            <AnchorPane fx:id="LoginPage" prefHeight="816.0" prefWidth="1003.0" style="-fx-background-color: #1E1E2E;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="LoginPage" prefHeight="816.0" prefWidth="1003.0" style="-fx-background-color: #1E1E2E;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox alignment="CENTER" fillWidth="false" layoutX="362.0" layoutY="244.0" prefHeight="278.0" prefWidth="289.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -141,7 +127,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="MainMenu" disable="true" prefHeight="816.0" prefWidth="1003.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="MainMenu" disable="true" prefHeight="816.0" prefWidth="1003.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                 <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0">
                      <children>

@@ -5,6 +5,7 @@ import Data.User;
 import Enums.MealTime;
 import Enums.MealType;
 import Save.Save;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -106,6 +107,20 @@ public class ProjectController {
             }
             Save.SaveSeparateFile(file, user);
         }
+    }
+
+    @FXML
+    public void Exit(ActionEvent event) {
+        Platform.exit();
+    }
+
+    @FXML
+    public void logout(ActionEvent event) {
+        user = new User("", "", "");
+        MainMenu.setVisible(false);
+        MainMenu.setDisable(true);
+        LoginPage.setVisible(true);
+        LoginPage.setDisable(false);
     }
 
     /**
