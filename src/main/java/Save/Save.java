@@ -129,8 +129,9 @@ public class Save {
      * @param user -> The user in which we have to load the data
      * @param path -> The path to the file
      */
-    public static void LoadData(User user, String path){
+    public static boolean LoadData(User user, String path){
         File file = new File(path);  // Open the file
+        boolean userFound = false;      // This checks whether we have found the user data
         try {
             FileReader fileReader = new FileReader(file);       // Open the file for reading
             BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -138,7 +139,6 @@ public class Save {
             if (line.equals(null)) {
                 System.out.println("No data found");    // If save file is empty, say no data found
             } else {
-                boolean userFound = false;      // This checks whether we have found the user data
                 while (line != null && !userFound) {
                     String[] data = line.split(",");    // Split the data based on commas
                     if (data[0].equals("U") && data[3].equals(user.getEmail())) {    // If this is the corresponding user
@@ -197,13 +197,11 @@ public class Save {
                         line = bufferedReader.readLine();   // If user not found, then continue reading file
                     }
                 }
-                if (!userFound) {   // If we have not found the user, output that no data found
-                    System.out.println("No data found");
-                }
             }
             // Close the corresponding file objects
             fileReader.close();
             bufferedReader.close();
+            return userFound;
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

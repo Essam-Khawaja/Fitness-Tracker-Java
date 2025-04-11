@@ -17,7 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ProjectController {
@@ -230,6 +229,16 @@ public class ProjectController {
         MainMenu.setVisible(true);
         MainMenu.setDisable(false);
         menuBar.setDisable(false);
+    }
+
+    /**
+     * Fix this thing when you add status bar
+     * @param actionEvent
+     */
+    @FXML
+    public void loadNewData(ActionEvent actionEvent) {
+        boolean foundUser = Save.LoadData(user, "src/main/java/Save/Save.csv");
+        if (!foundUser) {}
     }
 
     /**
