@@ -40,6 +40,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -176,7 +177,60 @@
                               </Accordion>
                            </children>
                         </VBox>
-                        <VBox fx:id="mainView" layoutX="289.0" layoutY="-3.0" prefHeight="776.0" prefWidth="714.0" visible="false" />
+                         <VBox fx:id="mainView" alignment="CENTER" prefHeight="770.0" prefWidth="712.0" spacing="10">
+                           <VBox fx:id="WorkoutInputView" disable="true" prefHeight="788.0" prefWidth="712.0" visible="false">
+                              <children>
+                               <HBox fx:id="workoutButtons" alignment="CENTER" prefHeight="201.0" prefWidth="712.0" spacing="15">
+                                   <Button fx:id="pullButton" onAction="#selectWorkout" prefHeight="100.0" prefWidth="115.0" text="Pull">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Button>
+                                   <Button fx:id="pushButton" onAction="#selectWorkout" prefHeight="100.0" prefWidth="110.0" text="Push">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Button>
+                                   <Button fx:id="legsButton" onAction="#selectWorkout" prefHeight="99.0" prefWidth="110.0" text="Leg">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Button>
+                                   <Button fx:id="upperButton" onAction="#selectWorkout" prefHeight="100.0" prefWidth="110.0" text="Upper">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Button>
+                                   <Button fx:id="lowerButton" onAction="#selectWorkout" prefHeight="100.0" prefWidth="109.0" text="Lower">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Button>
+                                   <Button fx:id="fullBodyButton" onAction="#selectWorkout" prefHeight="100.0" prefWidth="110.0" text="Full Body">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Button>
+                               </HBox>
+            
+                               <VBox fx:id="workoutDetails" alignment="CENTER" prefHeight="395.0" prefWidth="712.0" spacing="12" visible="false">
+                                   <Label style="-fx-font-weight: bold;" text="Workout Type:" />
+                                   <Label fx:id="workoutLabel" style="-fx-font-size: 16px;" />
+            
+                                   <TextField fx:id="workoutName" maxWidth="250" promptText="Exercise Name" />
+                                   <TextField fx:id="workoutKilograms" maxWidth="250" promptText="Kilograms Lifted" />
+                                   <TextField fx:id="workoutReps" maxWidth="250" promptText="Number of Reps" />
+            
+                                   <HBox alignment="CENTER" prefHeight="50.0" prefWidth="712.0" spacing="15">
+                                       <Button onAction="#addExercise" text="Add Exercise" />
+                                       <Button onAction="#resetWorkoutView" text="Go Back" />
+                                   </HBox>
+            
+                                   <TextArea fx:id="exerciseSummary" editable="false" prefHeight="237.0" prefWidth="712.0" />
+                               </VBox>
+                              </children>
+                           </VBox>
+                     </VBox>
                      </children>
                 </AnchorPane>
                </children>
