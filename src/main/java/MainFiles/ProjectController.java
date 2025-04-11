@@ -1,5 +1,13 @@
 package MainFiles;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import Data.Workout;
+import Data.Exercise;
+import Enums.WorkoutPlan;
+import java.util.ArrayList;
 import Data.Calories;
 import Data.User;
 import Enums.MealTime;
@@ -7,6 +15,7 @@ import Enums.MealType;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javafx.event.ActionEvent;
 
 import java.util.ArrayList;
 
@@ -55,4 +64,99 @@ public class ProjectController {
         textArea.setText(outputText);
         mainView.getChildren().add(textArea);
     }
+
+    @FXML
+    private HBox workoutButtons;
+    @FXML
+    private VBox workoutDetails;
+    @FXML
+    private Label workoutLabel;
+    @FXML
+    private TextField workoutName, workoutKilograms, workoutReps;
+    @FXML
+    private TextArea exerciseSummary;
+
+    private Workout currentWorkout;
+    private ArrayList<Exercise> exerciseList = new ArrayList<>();
+
+    @FXML
+    private void selectWorkout(ActionEvent event) {
+        Button clickedButton = (Button) event.getSource();
+        String workoutName = clickedButton.getText().trim().toUpperCase().replace(" ", "_");
+
+        // Special handling for inconsistent naming
+        if (workoutName.equals("LEG")) {
+            workoutName = "LEGS";
+        }
+
+        WorkoutPlan selectedWorkoutPlan = WorkoutPlan.getPlanEnum(workoutName);
+
+        if (selectedWorkoutPlan != null) {
+            currentWorkout = new Workout(selectedWorkoutPlan, new ArrayList<>());
+            workoutLabel.setText(clickedButton.getText());
+            workoutDetails.setVisible(true);
+            exerciseList.clear();
+            exerciseSummary.clear();
+        } else {
+            System.out.println("Workout plan not recognized: " + workoutName);
+            workoutDetails.setVisible(false);
+        }
+    }
+
+    @FXML
+    private void addExercise() {
+        String name = workoutName.getText();
+        String kgInput = workoutKilograms.getText();
+        String repsInput = workoutReps.getText();
+
+        // Validate inputs using your existing validation methods
+        if (Workout.validateWeightLifted(kgInput) && Workout.validateReps(repsInput)) {
+            double kilograms = Double.parseDouble(kgInput);
+            int reps = Integer.parseInt(repsInput);
+
+            Exercise exercise = new Exercise(name, kilograms, reps);
+            currentWorkout.getExercises().add(exercise);
+            updateSummary();
+
+            workoutName.clear();
+            workoutKilograms.clear();
+            workoutReps.clear();
+        } else {
+            exerciseSummary.appendText("Invalid input, please enter valid values.\n");
+        }
+    }
+
+    private void updateSummary() {
+        StringBuilder summary = new StringBuilder();
+        for (Exercise e : currentWorkout.getExercises()) {
+            summary.append(e.getExerciseName())
+                    .append(" - ")
+                    .append(e.getWeightLifted())
+                    .append("kg x ")
+                    .append(e.getReps())
+                    .append(" reps\n");
+        }
+        exerciseSummary.setText(summary.toString());
+    }
+
+    @FXML
+    private void resetWorkoutView() {
+        workoutDetails.setVisible(false);
+        workoutButtons.setVisible(true);
+        workoutName.clear();
+        workoutKilograms.clear();
+        workoutReps.clear();
+        exerciseSummary.clear();
+        currentWorkout = null;
+    }
+
+    @FXML
+    private VBox WorkoutInputView;
+
+    @FXML
+    private void ShowAddNewWorkout(){
+        WorkoutInputView.setVisible(true);
+        WorkoutInputView.setDisable(false);
+    }
 }
+
