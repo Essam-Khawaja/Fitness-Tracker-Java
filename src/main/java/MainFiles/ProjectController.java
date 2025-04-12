@@ -1,15 +1,16 @@
 package MainFiles;
 
+import Data.*;
+import com.sun.tools.javac.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import Data.Workout;
-import Data.Exercise;
 import Enums.WorkoutPlan;
+
+import java.lang.reflect.Field;
 import java.util.ArrayList;
-import Data.Calories;
-import Data.User;
+
 import Enums.MealTime;
 import Enums.MealType;
 import Save.Save;
@@ -37,7 +38,9 @@ public class ProjectController {
     private static User user = new User("", "", "");    // This is the user of the menu
 
     @FXML
-    private VBox mainView;
+    private AnchorPane mainView;
+    @FXML
+    private VBox calorieInput;
     @FXML
     private MenuBar menuBar;
     @FXML
@@ -102,6 +105,8 @@ public class ProjectController {
     private TextField workoutName, workoutKilograms, workoutReps;
     @FXML
     private TextArea exerciseSummary;
+    @FXML
+    private TextField workoutSets;
 
     private Workout currentWorkout;
     private ArrayList<Exercise> exerciseList = new ArrayList<>();
@@ -121,6 +126,7 @@ public class ProjectController {
         if (selectedWorkoutPlan != null) {
             currentWorkout = new Workout(selectedWorkoutPlan, new ArrayList<>());
             workoutLabel.setText(clickedButton.getText());
+            workoutDetails.setDisable(false);
             workoutDetails.setVisible(true);
             exerciseList.clear();
             exerciseSummary.clear();
@@ -132,43 +138,55 @@ public class ProjectController {
 
     @FXML
     private void addExercise() {
-//        String name = workoutName.getText();
-//        String kgInput = workoutKilograms.getText();
-//        String repsInput = workoutReps.getText();
-//
-//        // Validate inputs using your existing validation methods
-//        if (Workout.validateWeightLifted(kgInput) && Workout.validateReps(repsInput)) {
-//            double kilograms = Double.parseDouble(kgInput);
-//            int reps = Integer.parseInt(repsInput);
-//
-//            Exercise exercise = new Exercise(name, kilograms, reps);
-//            currentWorkout.getExercises().add(exercise);
-//            updateSummary();
-//
-//            workoutName.clear();
-//            workoutKilograms.clear();
-//            workoutReps.clear();
-//        } else {
-//            exerciseSummary.appendText("Invalid input, please enter valid values.\n");
-//        }
+        String name = workoutName.getText();
+        String kgInput = workoutKilograms.getText();
+        String repsInput = workoutReps.getText();
+        String setsInput = workoutSets.getText();
+
+        // Validate inputs using your existing validation methods
+        if (Workout.validateWeightLifted(kgInput) && Workout.validateReps(repsInput)) {
+            float kilograms = Float.parseFloat(kgInput);
+            int reps = Integer.parseInt(repsInput);
+            int sets = Integer.parseInt(setsInput);
+
+            ArrayList<Set> setList = new ArrayList<>();
+            for (int i = 0; i < sets; i++) {
+                Set thisSet = new Set(reps, kilograms);
+                setList.add(thisSet);
+            }
+
+            Exercise exercise = new Exercise(name, setList);
+            currentWorkout.getExercises().add(exercise);
+            updateSummary();
+
+            workoutName.clear();
+            workoutKilograms.clear();
+            workoutReps.clear();
+            workoutSets.clear();
+        } else {
+            exerciseSummary.appendText("Invalid input, please enter valid values.\n");
+        }
     }
 
     private void updateSummary() {
-//        StringBuilder summary = new StringBuilder();
-//        for (Exercise e : currentWorkout.getExercises()) {
-//            summary.append(e.getExerciseName())
-//                    .append(" - ")
-//                    .append(e.getWeightLifted())
-//                    .append("kg x ")
-//                    .append(e.getReps())
-//                    .append(" reps\n");
-//        }
-//        exerciseSummary.setText(summary.toString());
+        StringBuilder summary = new StringBuilder();
+        for (Exercise e : currentWorkout.getExercises()) {
+            summary.append(e.getExerciseName() + ": ");
+            for (Set s: e.getSets()) {
+                summary.append("\n - ").append(s.getWeightLifted())
+                        .append("kg x ")
+                        .append(s.getReps())
+                        .append(" reps");
+            }
+            summary.append("\n");
+        }
+        exerciseSummary.setText(summary.toString());
     }
 
     @FXML
     private void resetWorkoutView() {
         workoutDetails.setVisible(false);
+        workoutDetails.setDisable(true);
         workoutButtons.setVisible(true);
         workoutName.clear();
         workoutKilograms.clear();
@@ -188,20 +206,27 @@ public class ProjectController {
 
     @FXML
     public void calorieInput() {
+        calorieInput.setVisible(true);
+        calorieInput.setDisable(false);
+        calorieInput.getChildren().clear();
         // Input Fields
         ComboBox<MealType> mealTypeCombo = new ComboBox<>();
         mealTypeCombo.getItems().addAll(MealType.values());
         mealTypeCombo.setPromptText("Select Type");
+        calorieInput.getChildren().add(mealTypeCombo);
 
         ComboBox<MealTime> mealTimeCombo = new ComboBox<>();
         mealTimeCombo.getItems().addAll(MealTime.values());
         mealTimeCombo.setPromptText("Select Meal Time");
+        calorieInput.getChildren().add(mealTimeCombo);
 
         TextField foodNameField = new TextField();
         foodNameField.setPromptText("Enter Food Name");
+        calorieInput.getChildren().add(foodNameField);
 
         TextField calorieField = new TextField();
         calorieField.setPromptText("Enter Calories");
+        calorieInput.getChildren().add(calorieField);
 
         // Submit Button
         javafx.scene.control.Button submitButton = new javafx.scene.control.Button("Add Calorie Entry");
@@ -229,6 +254,7 @@ public class ProjectController {
                 showMessage("⚠️ Invalid input. Please check your fields.");
             }
         });
+        calorieInput.getChildren().add(submitButton);
     }
 
     // Helper message popup
@@ -429,6 +455,12 @@ public class ProjectController {
      */
     @FXML
     public void initialize() {
+        MainMenu.setDisable(true);
+        MainMenu.setVisible(false);
+        loginDataPane.setVisible(false);
+        loginDataPane.setDisable(true);
+        LoginPage.setVisible(true);
+        LoginPage.setDisable(false);
         menuBar.setDisable(true);
     }
 
