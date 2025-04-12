@@ -70,6 +70,8 @@ public class ProjectController {
     private VBox navigationBar;
     @FXML
     private Button toggleSidebarButton;
+    @FXML
+    private VBox viewMenu;
 
     private boolean isSidebarCollapsed = false;
 
@@ -186,6 +188,10 @@ public class ProjectController {
 
     @FXML
     public void showCalorieView() {
+        viewMenu.getChildren().clear();
+        resetView();
+        viewMenu.setDisable(false);
+        viewMenu.setVisible(true);
         TextArea textArea = new TextArea();
         textArea.setEditable(false);
         textArea.setWrapText(true);
@@ -216,6 +222,46 @@ public class ProjectController {
             outputText += "\n🔥 Today's Total Calories: " + totalCalories + " kcal 🔥\n";
         }
         textArea.setText(outputText);
+        viewMenu.getChildren().add(textArea);
+    }
+
+    @FXML
+    public void showWorkoutView() {
+        viewMenu.getChildren().clear();
+        resetView();
+        viewMenu.setDisable(false);
+        viewMenu.setVisible(true);
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+        textArea.setPrefWidth(600);
+        textArea.setPrefHeight(600);
+        // Retrieve the calorie data
+        ArrayList<Calories> calorieTrackingData = user.getCalorieData();
+        String outputText = "";
+
+        // Check if its empty
+        if (calorieTrackingData.isEmpty()) {
+            outputText += "No calorie data available for today.";
+        } else {
+            // Go through all the array objects and print them out in correct format
+            outputText += "\n===================================\n";
+            outputText += "   TODAY'S CALORIES TRACKING DATA  \n";
+            outputText += "===================================\n";
+            int totalCalories = 0;  // Stores the total of all the calories stored
+            for (Calories data : calorieTrackingData) {
+                outputText += "\n. " + data.getFoodName();
+                outputText += "\n    Type:" + data.getSnackOrMeal();
+                if (!(data.getSnackOrMeal() == MealType.SNACK)) {
+                    outputText += "\n    Time:" + data.getMealTime();
+                }
+                outputText += "\n    Calories:" + data.getCalories() + " kcal";
+                totalCalories += data.getCalories();
+            }
+            outputText += "\n🔥 Today's Total Calories: " + totalCalories + " kcal 🔥\n";
+        }
+        textArea.setText(outputText);
+        viewMenu.getChildren().add(textArea);
     }
 
     @FXML
