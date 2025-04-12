@@ -3,6 +3,7 @@ package MainFiles;
 import Data.*;
 import com.sun.tools.javac.Main;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -60,6 +61,14 @@ public class ProjectController {
     @FXML
     private Label loginStatusLabel;
 
+
+    @FXML
+    private void resetView() {
+        for (Node child : mainView.getChildren()) {
+            child.setDisable(true);
+            child.setVisible(false);
+        }
+    }
 
     @FXML
     public void showCalorieView() {
@@ -196,16 +205,27 @@ public class ProjectController {
     }
 
     @FXML
+    private void saveNewWorkout() {
+        user.addWorkoutData(currentWorkout);
+        currentWorkout = null;
+        exerciseList.clear();
+        resetWorkoutView();
+    }
+
+    @FXML
     private VBox WorkoutInputView;
 
     @FXML
     private void ShowAddNewWorkout(){
+        resetView();
+        resetWorkoutView();
         WorkoutInputView.setVisible(true);
         WorkoutInputView.setDisable(false);
     }
 
     @FXML
     public void calorieInput() {
+        resetView();
         calorieInput.setVisible(true);
         calorieInput.setDisable(false);
         calorieInput.getChildren().clear();
@@ -440,14 +460,6 @@ public class ProjectController {
         MainMenu.setVisible(true);
         MainMenu.setDisable(false);
         menuBar.setDisable(false);
-    }
-
-    /**
-     * @author Syed Essam Uddin Khawaja
-     */
-    @FXML
-    public void showWorkoutInputPane() {
-        newWorkoutDataPane.setVisible(true);
     }
 
     /**

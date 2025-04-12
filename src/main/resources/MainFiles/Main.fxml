@@ -230,6 +230,11 @@
                                       </HBox>
                   
                                                            <TextArea fx:id="exerciseSummary" editable="false" prefHeight="237.0" prefWidth="712.0" />
+                                       <Button mnemonicParsing="false" onAction="#saveNewWorkout" text="Save">
+                                          <VBox.margin>
+                                             <Insets top="10.0" />
+                                          </VBox.margin>
+                                       </Button>
                                   </VBox>
                                  </children>
                               </VBox>
