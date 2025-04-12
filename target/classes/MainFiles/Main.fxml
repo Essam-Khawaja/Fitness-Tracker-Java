@@ -50,7 +50,7 @@
 
 <VBox prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainFiles.ProjectController">
   <children>
-    <MenuBar fx:id="menuBar" prefHeight="40.0" prefWidth="1006.0">
+    <MenuBar fx:id="menuBar" prefHeight="28.0" prefWidth="1000.0">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
@@ -130,16 +130,29 @@
             </AnchorPane>
             <AnchorPane fx:id="MainMenu" prefHeight="816.0" prefWidth="1003.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label fx:id="errorStatus" styleClass="status-label" text="Bad" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="successStatus" layoutX="10.0" layoutY="10.0" style="-fx-background-color: green;" styleClass="status-label" text="Good" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                     </padding>
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Label>
+                  <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <VBox prefHeight="770.0" prefWidth="290.0" spacing="20.0" style="-fx-background-color: #2A2A3C;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="710.0" AnchorPane.topAnchor="0.0">
+                        <VBox fx:id="navigationBar" minHeight="0.0" minWidth="0.0" prefHeight="770.0" prefWidth="290.0" spacing="20.0" style="-fx-background-color: #2A2A3C;">
                            <children>
-                              <Label text="Choose an Option:" textFill="#e0e0e0">
+                              <Label minHeight="0.0" minWidth="0.0" text="Choose an Option:" textFill="#e0e0e0">
                                  <VBox.margin>
                                     <Insets top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Accordion prefHeight="725.0" prefWidth="299.0" style="-fx-border-width: 0;">
+                              <Accordion minHeight="0.0" minWidth="0.0" prefHeight="725.0" prefWidth="299.0" style="-fx-border-width: 0;" VBox.vgrow="ALWAYS">
                                 <panes>
                                   <TitledPane animated="false" expanded="true" style="-fx-background-color: #2A2A3C;" text="Calories">
                                     <content>
@@ -177,7 +190,7 @@
                               </Accordion>
                            </children>
                         </VBox>
-                        <AnchorPane fx:id="mainView" layoutX="289.0" layoutY="10.0" prefHeight="760.0" prefWidth="711.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="289.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="mainView" prefHeight="760.0" prefWidth="711.0" HBox.hgrow="ALWAYS">
                            <children>
                               <VBox fx:id="calorieInput" alignment="CENTER" disable="true" fillWidth="false" prefHeight="652.0" prefWidth="712.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                               <VBox fx:id="WorkoutInputView" alignment="CENTER" disable="true" prefHeight="788.0" prefWidth="712.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -238,10 +251,11 @@
                                   </VBox>
                                  </children>
                               </VBox>
+                              <Button fx:id="toggleSidebarButton" layoutX="18.0" layoutY="16.0" mnemonicParsing="false" onAction="#expandSidebar" text="Back" visible="false" />
                            </children>
                         </AnchorPane>
                      </children>
-                </AnchorPane>
+                  </HBox>
                </children>
             </AnchorPane>
          </children>

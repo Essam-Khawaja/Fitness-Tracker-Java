@@ -2,6 +2,7 @@ package MainFiles;
 
 import Data.*;
 import com.sun.tools.javac.Main;
+import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -28,6 +29,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.event.ActionEvent;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -60,7 +62,119 @@ public class ProjectController {
     private TextField emailInput;
     @FXML
     private Label loginStatusLabel;
+    @FXML
+    private Label errorStatus;
+    @FXML
+    private Label successStatus;
+    @FXML
+    private VBox navigationBar;
+    @FXML
+    private Button toggleSidebarButton;
 
+    private boolean isSidebarCollapsed = false;
+
+    @FXML
+    private void collapseSidebar() {
+        Timeline collapse = new Timeline(
+                new KeyFrame(Duration.millis(300),
+                        new KeyValue(navigationBar.prefWidthProperty(), 0),
+                        new KeyValue(navigationBar.minWidthProperty(), 0)
+                )
+        );
+
+        // Slight visual nudge for content
+        TranslateTransition contentShift = new TranslateTransition(Duration.millis(300), mainView);
+        contentShift.setFromX(0);
+        contentShift.setToX(-10);
+        contentShift.setAutoReverse(true);
+        contentShift.setCycleCount(2);
+
+        collapse.setOnFinished(e -> {
+            toggleSidebarButton.setVisible(true);
+            toggleSidebarButton.setOpacity(0);
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(200), toggleSidebarButton);
+            fadeIn.setToValue(1);
+            fadeIn.play();
+            isSidebarCollapsed = true;
+        });
+
+        collapse.play();
+        contentShift.play();
+        toggleSidebarButton.setDisable(false);
+        toggleSidebarButton.setMouseTransparent(false);
+        toggleSidebarButton.toFront();
+    }
+
+    public void expandSidebar() {
+        Timeline expand = new Timeline(
+                new KeyFrame(Duration.millis(300),
+                        new KeyValue(navigationBar.prefWidthProperty(), 290),
+                        new KeyValue(navigationBar.minWidthProperty(), 290),
+                        new KeyValue(navigationBar.maxWidthProperty(), 290)
+                )
+        );
+
+        TranslateTransition contentShift = new TranslateTransition(Duration.millis(300), mainView);
+        contentShift.setFromX(0);
+        contentShift.setToX(10);
+        contentShift.setAutoReverse(true);
+        contentShift.setCycleCount(2);
+
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(200), toggleSidebarButton);
+        fadeOut.setToValue(0);
+        fadeOut.play();
+        toggleSidebarButton.setVisible(false);
+
+        expand.setOnFinished(e -> {
+            isSidebarCollapsed = false;
+        });
+
+        expand.play();
+        contentShift.play();
+    }
+
+    @FXML
+    private void showStatus(boolean isSuccess, String message) {
+        if (isSuccess) {
+            successStatus.setText(message);
+            // Fade in
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(300), successStatus);
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
+
+            // Pause
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+
+            // Fade out
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(300), successStatus);
+            fadeOut.setFromValue(1);
+            fadeOut.setToValue(0);
+
+            fadeIn.setOnFinished(e -> pause.play());
+            pause.setOnFinished(e -> fadeOut.play());
+
+            fadeIn.play();
+        } else {
+            errorStatus.setText(message);
+            // Fade in
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(300), errorStatus);
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
+
+            // Pause
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+
+            // Fade out
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(300), errorStatus);
+            fadeOut.setFromValue(1);
+            fadeOut.setToValue(0);
+
+            fadeIn.setOnFinished(e -> pause.play());
+            pause.setOnFinished(e -> fadeOut.play());
+
+            fadeIn.play();
+        }
+    }
 
     @FXML
     private void resetView() {
@@ -207,6 +321,7 @@ public class ProjectController {
     @FXML
     private void saveNewWorkout() {
         user.addWorkoutData(currentWorkout);
+        showStatus(true, "Successfully saved new workout!");
         currentWorkout = null;
         exerciseList.clear();
         resetWorkoutView();
@@ -219,6 +334,7 @@ public class ProjectController {
     private void ShowAddNewWorkout(){
         resetView();
         resetWorkoutView();
+        collapseSidebar();
         WorkoutInputView.setVisible(true);
         WorkoutInputView.setDisable(false);
     }
@@ -226,6 +342,7 @@ public class ProjectController {
     @FXML
     public void calorieInput() {
         resetView();
+        collapseSidebar();
         calorieInput.setVisible(true);
         calorieInput.setDisable(false);
         calorieInput.getChildren().clear();
@@ -474,6 +591,8 @@ public class ProjectController {
         LoginPage.setVisible(true);
         LoginPage.setDisable(false);
         menuBar.setDisable(true);
+        errorStatus.setOpacity(0);
+        successStatus.setOpacity(0);
     }
 
 }

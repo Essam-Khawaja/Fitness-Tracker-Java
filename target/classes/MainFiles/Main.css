@@ -36,6 +36,13 @@
     -fx-border-width: 0;
 }
 
+.status-label {
+    -fx-background-color: red;
+    -fx-background-radius: 10;
+    -fx-min-width: 50px;
+    -fx-font-size: 14px;
+}
+
 .button:hover {
     -fx-background-color: #7B2CBF;
     -fx-cursor: hand;
