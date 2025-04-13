@@ -27,6 +27,15 @@
     -fx-text-alignment: center;
 }
 
+.view-textarea {
+    -fx-background-color: #1E1E2E;
+    -fx-control-inner-background: #1E1E2E;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-pref-height: 600;
+    -fx-pref-width: 600;
+}
+
 .button {
     -fx-background-color: #6A4C93;
     -fx-text-fill: #E0E0E0;

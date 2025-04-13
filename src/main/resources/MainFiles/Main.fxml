@@ -219,12 +219,12 @@
                                                       <Button mnemonicParsing="false" onAction="#showWorkoutView" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Today's Workout  🏋️" />
                                                       <Button mnemonicParsing="false" onAction="#showMealBreakdown" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Meal Breakdown  🍽️" />
                                                       <Button mnemonicParsing="false" onAction="#showCalorieView" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Calories of a Particular Meal  🍛" />
-                                                      <Button mnemonicParsing="false" onAction="#showCalorieView" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Average Calories Per Meal  ⚖️" />
-                                                      <Button mnemonicParsing="false" onAction="#showCalorieView" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Snacks vs. Foods  🥗" />
-                                                      <Button mnemonicParsing="false" onAction="#showCalorieView" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Workout Volume  🏋️‍" />
-                                                      <Button mnemonicParsing="false" onAction="#showCalorieView" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Heaviest Lift Per Exercise  🏋️‍" />
+                                                      <Button mnemonicParsing="false" onAction="#showAverageCalories" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Average Calories Per Meal  ⚖️" />
+                                                      <Button mnemonicParsing="false" onAction="#showSnacksVsCalories" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Snacks vs. Foods  🥗" />
+                                                      <Button mnemonicParsing="false" onAction="#showWorkoutVolume" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Workout Volume  🏋️‍" />
+                                                      <Button mnemonicParsing="false" onAction="#showHeaviestLiftPerExercise" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Heaviest Lift Per Exercise  🏋️‍" />
                                                       <Button mnemonicParsing="false" onAction="#showCalorieView" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Calories Consumed vs. Goal  🎯" />
-                                                      <Button mnemonicParsing="false" onAction="#showCalorieView" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Performance Summary  📊" />
+                                                      <Button mnemonicParsing="false" onAction="#showPerformanceSummary" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Performance Summary  📊" />
                                                    </children>
                                                 </VBox>
                                              </children>

@@ -198,13 +198,8 @@ public class ProjectController {
         viewMenu.setVisible(true);
         TextArea textArea = new TextArea();
         textArea.setEditable(false);
-        textArea.setStyle("    -fx-background-color: transparent;" +
-                "-fx-border-radius: 10;" +
-                "-fx-background-radius: 10;" +
-                "-fx-font-size: 14px;" +
-                " -fx-wrap-text: true;" +
-                "-fx-pref-width: 600;" +
-                "-fx-pref-height: 600;");
+        textArea.setWrapText(true);
+        textArea.getStyleClass().add("view-textarea");
         // Retrieve the calorie data
         ArrayList<Calories> calorieTrackingData = user.getCalorieData();
         String outputText = "";
@@ -242,13 +237,8 @@ public class ProjectController {
         viewMenu.setVisible(true);
         TextArea textArea = new TextArea();
         textArea.setEditable(false);
-        textArea.setStyle("    -fx-background-color: transparent;" +
-                "-fx-border-radius: 10;" +
-                "-fx-background-radius: 10;" +
-                "-fx-font-size: 14px;" +
-                " -fx-wrap-text: true;" +
-                "-fx-pref-width: 600;" +
-                "-fx-pref-height: 600;");
+        textArea.setWrapText(true);
+        textArea.getStyleClass().add("view-textarea");
         // Retrieve the calorie data
         ArrayList<Workout> workouts = user.getWorkoutData();
         StringBuilder outputText = new StringBuilder();
@@ -294,6 +284,8 @@ public class ProjectController {
         viewMenu.setVisible(true);
         TextArea textArea = new TextArea();
         textArea.setEditable(false);
+        textArea.setWrapText(true);
+        textArea.getStyleClass().add("view-textarea");
         // Retrieve the calorie data
         ArrayList<Calories> calories = user.getCalorieData();
         StringBuilder outputText = new StringBuilder();
@@ -354,16 +346,10 @@ public class ProjectController {
             outputText.append("  Total: " + totalSnacks + " kcal\n");
         }
         textArea.setText(outputText.toString());
-        textArea.setStyle("-fx-background-color: transparent;" +
-                "-fx-border-radius: 10;" +
-                "-fx-background-radius: 10;" +
-                "-fx-font-size: 14px;" +
-                " -fx-wrap-text: true;" +
-                "-fx-pref-width: 600;" +
-                "-fx-pref-height: 600;");
         viewMenu.getChildren().add(textArea);
     }
 
+    // TODO: Need to finish this
     @FXML
     public void showParticularCalories() {
         viewMenu.getChildren().clear();
@@ -373,13 +359,8 @@ public class ProjectController {
         viewMenu.setVisible(true);
         TextArea textArea = new TextArea();
         textArea.setEditable(false);
-        textArea.setStyle("    -fx-background-color: transparent;" +
-                "-fx-border-radius: 10;" +
-                "-fx-background-radius: 10;" +
-                "-fx-font-size: 14px;" +
-                " -fx-wrap-text: true;" +
-                "-fx-pref-width: 600;" +
-                "-fx-pref-height: 600;");
+        textArea.setWrapText(true);
+        textArea.getStyleClass().add("view-textarea");
         // Retrieve the calorie data
         ArrayList<Workout> workouts = user.getWorkoutData();
         StringBuilder outputText = new StringBuilder();
@@ -411,6 +392,375 @@ public class ProjectController {
                     });
                 });
             });
+        }
+        textArea.setText(outputText.toString());
+        viewMenu.getChildren().add(textArea);
+    }
+
+    @FXML
+    public void showAverageCalories() {
+        viewMenu.getChildren().clear();
+        resetView();
+        collapseSidebar();
+        viewMenu.setDisable(false);
+        viewMenu.setVisible(true);
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+        textArea.getStyleClass().add("view-textarea");
+        // Retrieve the calorie data
+        ArrayList<Calories> calories = user.getCalorieData();
+        StringBuilder outputText = new StringBuilder();
+
+        // Check if its empty
+        if (calories.isEmpty()) {
+            outputText.append("No calories data available for today.");
+        } else {
+            // Go through all the array objects and print them out in correct format
+            outputText.append("\n===================================\n");
+            outputText.append("      AVERAGE CALORIES PER MEAL TYPE       ");
+            outputText.append("\n===================================\n");
+            // Initialize all the variables needed, with the average variables storing the total as well
+            float avgBreakfastCalories = 0f;
+            int breakfastCount = 0;
+            float avgLunchCalories = 0f;
+            int lunchCount = 0;
+            float avgDinnerCalories = 0f;
+            int dinnerCount = 0;
+            float avgSnackCalories = 0f;
+            int snacksCount = 0;
+
+            // Add to both count and total of the corresponding meal type
+            for (Calories data : calories) {
+                MealTime mealTime = data.getMealTime();
+                MealType snackOrMeal = data.getSnackOrMeal();
+                if (snackOrMeal == MealType.SNACK) {
+                    avgSnackCalories += data.getCalories();
+                    snacksCount++;
+                } else {
+                    switch (mealTime) {
+                        case BREAKFAST:
+                            avgBreakfastCalories += data.getCalories();
+                            breakfastCount++;
+                            break;
+                        case LUNCH:
+                            avgLunchCalories += data.getCalories();
+                            lunchCount++;
+                            break;
+                        case DINNER:
+                            avgDinnerCalories += data.getCalories();
+                            dinnerCount++;
+                            break;
+                    }
+                }
+            }
+            // Calculate the averages
+            if (avgBreakfastCalories != 0) {
+                avgBreakfastCalories /= breakfastCount;
+            }
+            if (avgLunchCalories != 0) {
+                avgLunchCalories /= lunchCount;
+            }
+            if (avgDinnerCalories != 0) {
+                avgDinnerCalories /= dinnerCount;
+            }
+            if (avgSnackCalories != 0) {
+                avgSnackCalories /= snacksCount;
+            }
+
+            // Output them
+            outputText.append("Average Calories in Breakfast: " + avgBreakfastCalories + " kcal\n");
+            outputText.append("Average Calories in Lunch: " + avgLunchCalories + " kcal\n");
+            outputText.append("Average Calories in Dinner: " + avgDinnerCalories + " kcal\n");
+            outputText.append("Average Calories in Snacks: " + avgSnackCalories + " kcal\n");
+        }
+        textArea.setText(outputText.toString());
+        viewMenu.getChildren().add(textArea);
+    }
+
+    @FXML
+    public void showSnacksVsCalories() {
+        viewMenu.getChildren().clear();
+        resetView();
+        collapseSidebar();
+        viewMenu.setDisable(false);
+        viewMenu.setVisible(true);
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+        textArea.getStyleClass().add("view-textarea");
+        // Retrieve the calorie data
+        ArrayList<Calories> calories = user.getCalorieData();
+        StringBuilder outputText = new StringBuilder();
+
+        // Check if its empty
+        if (calories.isEmpty()) {
+            outputText.append("No calories data available for today.");
+        } else {
+            // Go through all the array objects and print them out in correct format
+            outputText.append("\n===================================\n");
+            outputText.append("      TOTAL CALORIES: MEALS & SNACKS       ");
+            outputText.append("\n===================================\n");
+            // Find the total calories of both snacks and meals
+            int snackCalories = 0;
+            int mealCalories = 0;
+            for (Calories data : calories) {
+                MealType snackOrMeal = data.getSnackOrMeal();
+                if (snackOrMeal.equals(MealType.SNACK)) {
+                    snackCalories += data.getCalories();
+                } else {
+                    mealCalories += data.getCalories();
+                }
+            }
+
+            // Calculate the percentage of each consumed
+            float percentageSnack = ((float) snackCalories / (mealCalories + snackCalories)) * 100;
+            float percentageMeal = ((float) mealCalories / (mealCalories + snackCalories)) * 100;
+
+            // Output the calculated data
+            outputText.append("🍟Total Snack Calories: " + snackCalories + " kcal\n");
+            outputText.append("🍝 Total Meal Calories: " + mealCalories + " kcal\n");
+            outputText.append(String.format( "Percentage Of Calories From Snacks: %.2f%%\n", percentageSnack));
+            outputText.append(String.format("Percentage Of Calories From Meals: %.2f%%\n", percentageMeal));
+        }
+        textArea.setText(outputText.toString());
+        viewMenu.getChildren().add(textArea);
+    }
+
+    @FXML
+    public void showWorkoutVolume() {
+        viewMenu.getChildren().clear();
+        resetView();
+        collapseSidebar();
+        viewMenu.setDisable(false);
+        viewMenu.setVisible(true);
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+        textArea.getStyleClass().add("view-textarea");
+        // Retrieve the calorie data
+        ArrayList<Workout> workouts = user.getWorkoutData();
+        StringBuilder outputText = new StringBuilder();
+
+        // Check if its empty
+        if (workouts.isEmpty()) {
+            outputText.append("No workout data available for today.");
+        } else {
+            // Go through all the array objects and print them out in correct format
+            outputText.append("\n===================================\n");
+            outputText.append("💪      WORKOUT VOLUME DATA       💪");
+            outputText.append("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+            // Go through each exercise, do the calculation and then print it out
+            for (Workout data : workouts) {
+                for (Exercise exercise : data.getExercises()) {
+                    outputText.append("Name of exercise: " + exercise.getExerciseName() + "\n");
+                    int setCount = 0;
+                    float volume = 1;
+                    for (Set set : exercise.getSets()) {
+                        float weight = set.getWeightLifted();
+                        volume *= set.getReps() * weight;
+                        setCount++;
+                    }
+                    volume *= setCount;
+                    outputText.append("Volume: " + Math.round(volume) + " kg\n");
+                }
+            }
+        }
+        textArea.setText(outputText.toString());
+        viewMenu.getChildren().add(textArea);
+    }
+
+    @FXML
+    public void showHeaviestLiftPerExercise() {
+        viewMenu.getChildren().clear();
+        resetView();
+        collapseSidebar();
+        viewMenu.setDisable(false);
+        viewMenu.setVisible(true);
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+        textArea.getStyleClass().add("view-textarea");
+        // Retrieve the calorie data
+        ArrayList<Workout> workouts = user.getWorkoutData();
+        StringBuilder outputText = new StringBuilder();
+
+        // Check if its empty
+        if (workouts.isEmpty()) {
+            outputText.append("No workout data available for today.");
+        } else {
+            // Go through all the array objects and print them out in correct format
+            outputText.append("\n===================================\n");
+            outputText.append("💪      HEAVIEST LIFT PER EXERCISE       💪");
+            outputText.append("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+            // Go through each exercise, do the calculation and then print it out
+            // Go through each exercise, and print out the max weight lifted for that exercise
+            for (Workout data : workouts) {
+                for (Exercise exercise : data.getExercises()) {
+                    outputText.append("Name: " + exercise.getExerciseName() + "\n");
+                    float maxWeightLift = 0f;
+                    for (Set set : exercise.getSets()) {
+                        float currentWeightLift = set.getWeightLifted();
+                        if (maxWeightLift < currentWeightLift) {
+                            maxWeightLift = currentWeightLift;
+                        }
+                    }
+                    outputText.append("Max Weight Lifted : " + maxWeightLift + "kg\n");
+                }
+            }
+        }
+        textArea.setText(outputText.toString());
+        viewMenu.getChildren().add(textArea);
+    }
+
+    // TODO: Need to finish this
+    @FXML
+    public void showCaloriesConsumedVsGoal() {
+        viewMenu.getChildren().clear();
+        resetView();
+        collapseSidebar();
+        viewMenu.setDisable(false);
+        viewMenu.setVisible(true);
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+        textArea.getStyleClass().add("view-textarea");
+        // Retrieve the calorie data
+        ArrayList<Workout> workouts = user.getWorkoutData();
+        StringBuilder outputText = new StringBuilder();
+
+        // Check if its empty
+        if (workouts.isEmpty()) {
+            outputText.append("No workout data available for today.");
+        } else {
+            // Go through all the array objects and print them out in correct format
+            outputText.append("\n===================================\n");
+            outputText.append("💪      TODAY'S WORKOUT DATA       💪");
+            outputText.append("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+            workouts.forEach(workout -> {
+                outputText.append("🏋️ Workout Plan: ✨ ")
+                        .append(workout.getWorkoutPlan())
+                        .append(" ✨\n");
+                ArrayList<Exercise> exercises = workout.getExercises();
+                exercises.forEach(exercise -> {
+                    outputText.append("Exercise: ")
+                            .append(exercise.getExerciseName())
+                            .append("\n");
+                    ArrayList<Set> sets = exercise.getSets();
+                    sets.forEach(set -> {
+                        outputText.append(" - ")
+                                .append(set.getWeightLifted())
+                                .append("kg x ")
+                                .append(set.getReps())
+                                .append(" reps\n");
+                    });
+                });
+            });
+        }
+        textArea.setText(outputText.toString());
+        viewMenu.getChildren().add(textArea);
+    }
+
+    @FXML
+    public void showPerformanceSummary() {
+        viewMenu.getChildren().clear();
+        resetView();
+        collapseSidebar();
+        viewMenu.setDisable(false);
+        viewMenu.setVisible(true);
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+        textArea.getStyleClass().add("view-textarea");
+        // Retrieve the calorie data
+        ArrayList<Workout> workouts = user.getWorkoutData();
+        ArrayList<Calories> calories = user.getCalorieData();
+        StringBuilder outputText = new StringBuilder();
+
+        // Check if its empty
+        if (workouts.isEmpty() && calories.isEmpty()) {
+            outputText.append("No data available for today.");
+        } else {
+            // Go through all the array objects and print them out in correct format
+            outputText.append("\n===================================\n");
+            outputText.append("      PERFORMANCE SUMMARY      ");
+            outputText.append("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+            outputText.append("🍽️      MEAL BREAKDOWN       🍽️");
+            outputText.append("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+            if (!calories.isEmpty()) {
+                ArrayList<Calories> snacks = new ArrayList<>();
+                ArrayList<Calories> breakfast = new ArrayList<>();
+                ArrayList<Calories> lunch = new ArrayList<>();
+                ArrayList<Calories> dinner = new ArrayList<>();
+
+                for (Calories data : calories) {
+                    if (data.getSnackOrMeal() == MealType.SNACK) {
+                        snacks.add(data);
+                    } else {
+                        switch (data.getMealTime()) {
+                            case BREAKFAST -> breakfast.add(data);
+                            case LUNCH -> lunch.add(data);
+                            case DINNER -> dinner.add(data);
+                        }
+                    }
+                }
+                outputText.append("🍳 Breakfast:\n");
+                int totalBreakfast = 0;
+                for (Calories data : breakfast) {
+                    outputText.append("  - " + data.getFoodName() + ": " + data.getCalories() + " kcal\n");
+                    totalBreakfast += data.getCalories();
+                }
+                outputText.append("  Total: " + totalBreakfast + " kcal\n");
+
+                outputText.append("\n🥪 Lunch:");
+                int totalLunch = 0;
+                for (Calories data : lunch) {
+                    outputText.append("  - " + data.getFoodName() + ": " + data.getCalories() + " kcal\n");
+                    totalLunch += data.getCalories();
+                }
+                outputText.append("  Total: " + totalLunch + " kcal\n");
+
+                outputText.append("\n🍝 Dinner:");
+                int totalDinner = 0;
+                for (Calories data : dinner) {
+                    outputText.append("  - " + data.getFoodName() + ": " + data.getCalories() + " kcal\n");
+                    totalDinner += data.getCalories();
+                }
+                outputText.append("  Total: " + totalDinner + " kcal\n");
+
+                outputText.append("\n🍇 Snacks:");
+                int totalSnacks = 0;
+                for (Calories data : snacks) {
+                    outputText.append("  - " + data.getFoodName() + ": " + data.getCalories() + " kcal\n");
+                    totalSnacks += data.getCalories();
+                }
+                outputText.append("  Total: " + totalSnacks + " kcal\n");
+            } else {
+                outputText.append("No calories data available for today.");
+            }
+
+            outputText.append("\n💪      WORKOUT VOLUME DATA       💪");
+            outputText.append("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+            if(!workouts.isEmpty()) {
+                // Go through all the array objects and print them out in correct format
+                // Go through each exercise, do the calculation and then print it out
+                for (Workout data : workouts) {
+                    for (Exercise exercise : data.getExercises()) {
+                        outputText.append("Name of exercise: " + exercise.getExerciseName() + "\n");
+                        int setCount = 0;
+                        float volume = 1;
+                        for (Set set : exercise.getSets()) {
+                            float weight = set.getWeightLifted();
+                            volume *= set.getReps() * weight;
+                            setCount++;
+                        }
+                        volume *= setCount;
+                        outputText.append("Volume: " + Math.round(volume) + " kg\n");
+                    }
+                }
+            } else {
+                outputText.append("No workout data available for today.");
+            }
         }
         textArea.setText(outputText.toString());
         viewMenu.getChildren().add(textArea);
@@ -749,6 +1099,7 @@ public class ProjectController {
         menuBar.setDisable(false);
     }
 
+    // TODO: Finish this
     /**
      * Fix this thing when you add status bar
      * @param actionEvent
