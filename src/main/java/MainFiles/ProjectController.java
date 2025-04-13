@@ -72,8 +72,9 @@ public class ProjectController {
     private Button toggleSidebarButton;
     @FXML
     private VBox viewMenu;
-
     private boolean isSidebarCollapsed = false;
+
+    // These are miscellaneous and general functions used throughout the controller
 
     @FXML
     private void collapseSidebar() {
@@ -186,17 +187,24 @@ public class ProjectController {
         }
     }
 
+    // The following are all the view menu functions
+
     @FXML
     public void showCalorieView() {
         viewMenu.getChildren().clear();
         resetView();
+        collapseSidebar();
         viewMenu.setDisable(false);
         viewMenu.setVisible(true);
         TextArea textArea = new TextArea();
         textArea.setEditable(false);
-        textArea.setWrapText(true);
-        textArea.setPrefWidth(600);
-        textArea.setPrefHeight(600);
+        textArea.setStyle("    -fx-background-color: transparent;" +
+                "-fx-border-radius: 10;" +
+                "-fx-background-radius: 10;" +
+                "-fx-font-size: 14px;" +
+                " -fx-wrap-text: true;" +
+                "-fx-pref-width: 600;" +
+                "-fx-pref-height: 600;");
         // Retrieve the calorie data
         ArrayList<Calories> calorieTrackingData = user.getCalorieData();
         String outputText = "";
@@ -229,40 +237,186 @@ public class ProjectController {
     public void showWorkoutView() {
         viewMenu.getChildren().clear();
         resetView();
+        collapseSidebar();
         viewMenu.setDisable(false);
         viewMenu.setVisible(true);
         TextArea textArea = new TextArea();
         textArea.setEditable(false);
-        textArea.setWrapText(true);
-        textArea.setPrefWidth(600);
-        textArea.setPrefHeight(600);
+        textArea.setStyle("    -fx-background-color: transparent;" +
+                "-fx-border-radius: 10;" +
+                "-fx-background-radius: 10;" +
+                "-fx-font-size: 14px;" +
+                " -fx-wrap-text: true;" +
+                "-fx-pref-width: 600;" +
+                "-fx-pref-height: 600;");
         // Retrieve the calorie data
-        ArrayList<Calories> calorieTrackingData = user.getCalorieData();
-        String outputText = "";
+        ArrayList<Workout> workouts = user.getWorkoutData();
+        StringBuilder outputText = new StringBuilder();
 
         // Check if its empty
-        if (calorieTrackingData.isEmpty()) {
-            outputText += "No calorie data available for today.";
+        if (workouts.isEmpty()) {
+            outputText.append("No workout data available for today.");
         } else {
             // Go through all the array objects and print them out in correct format
-            outputText += "\n===================================\n";
-            outputText += "   TODAY'S CALORIES TRACKING DATA  \n";
-            outputText += "===================================\n";
-            int totalCalories = 0;  // Stores the total of all the calories stored
-            for (Calories data : calorieTrackingData) {
-                outputText += "\n. " + data.getFoodName();
-                outputText += "\n    Type:" + data.getSnackOrMeal();
-                if (!(data.getSnackOrMeal() == MealType.SNACK)) {
-                    outputText += "\n    Time:" + data.getMealTime();
-                }
-                outputText += "\n    Calories:" + data.getCalories() + " kcal";
-                totalCalories += data.getCalories();
-            }
-            outputText += "\n🔥 Today's Total Calories: " + totalCalories + " kcal 🔥\n";
+            outputText.append("\n===================================\n");
+            outputText.append("💪      TODAY'S WORKOUT DATA       💪");
+            outputText.append("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+            workouts.forEach(workout -> {
+                outputText.append("🏋️ Workout Plan: ✨ ")
+                        .append(workout.getWorkoutPlan())
+                        .append(" ✨\n");
+                ArrayList<Exercise> exercises = workout.getExercises();
+                exercises.forEach(exercise -> {
+                    outputText.append("Exercise: ")
+                            .append(exercise.getExerciseName())
+                            .append("\n");
+                    ArrayList<Set> sets = exercise.getSets();
+                    sets.forEach(set -> {
+                        outputText.append(" - ")
+                                .append(set.getWeightLifted())
+                                .append("kg x ")
+                                .append(set.getReps())
+                                .append(" reps\n");
+                    });
+                });
+            });
         }
-        textArea.setText(outputText);
+        textArea.setText(outputText.toString());
         viewMenu.getChildren().add(textArea);
     }
+
+    @FXML
+    public void showMealBreakdown() {
+        viewMenu.getChildren().clear();
+        resetView();
+        collapseSidebar();
+        viewMenu.setDisable(false);
+        viewMenu.setVisible(true);
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        // Retrieve the calorie data
+        ArrayList<Calories> calories = user.getCalorieData();
+        StringBuilder outputText = new StringBuilder();
+
+        // Check if its empty
+        if (calories.isEmpty()) {
+            outputText.append("No calories data available for today.");
+        } else {
+            outputText.append("\n===================================\n");
+            outputText.append("🍽️      MEAL BREAKDOWN       🍽️");
+            outputText.append("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+            ArrayList<Calories> snacks = new ArrayList<>();
+            ArrayList<Calories> breakfast = new ArrayList<>();
+            ArrayList<Calories> lunch = new ArrayList<>();
+            ArrayList<Calories> dinner = new ArrayList<>();
+
+            for (Calories data : calories) {
+                if (data.getSnackOrMeal() == MealType.SNACK) {
+                    snacks.add(data);
+                } else {
+                    switch (data.getMealTime()) {
+                        case BREAKFAST -> breakfast.add(data);
+                        case LUNCH -> lunch.add(data);
+                        case DINNER -> dinner.add(data);
+                    }
+                }
+            }
+            outputText.append("🍳 Breakfast:\n");
+            int totalBreakfast = 0;
+            for (Calories data : breakfast) {
+                outputText.append("  - " + data.getFoodName() + ": " + data.getCalories() + " kcal\n");
+                totalBreakfast += data.getCalories();
+            }
+            outputText.append("  Total: " + totalBreakfast + " kcal\n");
+
+            outputText.append("\n🥪 Lunch:");
+            int totalLunch = 0;
+            for (Calories data : lunch) {
+                outputText.append("  - " + data.getFoodName() + ": " + data.getCalories() + " kcal\n");
+                totalLunch += data.getCalories();
+            }
+            outputText.append("  Total: " + totalLunch + " kcal\n");
+
+            outputText.append("\n🍝 Dinner:");
+            int totalDinner = 0;
+            for (Calories data : dinner) {
+                outputText.append("  - " + data.getFoodName() + ": " + data.getCalories() + " kcal\n");
+                totalDinner += data.getCalories();
+            }
+            outputText.append("  Total: " + totalDinner + " kcal\n");
+
+            outputText.append("\n🍇 Snacks:");
+            int totalSnacks = 0;
+            for (Calories data : snacks) {
+                outputText.append("  - " + data.getFoodName() + ": " + data.getCalories() + " kcal\n");
+                totalSnacks += data.getCalories();
+            }
+            outputText.append("  Total: " + totalSnacks + " kcal\n");
+        }
+        textArea.setText(outputText.toString());
+        textArea.setStyle("-fx-background-color: transparent;" +
+                "-fx-border-radius: 10;" +
+                "-fx-background-radius: 10;" +
+                "-fx-font-size: 14px;" +
+                " -fx-wrap-text: true;" +
+                "-fx-pref-width: 600;" +
+                "-fx-pref-height: 600;");
+        viewMenu.getChildren().add(textArea);
+    }
+
+    @FXML
+    public void showParticularCalories() {
+        viewMenu.getChildren().clear();
+        resetView();
+        collapseSidebar();
+        viewMenu.setDisable(false);
+        viewMenu.setVisible(true);
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        textArea.setStyle("    -fx-background-color: transparent;" +
+                "-fx-border-radius: 10;" +
+                "-fx-background-radius: 10;" +
+                "-fx-font-size: 14px;" +
+                " -fx-wrap-text: true;" +
+                "-fx-pref-width: 600;" +
+                "-fx-pref-height: 600;");
+        // Retrieve the calorie data
+        ArrayList<Workout> workouts = user.getWorkoutData();
+        StringBuilder outputText = new StringBuilder();
+
+        // Check if its empty
+        if (workouts.isEmpty()) {
+            outputText.append("No workout data available for today.");
+        } else {
+            // Go through all the array objects and print them out in correct format
+            outputText.append("\n===================================\n");
+            outputText.append("💪      TODAY'S WORKOUT DATA       💪");
+            outputText.append("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+            workouts.forEach(workout -> {
+                outputText.append("🏋️ Workout Plan: ✨ ")
+                        .append(workout.getWorkoutPlan())
+                        .append(" ✨\n");
+                ArrayList<Exercise> exercises = workout.getExercises();
+                exercises.forEach(exercise -> {
+                    outputText.append("Exercise: ")
+                            .append(exercise.getExerciseName())
+                            .append("\n");
+                    ArrayList<Set> sets = exercise.getSets();
+                    sets.forEach(set -> {
+                        outputText.append(" - ")
+                                .append(set.getWeightLifted())
+                                .append("kg x ")
+                                .append(set.getReps())
+                                .append(" reps\n");
+                    });
+                });
+            });
+        }
+        textArea.setText(outputText.toString());
+        viewMenu.getChildren().add(textArea);
+    }
+
+    // The following are all the workout functions
 
     @FXML
     private HBox workoutButtons;
@@ -385,6 +539,8 @@ public class ProjectController {
         WorkoutInputView.setDisable(false);
     }
 
+    // The following are all the calorie input functions
+
     @FXML
     public void calorieInput() {
         resetView();
@@ -431,24 +587,16 @@ public class ProjectController {
                 calorieField.clear();
                 mealTypeCombo.setValue(null);
                 mealTimeCombo.setValue(null);
-                showMessage("Calorie entry added successfully!");
+                showStatus(true, "Calorie entry added successfully!");
 
             } catch (Exception ex) {
-                showMessage("⚠️ Invalid input. Please check your fields.");
+                showStatus(false, "⚠️ Invalid input. Please check your fields.");
             }
         });
         calorieInput.getChildren().add(submitButton);
     }
 
-    // Helper message popup
-    private void showMessage(String msg) {
-        TextArea messageArea = new TextArea(msg);
-        messageArea.setEditable(false);
-        messageArea.setWrapText(true);
-        messageArea.setPrefHeight(50);
-        mainView.getChildren().add(messageArea);
-    }
-
+    // The following are all menu functions (mostly save functions)
 
     @FXML
     public void Load() {

@@ -36,6 +36,16 @@
     -fx-border-width: 0;
 }
 
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-font-size: 14px;
+    -fx-alignment: center-left;
+    -fx-padding: 0 10;
+}
+.nav-button:hover {
+    -fx-background-color: #e0e0e0;
+}
+
 .status-label {
     -fx-background-color: red;
     -fx-background-radius: 10;
