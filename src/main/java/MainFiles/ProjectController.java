@@ -913,16 +913,7 @@ public class ProjectController {
     }
 
     @FXML
-    private ComboBox<MealType> mealTypeCombo;
-
-    @FXML
-    private ComboBox<MealTime> mealTimeCombo;
-
-    @FXML
-    private Button saveCalories;
-
-    @FXML
-    private TextField foodNameText;
+    private VBox WorkoutInputView;
 
     @FXML
     private void ShowAddNewWorkout(){
@@ -932,9 +923,23 @@ public class ProjectController {
         WorkoutInputView.setVisible(true);
         WorkoutInputView.setDisable(false);
     }
-    private TextField calorieNumber;
 
     // The following are all the calorie input functions
+
+    @FXML
+    private ComboBox<MealType> mealTypeCombo;
+
+    @FXML
+    private ComboBox<MealTime> mealTimeCombo;
+
+    @FXML
+    private TextField calorieNumber;
+
+    @FXML
+    private TextField foodNameText;
+
+    @FXML
+    private Button saveCalories;
 
     @FXML
     public void calorieInput() {
@@ -944,6 +949,9 @@ public class ProjectController {
         calorieInput.setDisable(false);
 
         // Combo Boxes
+        mealTimeCombo.getItems().clear();
+        mealTypeCombo.getItems().clear();
+
         mealTypeCombo.setPromptText("Select Type");
         mealTypeCombo.getItems().addAll(MealType.values());
 
@@ -951,6 +959,7 @@ public class ProjectController {
         mealTimeCombo.getItems().addAll(MealTime.values());
 
         // MealType Listener for Snack
+
         mealTypeCombo.setOnAction(e -> {
             MealType selectedType = mealTypeCombo.getValue();
             if (selectedType == MealType.SNACK) {
@@ -974,7 +983,7 @@ public class ProjectController {
                 int cals = Integer.parseInt(calorieNumber.getText().trim());
 
                 if (type == null || food.isEmpty() || cals < 0 || (type != MealType.SNACK && time == null)) {
-                    throw new IllegalArgumentException();
+                showStatus(false, "Invalid input, please enter valid values.");
                 }
 
                 Calories newEntry = new Calories(type, time, food, cals);
@@ -986,9 +995,11 @@ public class ProjectController {
                 mealTimeCombo.setValue(null);
 
                 //showMessage("Calorie entry added successfully!");
+                showStatus(true, "Successfully saved new calories!");
 
             } catch (Exception ex) {
                 //showMessage("⚠️ Invalid input. Please check your fields.");
+                showStatus(false,"Invalid input. Please check your fields.");
             }
         });
     }
