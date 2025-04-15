@@ -18,6 +18,10 @@
     -fx-text-fill: #E0E0E0;
 }
 
+.text {
+    -fx-text-fill: #E0E0E0;
+}
+
 .titled-pane {
     -fx-background-color: #2A2A3C;
 }
