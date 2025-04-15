@@ -34,6 +34,13 @@
     -fx-padding: 0;
     -fx-pref-height: 600;
     -fx-pref-width: 600;
+    -fx-font-size: 14px;
+}
+
+.view-title {
+    -fx-font-size: 26px;
+    -fx-font-family: AppleGothic;
+    -fx-padding: 0 0 20 0;
 }
 
 .button {
