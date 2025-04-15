@@ -1031,6 +1031,10 @@ public class ProjectController {
     }
 
     // The following are all the calorie input functions
+    /**
+     * Asks the user for valid caloire data and saves it to the user object
+     * @author Abdullah AL-Dhaibani
+     */
 
     @FXML
     private ComboBox<MealType> mealTypeCombo;
@@ -1049,6 +1053,8 @@ public class ProjectController {
 
     @FXML
     public void calorieInput() {
+
+        // Making the function visible when chosen
         resetView();
         collapseSidebar();
         calorieInput.setVisible(true);
@@ -1065,7 +1071,6 @@ public class ProjectController {
         mealTimeCombo.getItems().addAll(MealTime.values());
 
         // MealType Listener for Snack
-
         mealTypeCombo.setOnAction(e -> {
             MealType selectedType = mealTypeCombo.getValue();
             if (selectedType == MealType.SNACK) {
@@ -1112,11 +1117,11 @@ public class ProjectController {
                 mealTypeCombo.setValue(null);
                 mealTimeCombo.setValue(null);
 
-                //showMessage("Calorie entry added successfully!");
+                // If inputs are correct, it will output valid and save
                 showStatus(true, "Successfully saved new calories!");
 
             } catch (Exception ex) {
-                //showMessage("⚠️ Invalid input. Please check your fields.");
+                // If inputs are incorrect, it would output invalid
                 showStatus(false,"Invalid input. Please check your fields.");
             }
         });
