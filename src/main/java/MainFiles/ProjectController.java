@@ -196,46 +196,54 @@ public class ProjectController {
     }
 
     @FXML
-    private VBox WorkoutInputView;
+    private ComboBox<MealType> mealTypeCombo;
 
     @FXML
-    private void ShowAddNewWorkout(){
-        WorkoutInputView.setVisible(true);
-        WorkoutInputView.setDisable(false);
-    }
+    private ComboBox<MealTime> mealTimeCombo;
+
+    @FXML
+    private Button saveCalories;
+
+    @FXML
+    private TextField foodNameText;
+
+    @FXML
+    private TextField calorieNumber;
 
     @FXML
     public void calorieInput() {
         calorieInput.setVisible(true);
         calorieInput.setDisable(false);
-        calorieInput.getChildren().clear();
-        // Input Fields
-        ComboBox<MealType> mealTypeCombo = new ComboBox<>();
-        mealTypeCombo.getItems().addAll(MealType.values());
+
+        // Combo Boxes
         mealTypeCombo.setPromptText("Select Type");
-        calorieInput.getChildren().add(mealTypeCombo);
+        mealTypeCombo.getItems().addAll(MealType.values());
 
-        ComboBox<MealTime> mealTimeCombo = new ComboBox<>();
-        mealTimeCombo.getItems().addAll(MealTime.values());
         mealTimeCombo.setPromptText("Select Meal Time");
-        calorieInput.getChildren().add(mealTimeCombo);
+        mealTimeCombo.getItems().addAll(MealTime.values());
 
-        TextField foodNameField = new TextField();
-        foodNameField.setPromptText("Enter Food Name");
-        calorieInput.getChildren().add(foodNameField);
+        // MealType Listener for Snack
+        mealTypeCombo.setOnAction(e -> {
+            MealType selectedType = mealTypeCombo.getValue();
+            if (selectedType == MealType.SNACK) {
+                mealTimeCombo.setDisable(true);
+                mealTimeCombo.setValue(null);
+            } else {
+                mealTimeCombo.setDisable(false);
+            }
+        });
 
-        TextField calorieField = new TextField();
-        calorieField.setPromptText("Enter Calories");
-        calorieInput.getChildren().add(calorieField);
+        // Text Fields
+        foodNameText.setPromptText("Enter Food Name");
+        calorieNumber.setPromptText("Enter Calories");
 
         // Submit Button
-        javafx.scene.control.Button submitButton = new javafx.scene.control.Button("Add Calorie Entry");
-        submitButton.setOnAction(e -> {
+        saveCalories.setOnAction(e -> {
             try {
                 MealType type = mealTypeCombo.getValue();
                 MealTime time = mealTimeCombo.getValue();
-                String food = foodNameField.getText().trim();
-                int cals = Integer.parseInt(calorieField.getText().trim());
+                String food = foodNameText.getText().trim();
+                int cals = Integer.parseInt(calorieNumber.getText().trim());
 
                 if (type == null || food.isEmpty() || cals < 0 || (type != MealType.SNACK && time == null)) {
                     throw new IllegalArgumentException();
@@ -244,26 +252,17 @@ public class ProjectController {
                 Calories newEntry = new Calories(type, time, food, cals);
                 user.addCalorieData(newEntry);
 
-                foodNameField.clear();
-                calorieField.clear();
+                foodNameText.clear();
+                calorieNumber.clear();
                 mealTypeCombo.setValue(null);
                 mealTimeCombo.setValue(null);
-                showMessage("Calorie entry added successfully!");
+
+                //showMessage("Calorie entry added successfully!");
 
             } catch (Exception ex) {
-                showMessage("⚠️ Invalid input. Please check your fields.");
+                //showMessage("⚠️ Invalid input. Please check your fields.");
             }
         });
-        calorieInput.getChildren().add(submitButton);
-    }
-
-    // Helper message popup
-    private void showMessage(String msg) {
-        TextArea messageArea = new TextArea(msg);
-        messageArea.setEditable(false);
-        messageArea.setWrapText(true);
-        messageArea.setPrefHeight(50);
-        mainView.getChildren().add(messageArea);
     }
 
 
