@@ -1068,7 +1068,11 @@ public class ProjectController {
         mealTypeCombo.getItems().addAll(MealType.values());
 
         mealTimeCombo.setPromptText("Select Meal Time");
-        mealTimeCombo.getItems().addAll(MealTime.values());
+        for (MealTime mt : MealTime.values()) {
+            if (mt != MealTime.NULL) {
+                mealTimeCombo.getItems().add(mt);
+            }
+        }
 
         // MealType Listener for Snack
         mealTypeCombo.setOnAction(e -> {
@@ -1347,7 +1351,7 @@ public class ProjectController {
     }
 
     // This is the base file path for load, it will change if user has set parameters on command line
-    private String loadFilePath = "/Users/syedessamuddinkhawaja/Desktop/CPSC 233 Project/CPSC233Project/src/main/java/Save/Save.csv";
+    private String loadFilePath = "C:\\Users\\abdul\\Desktop\\cpsc233-termproject-fitnesstracker-main\\cpsc233-termproject-fitnesstracker\\src\\main\\java\\Save\\Save.csv";
 
     /**
      * This function takes in the args from the main, and checks to see if the file is valid and outputs the correct status via alerts
