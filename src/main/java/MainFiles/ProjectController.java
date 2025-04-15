@@ -1358,7 +1358,7 @@ public class ProjectController {
     }
 
     // This is the base file path for load, it will change if user has set parameters on command line
-    private String loadFilePath = "C:\\Users\\abdul\\Desktop\\cpsc233-termproject-fitnesstracker-main\\cpsc233-termproject-fitnesstracker\\src\\main\\java\\Save\\Save.csv";
+    private String loadFilePath = "src/main/java/Save/Save.csv";
 
     /**
      * This function takes in the args from the main, and checks to see if the file is valid and outputs the correct status via alerts
