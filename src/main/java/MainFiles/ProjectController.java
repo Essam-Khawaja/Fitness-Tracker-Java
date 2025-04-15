@@ -1,6 +1,7 @@
 package MainFiles;
 
 import Data.*;
+import Data.Set;
 import com.sun.tools.javac.Main;
 import javafx.animation.*;
 import javafx.application.Application;
@@ -13,7 +14,7 @@ import Enums.WorkoutPlan;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.util.*;
 
 import Enums.MealTime;
 import Enums.MealType;
@@ -58,6 +59,8 @@ public class ProjectController {
     // The following are all javafx components, later on we imported above the functions
     @FXML
     private AnchorPane mainView;
+    @FXML
+    private Node workoutDetails;
     @FXML
     private VBox calorieInput;
     @FXML
@@ -291,53 +294,59 @@ public class ProjectController {
      * Show the basic workout view
      */
     @FXML
+    private VBox ViewWorkout;
+
+    @FXML
     public void showWorkoutView() {
-        viewMenu.getChildren().clear();
+//        viewMenu.getChildren().clear();
+//        resetView();
+//        collapseSidebar();
+//        viewMenu.setDisable(false);
+//        viewMenu.setVisible(true);
+//        TextArea textArea = new TextArea();
+//        textArea.setEditable(false);
+//        textArea.setWrapText(true);
+//        textArea.getStyleClass().add("view-textarea");
+//        Label viewTitle = new Label();
+//        viewTitle.setText("💪 TODAY'S WORKOUT DATA 💪");
+//        viewTitle.setUnderline(true);
+//        viewTitle.getStyleClass().add("view-title");
+//        viewMenu.getChildren().add(viewTitle);
+//        // Retrieve the calorie data
+//        ArrayList<Workout> workouts = user.getWorkoutData();
+//        StringBuilder outputText = new StringBuilder();
+//
+//        // Check if its empty
+//        if (workouts.isEmpty()) {
+//            outputText.append("No workout data available for today.");
+//        } else {
+//            // Go through all the array objects and print them out in correct format
+//            workouts.forEach(workout -> {
+//                outputText.append("🏋️ Workout Plan: ✨ ")
+//                        .append(workout.getWorkoutPlan())
+//                        .append(" ✨\n");
+//                ArrayList<Exercise> exercises = workout.getExercises();
+//                exercises.forEach(exercise -> {
+//                    outputText.append("Exercise: ")
+//                            .append(exercise.getExerciseName())
+//                            .append("\n");
+//                    ArrayList<Set> sets = exercise.getSets();
+//                    sets.forEach(set -> {
+//                        outputText.append(" - ")
+//                                .append(set.getWeightLifted())
+//                                .append("kg x ")
+//                                .append(set.getReps())
+//                                .append(" reps\n");
+//                    });
+//                });
+//            });
+//        }
+//        textArea.setText(outputText.toString());
+//        viewMenu.getChildren().add(textArea);
         resetView();
         collapseSidebar();
-        // Add and manage the scenes
-        viewMenu.setDisable(false);
-        viewMenu.setVisible(true);
-        TextArea textArea = new TextArea();
-        textArea.setEditable(false);
-        textArea.setWrapText(true);
-        textArea.getStyleClass().add("view-textarea");
-        Label viewTitle = new Label();
-        viewTitle.setText("💪 TODAY'S WORKOUT DATA 💪");
-        viewTitle.setUnderline(true);
-        viewTitle.getStyleClass().add("view-title");
-        viewMenu.getChildren().add(viewTitle);
-        // Retrieve the calorie data
-        ArrayList<Workout> workouts = user.getWorkoutData();
-        StringBuilder outputText = new StringBuilder();
-
-        // Check if its empty
-        if (workouts.isEmpty()) {
-            outputText.append("No workout data available for today.");
-        } else {
-            // Go through all the array objects and print them out in correct format
-            workouts.forEach(workout -> {
-                outputText.append("🏋️ Workout Plan: ✨ ")
-                        .append(workout.getWorkoutPlan())
-                        .append(" ✨\n");
-                ArrayList<Exercise> exercises = workout.getExercises();
-                exercises.forEach(exercise -> {
-                    outputText.append("Exercise: ")
-                            .append(exercise.getExerciseName())
-                            .append("\n");
-                    ArrayList<Set> sets = exercise.getSets();
-                    sets.forEach(set -> {
-                        outputText.append(" - ")
-                                .append(set.getWeightLifted())
-                                .append("kg x ")
-                                .append(set.getReps())
-                                .append(" reps\n");
-                    });
-                });
-            });
-        }
-        textArea.setText(outputText.toString());
-        viewMenu.getChildren().add(textArea);
+        ViewWorkout.setDisable(false);
+        ViewWorkout.setVisible(true);
     }
 
     /**
@@ -661,7 +670,7 @@ public class ProjectController {
                     int setCount = 0;
                     float volume = 1;
                     for (Set set : exercise.getSets()) {
-                        float weight = set.getWeightLifted();
+                        float weight = (float) set.getWeightLifted();
                         volume *= set.getReps() * weight;
                         setCount++;
                     }
@@ -709,7 +718,7 @@ public class ProjectController {
                     outputText.append("Name: " + exercise.getExerciseName() + "\n");
                     float maxWeightLift = 0f;
                     for (Set set : exercise.getSets()) {
-                        float currentWeightLift = set.getWeightLifted();
+                        float currentWeightLift = (float) set.getWeightLifted();
                         if (maxWeightLift < currentWeightLift) {
                             maxWeightLift = currentWeightLift;
                         }
@@ -876,7 +885,7 @@ public class ProjectController {
                         int setCount = 0;
                         float volume = 1;
                         for (Set set : exercise.getSets()) {
-                            float weight = set.getWeightLifted();
+                            float weight = (float) set.getWeightLifted();
                             volume *= set.getReps() * weight;
                             setCount++;
                         }
@@ -896,8 +905,6 @@ public class ProjectController {
 
     @FXML
     private HBox workoutButtons;
-    @FXML
-    private VBox workoutDetails;
     @FXML
     private Label workoutLabel;
     @FXML
@@ -1386,5 +1393,59 @@ public class ProjectController {
             }
         }
     }
+
+    public void showPullWorkouts2(ActionEvent actionEvent) {
+        showWorkoutData(WorkoutPlan.PULL);
+    }
+
+    public void showPushWorkouts2(ActionEvent actionEvent) {
+        showWorkoutData(WorkoutPlan.PUSH);
+    }
+
+    public void showLegWorkouts2(ActionEvent actionEvent) {
+        showWorkoutData(WorkoutPlan.LEGS);
+    }
+
+    public void showUpperWorkouts2(ActionEvent actionEvent) {
+        showWorkoutData(WorkoutPlan.UPPER);
+    }
+
+    public void showLowerWorkouts2(ActionEvent actionEvent) {
+        showWorkoutData(WorkoutPlan.LOWER);
+    }
+
+    public void showFullBodyWorkouts2(ActionEvent actionEvent) {
+        showWorkoutData(WorkoutPlan.FULL_BODY);
+    }
+
+    @FXML
+    private TextArea workoutViewTextArea;
+
+    private void showWorkoutData(WorkoutPlan workoutPlan) {
+        workoutLabel.setText("Today's " + workoutPlan.toString() + " Workout:");
+        ArrayList<Workout> workouts = user.getWorkoutData();
+        StringBuilder outputText = new StringBuilder("");
+        // Print out each workout stored
+        workouts.forEach(workout -> {
+            if (workout.getWorkoutPlan() == workoutPlan) {
+                outputText.append("🏋️ Data.Workout Plan: ✨ " + workout.getWorkoutPlan() + " ✨\n");
+                ArrayList<Exercise> exercises = workout.getExercises();
+                exercises.forEach(exercise -> {
+                    outputText.append("Exercise: " + exercise.getExerciseName() + "\n");
+                    ArrayList<Set> sets = exercise.getSets();
+                    sets.forEach(set -> {
+                        outputText.append(" - " + set.getWeightLifted() + "kg x " + set.getReps() + " reps\n");
+                    });
+                });
+            }
+        });
+        workoutViewTextArea.setText("");
+        if (outputText.toString().equals("")) {
+            outputText.append("No workout data available for today."); // Update the StringBuilder
+            workoutViewTextArea.setText(outputText.toString()); // Update the GUI component
+        }
+        workoutViewTextArea.setText(outputText.toString());
+    }
+
 }
 
