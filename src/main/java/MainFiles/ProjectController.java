@@ -3,6 +3,7 @@ package MainFiles;
 import Data.*;
 import com.sun.tools.javac.Main;
 import javafx.animation.*;
+import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -10,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import Enums.WorkoutPlan;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -29,18 +31,31 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.event.ActionEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+
+/**
+ * @author Syed Essam Uddin Khawaja, Abdullah Al-Dhaibani, Ali Gad
+ * Due Date -> 15th April 2025
+ * TA -> Tarif Ashraf
+ *
+ * This is the main project controller for the FXML file
+ */
 public class ProjectController {
     private static final int MAX_CALORIES = 20000;  // Stores the max calories that can be stored for a single item
     private static final int MAX_EXERCISE_NUMBER = 10;  // Stores the maximum number of exercises that can be stored for a single workout
     private static final int MAX_SET_NUMBER = 5;    // Stores the maximum number of sets that can be stored for a single exercise
     private static User user = new User("", "", "");    // This is the user of the menu
 
+    private List<String> commandLineArgs;   // This stores the commandLineArgs for if the user enters in params
+    // The following are all javafx components, later on we imported above the functions
     @FXML
     private AnchorPane mainView;
     @FXML
@@ -77,22 +92,46 @@ public class ProjectController {
 
     // These are miscellaneous and general functions used throughout the controller
 
+    /**
+     * This just shows a popup for the about menu on the menu bar at top
+     * @param event -> No clue what this does, it just autocompleted
+     */
+    @FXML
+    public void aboutPopup(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);   // Initialize the alert
+        alert.setTitle("About");    // Set the title
+        alert.setHeaderText("This is a fitness tracker!");     // Set the header
+        // Set the content of the alert
+        alert.setContentText("""
+                Authors: Syed Essam Uddin Khawaja, Ali Gad, Abdullah Al-Dhaibani
+                Email: syedessamuddin.khawa@ucalgary.ca, abdullah.aldhaibani@ucalgary.ca, ali.gad@ucalgary.ca
+                Version: 1.0
+                """);
+        alert.show();       // Display the alert
+    }
+
+    /**
+     * This function collapses the main menu sidebar
+     */
     @FXML
     private void collapseSidebar() {
+        // This sets keyframes of animation, essentially starting and end points for the animation
         Timeline collapse = new Timeline(
                 new KeyFrame(Duration.millis(300),
-                        new KeyValue(navigationBar.prefWidthProperty(), 0),
-                        new KeyValue(navigationBar.minWidthProperty(), 0)
+                        new KeyValue(navigationBar.prefWidthProperty(), 0),     // This will start from the preferred width to 0 width
+                        new KeyValue(navigationBar.minWidthProperty(), 0)   // This is the last keyframe, where the width will be set from min width to 0
                 )
         );
 
         // Slight visual nudge for content
-        TranslateTransition contentShift = new TranslateTransition(Duration.millis(300), mainView);
+        TranslateTransition contentShift = new TranslateTransition(Duration.millis(300), mainView);     // This is the translation transition, javafx transition animations are a library
+        // This makes the animation feel nicer by making it have a little "bounce"
         contentShift.setFromX(0);
         contentShift.setToX(-10);
         contentShift.setAutoReverse(true);
         contentShift.setCycleCount(2);
 
+        // Make the back button appear
         collapse.setOnFinished(e -> {
             toggleSidebarButton.setVisible(true);
             toggleSidebarButton.setOpacity(0);
@@ -102,6 +141,7 @@ public class ProjectController {
             isSidebarCollapsed = true;
         });
 
+        // Play the animations
         collapse.play();
         contentShift.play();
         toggleSidebarButton.setDisable(false);
@@ -109,7 +149,11 @@ public class ProjectController {
         toggleSidebarButton.toFront();
     }
 
+    /**
+     * This will expand the main menu sidebar
+     */
     public void expandSidebar() {
+        // Same logic as the above collapse sidebar
         Timeline expand = new Timeline(
                 new KeyFrame(Duration.millis(300),
                         new KeyValue(navigationBar.prefWidthProperty(), 290),
@@ -137,6 +181,11 @@ public class ProjectController {
         contentShift.play();
     }
 
+    /**
+     * This function will be used for status updates
+     * @param isSuccess -> Checks to see which status to show
+     * @param message -> The message to show the status
+     */
     @FXML
     private void showStatus(boolean isSuccess, String message) {
         if (isSuccess) {
@@ -180,6 +229,9 @@ public class ProjectController {
         }
     }
 
+    /**
+     * Take all the children nodes within the main view and make them invisible, so that we can transfer "scenes"
+     */
     @FXML
     private void resetView() {
         for (Node child : mainView.getChildren()) {
@@ -190,11 +242,15 @@ public class ProjectController {
 
     // The following are all the view menu functions
 
+    /**
+     * This will show the basic calories view
+     */
     @FXML
     public void showCalorieView() {
         viewMenu.getChildren().clear();
         resetView();
         collapseSidebar();
+        // Add and manage the scenes
         viewMenu.setDisable(false);
         viewMenu.setVisible(true);
         TextArea textArea = new TextArea();
@@ -231,11 +287,15 @@ public class ProjectController {
         viewMenu.getChildren().add(textArea);
     }
 
+    /**
+     * Show the basic workout view
+     */
     @FXML
     public void showWorkoutView() {
         viewMenu.getChildren().clear();
         resetView();
         collapseSidebar();
+        // Add and manage the scenes
         viewMenu.setDisable(false);
         viewMenu.setVisible(true);
         TextArea textArea = new TextArea();
@@ -280,11 +340,15 @@ public class ProjectController {
         viewMenu.getChildren().add(textArea);
     }
 
+    /**
+     * Show the meal breakdown
+     */
     @FXML
     public void showMealBreakdown() {
         viewMenu.getChildren().clear();
         resetView();
         collapseSidebar();
+        // Add and manage the scenes
         viewMenu.setDisable(false);
         viewMenu.setVisible(true);
         TextArea textArea = new TextArea();
@@ -360,10 +424,14 @@ public class ProjectController {
     @FXML private ComboBox<Object> particularMealComboBox;
     @FXML private TextArea particularTextArea;
 
+    /**
+     * Show calories of particular meal
+     */
     @FXML
     public void showParticularMealCalories() {
         resetView();
         collapseSidebar();
+        // Add and manage the scenes
         showParticularMealView.setDisable(false);
         showParticularMealView.setVisible(true);
         particularMealComboBox.getItems().clear();
@@ -415,11 +483,15 @@ public class ProjectController {
         });
     }
 
+    /**
+     * Show the average calories of each meal
+     */
     @FXML
     public void showAverageCalories() {
         viewMenu.getChildren().clear();
         resetView();
         collapseSidebar();
+        // Add and manage the scenes
         viewMenu.setDisable(false);
         viewMenu.setVisible(true);
         TextArea textArea = new TextArea();
@@ -498,11 +570,15 @@ public class ProjectController {
         viewMenu.getChildren().add(textArea);
     }
 
+    /**
+     * Show the comparison between snack calories and meal calories
+     */
     @FXML
     public void showSnacksVsCalories() {
         viewMenu.getChildren().clear();
         resetView();
         collapseSidebar();
+        // Add and manage the scenes
         viewMenu.setDisable(false);
         viewMenu.setVisible(true);
         TextArea textArea = new TextArea();
@@ -549,11 +625,15 @@ public class ProjectController {
         viewMenu.getChildren().add(textArea);
     }
 
+    /**
+     * Show workout volume
+     */
     @FXML
     public void showWorkoutVolume() {
         viewMenu.getChildren().clear();
         resetView();
         collapseSidebar();
+        // Add and manage the scenes
         viewMenu.setDisable(false);
         viewMenu.setVisible(true);
         TextArea textArea = new TextArea();
@@ -594,11 +674,15 @@ public class ProjectController {
         viewMenu.getChildren().add(textArea);
     }
 
+    /**
+     * Show the heaviest lift per exercise
+     */
     @FXML
     public void showHeaviestLiftPerExercise() {
         viewMenu.getChildren().clear();
         resetView();
         collapseSidebar();
+        // Add and manage the scenes
         viewMenu.setDisable(false);
         viewMenu.setVisible(true);
         TextArea textArea = new TextArea();
@@ -643,6 +727,9 @@ public class ProjectController {
     @FXML private TextArea goalView;
     @FXML private Button goalButton;
 
+    /**
+     * Show calories consumed when compared to goal
+     */
     @FXML
     public void showCaloriesConsumedVsGoal() {
         viewMenu.getChildren().clear();
@@ -694,11 +781,15 @@ public class ProjectController {
         });
     }
 
+    /**
+     * Show the performance summary, essentially show the baseline work you did for the day
+     */
     @FXML
     public void showPerformanceSummary() {
         viewMenu.getChildren().clear();
         resetView();
         collapseSidebar();
+        // Add and manage the scenes
         viewMenu.setDisable(false);
         viewMenu.setVisible(true);
         TextArea textArea = new TextArea();
@@ -839,7 +930,7 @@ public class ProjectController {
             exerciseList.clear();
             exerciseSummary.clear();
         } else {
-            System.out.println("Workout plan not recognized: " + workoutName);
+            showStatus(false, "Workout plan not recognized: " + workoutName);
             workoutDetails.setVisible(false);
         }
     }
@@ -871,8 +962,23 @@ public class ProjectController {
             workoutKilograms.clear();
             workoutReps.clear();
             workoutSets.clear();
+            showStatus(true, "Exercise added!");
         } else {
-            exerciseSummary.appendText("Invalid input, please enter valid values.\n");
+            if (!Workout.validateWeightLifted(kgInput)) {
+                showStatus(false, "Weight lifted not in correct format");
+            } else if (!Workout.validateReps(repsInput)) {
+                showStatus(false, "Reps not in correct format");
+            } else {
+                try {
+                    int sets = Integer.parseInt(setsInput);
+                    if (sets > 0 && sets <= MAX_SET_NUMBER) {
+                    } else {
+                        showStatus(false, "Invalid number of sets. Must be in the range 1-5. Try again.");
+                    }
+                } catch (NumberFormatException e) {
+                    showStatus(false,"Invalid number of sets. Must be a whole number. Try again.");
+                }
+            }
         }
     }
 
@@ -980,10 +1086,22 @@ public class ProjectController {
                 MealType type = mealTypeCombo.getValue();
                 MealTime time = mealTimeCombo.getValue();
                 String food = foodNameText.getText().trim();
-                int cals = Integer.parseInt(calorieNumber.getText().trim());
+                int cals = 0;
+                try {
+                    cals = Integer.parseInt(calorieNumber.getText().trim());
+                    if (cals < 0 || cals > MAX_CALORIES) {
+                        showStatus(false, "Invalid calories number. Must be in range 1 - " + MAX_CALORIES);
+                        return;
+                    }
+                } catch (NumberFormatException e1) {
+                    showStatus(false, "Calories must be a whole number.");
+                    return;
+                }
 
-                if (type == null || food.isEmpty() || cals < 0 || (type != MealType.SNACK && time == null)) {
-                showStatus(false, "Invalid input, please enter valid values.");
+                if (type == null) {
+                    showStatus(false, "Please enter a valid meal type");
+                } else if (food.isEmpty()) {
+                    showStatus(false, "Please enter a valid food name");
                 }
 
                 Calories newEntry = new Calories(type, time, food, cals);
@@ -1004,65 +1122,100 @@ public class ProjectController {
         });
     }
 
+    // Here are all the main menu functions
 
+    /**
+     * Load data for the user
+     */
     @FXML
     public void Load() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Load File");
-        File file = fileChooser.showSaveDialog(mainView.getScene().getWindow());
+        File file = fileChooser.showOpenDialog(mainView.getScene().getWindow());    // Open the loading dialog box
         if (file != null) {
-            Save.LoadData(user, file.getPath());
+            boolean userFound = Save.LoadData(user, file.getPath());    // Try and load the user data in
+            // Output correct status
+            if (userFound) {
+                showStatus(true, "Successfully loaded file! User data updated!");
+            } else {
+                showStatus(false, "User not present within the file");
+            }
         }
     }
 
+    /**
+     * Save the user data
+     * @param event -> Does nothing
+     */
     @FXML
     public void Save(ActionEvent event) {
         Save.SaveData(user);
+        showStatus(true, "Successfully saved user data!");
     }
 
+    /**
+     * Save the user data into a separate file
+     * @param event -> Nothing
+     */
     @FXML
     public void SaveSeparateFile(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save File");
-        File file = fileChooser.showSaveDialog(mainView.getScene().getWindow());
+        File file = fileChooser.showSaveDialog(mainView.getScene().getWindow());    // Open the save dialog box
         if (file != null) {
-            if (!file.getName().endsWith(".txt")) {
-                file = new File(file.getAbsolutePath() + ".txt");
+            // Make sure the file is a .csv
+            if (!file.getName().endsWith(".csv")) {
+                file = new File(file.getAbsolutePath() + ".csv");
             }
             Save.SaveSeparateFile(file, user);
+            // Output the correct status messages too
+            showStatus(true, "Successfully saved user data!");
+        } else {
+            showStatus(false, "Something went wrong!");
         }
     }
 
+    /**
+     * Exit the program
+     * @param event -> Nothing
+     */
     @FXML
     public void Exit(ActionEvent event) {
         Platform.exit();
     }
 
+    /**
+     * Reset the user, and go back to the main scene
+     */
     @FXML
-    public void logout(ActionEvent event) {
+    public void logout() {
         user = new User("", "", "");
         MainMenu.setVisible(false);
         MainMenu.setDisable(true);
         LoginPage.setVisible(true);
         LoginPage.setDisable(false);
+        usernameInput.clear();
+        passwordInput.clear();
+        emailInput.clear();
     }
 
     /**
-     *
-     * @param actionEvent
-     * @author Syed Essam Uddin Khawaja
+     * Log in function, checks and validates user inputs
      */
     @FXML
-    public void logIn(ActionEvent actionEvent) {
+    public void logIn() {
         boolean loggedIn = false;
+        // Get all the inputs
         String username = usernameInput.getText();
         String password = passwordInput.getText();
         String email = emailInput.getText();
 
+        // Initialize user
         user.setUsername(username);
         user.setPassword(password);
         user.setEmail(email);
 
+        // Do validity checks
         if (username.equals("")) {
             loginStatusLabel.setText("Username is required.");
             return;
@@ -1074,8 +1227,10 @@ public class ProjectController {
             return;
         }
 
+        // Check if the user is present in the user save file
         int validateUser = Save.ValidateUser(user);
 
+        // Output the correct validation
         if (validateUser == 1) {
             loggedIn = true;
         } else if (validateUser == 0) {
@@ -1088,6 +1243,7 @@ public class ProjectController {
             loginStatusLabel.setText("User with this email does not exist.");
         }
 
+        // If logged in, move to next scene
         if (loggedIn) {
             LoginPage.setVisible(false);
             LoginPage.setDisable(true);
@@ -1097,18 +1253,18 @@ public class ProjectController {
     }
 
     /**
-     *
-     * @param actionEvent
-     * @author Syed Essam Uddin Khawaja
+     * Sign up the user
      */
     @FXML
     public void signUp(ActionEvent actionEvent) {
         boolean signedUp = false;
 
+        // Take all the inputs
         String username = usernameInput.getText();
         String password = passwordInput.getText();
         String email = emailInput.getText();
 
+        // Do all the validity checks
         if (username.equals("")) {
             loginStatusLabel.setText("Username is required.");
             return;
@@ -1120,9 +1276,12 @@ public class ProjectController {
             return;
         }
 
+        // Initialize the user
         user.setUsername(username);
         user.setPassword(password);
         user.setEmail(email);
+
+        // Check if the user already exists
         int validateUser = Save.ValidateUser(user);
         if (validateUser == -1) {
             Save.SaveNewUser(user);
@@ -1132,6 +1291,7 @@ public class ProjectController {
             emailInput.requestFocus();
         }
 
+        // Move to next scene if signed up
         if (signedUp) {
             LoginPage.setVisible(false);
             LoginPage.setDisable(true);
@@ -1142,13 +1302,11 @@ public class ProjectController {
     }
 
     /**
-     *
-     * @param actionEvent
-     * @author Syed Essam Uddin Khawaja
+     * Move to next scene if user decided to load in previous data
      */
     @FXML
-    public void loadPreviousData(ActionEvent actionEvent) {
-        Save.LoadData(user, "src/main/java/Save/Save.csv");
+    public void loadPreviousData() {
+        Save.LoadData(user, loadFilePath);
         loginDataPane.setVisible(false);
         loginDataPane.setDisable(true);
         MainMenu.setVisible(true);
@@ -1156,24 +1314,11 @@ public class ProjectController {
         menuBar.setDisable(false);
     }
 
-    // TODO: Finish this
     /**
-     * Fix this thing when you add status bar
-     * @param actionEvent
+     * Move to main menu if user decided not to load in previous data
      */
     @FXML
-    public void loadNewData(ActionEvent actionEvent) {
-        boolean foundUser = Save.LoadData(user, "src/main/java/Save/Save.csv");
-        if (!foundUser) {}
-    }
-
-    /**
-     *
-     * @param actionEvent
-     * @author Syed Essam Uddin Khawaja
-     */
-    @FXML
-    public void moveToMainMenu(ActionEvent actionEvent) {
+    public void moveToMainMenu() {
         loginDataPane.setVisible(false);
         loginDataPane.setDisable(true);
         MainMenu.setVisible(true);
@@ -1183,7 +1328,7 @@ public class ProjectController {
     }
 
     /**
-     * @author Syed Essam Uddin Khawaja
+     *  This function initializes all major scenes for correct order
      */
     @FXML
     public void initialize() {
@@ -1194,9 +1339,43 @@ public class ProjectController {
         LoginPage.setVisible(true);
         LoginPage.setDisable(false);
         menuBar.setDisable(true);
-        errorStatus.setOpacity(0);
-        successStatus.setOpacity(0);
     }
 
+    // This is the base file path for load, it will change if user has set parameters on command line
+    private String loadFilePath = "/Users/syedessamuddinkhawaja/Desktop/CPSC 233 Project/CPSC233Project/src/main/java/Save/Save.csv";
+
+    /**
+     * This function takes in the args from the main, and checks to see if the file is valid and outputs the correct status via alerts
+     * @param args
+     */
+    @FXML
+    public void setParameters(List<String> args) {
+        this.commandLineArgs = args;
+        if (!this.commandLineArgs.isEmpty()) {
+            File file = new File(commandLineArgs.get(0));
+            if (!file.exists()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);   // Initialize the alert
+                alert.setTitle("Error Loading File");    // Set the title
+                alert.setHeaderText("No file found");     // Set the header
+                // Set the content of the alert
+                alert.setContentText("""
+                Please specify correct path, and restart the program. Press ok to continue.
+                """);
+                Stage currentStage = (Stage) successStatus.getScene().getWindow();
+                alert.initModality(Modality.WINDOW_MODAL);
+                alert.initOwner(currentStage);
+                alert.showAndWait();
+            } else {
+                loadFilePath = file.getAbsolutePath();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);   // Initialize the alert
+                alert.setTitle("File loaded!");    // Set the title
+                alert.setHeaderText("File Loaded! Make sure to login after pressing ok to get your data");     // Set the header
+                Stage currentStage = (Stage) successStatus.getScene().getWindow();
+                alert.initModality(Modality.WINDOW_MODAL);
+                alert.initOwner(currentStage);
+                alert.showAndWait();
+            }
+        }
+    }
 }
 

@@ -18,4 +18,4 @@ C,MEAL,LUNCH,steak,1200
 W,PUSH,E,bench,S,3,100.0,E,,S,3,3.0,S,3,3.0,E,3,S,3,3.0,S,3,3.0,S,3,3.0,E,3,S,3,3.0,S,3,3.0,S,3,3.0,E,3,S,3,3.0,S,3,3.0,S,3,3.0,E,3,S,3,3.0,S,3,3.0,S,3,3.0,E,3,S,3,3.0,S,3,3.0,S,3,3.0,E,3,S,3,3.0,S,3,3.0,S,3,33.0,E,3,S,3,3.0,S,3,33.0,S,3,3.0
 U,test,test,test
 C,MEAL,BREAKFAST,Toast,300
-W,PUSH,E,Bench Press,S,12,25.5,S,12,25.5,S,12,25.5,E,Shoulder Press,S,5,30.0,S,5,30.0
+W,PUSH,E,Bench Press,S,5,30.0,S,5,30.0,E,Shoulder Press,S,5,30.0,S,5,30.0
