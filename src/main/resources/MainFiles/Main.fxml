@@ -52,7 +52,7 @@
 
 <VBox prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainFiles.ProjectController">
   <children>
-    <MenuBar fx:id="menuBar" prefHeight="40.0" prefWidth="1006.0">
+    <MenuBar fx:id="menuBar" prefHeight="28.0" prefWidth="1000.0">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
@@ -132,25 +132,50 @@
             </AnchorPane>
             <AnchorPane fx:id="MainMenu" prefHeight="816.0" prefWidth="1003.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label fx:id="errorStatus" styleClass="status-label" text="Bad" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="successStatus" layoutX="10.0" layoutY="10.0" style="-fx-background-color: green;" styleClass="status-label" text="Good" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                     </padding>
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Label>
+                  <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <VBox prefHeight="770.0" prefWidth="290.0" spacing="20.0" style="-fx-background-color: #2A2A3C;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="710.0" AnchorPane.topAnchor="0.0">
+                        <VBox fx:id="navigationBar" minHeight="0.0" minWidth="0.0" prefHeight="770.0" prefWidth="290.0" spacing="20.0" style="-fx-background-color: #2A2A3C;">
                            <children>
-                              <Label text="Choose an Option:" textFill="#e0e0e0">
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <Accordion prefHeight="725.0" prefWidth="299.0" style="-fx-border-width: 0;">
+                              <HBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="289.0" spacing="150.0">
+                                 <children>
+                                    <Label minHeight="0.0" minWidth="0.0" text="Choose an Option:" textFill="#e0e0e0" />
+                                    <Button alignment="TOP_RIGHT" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" onAction="#collapseSidebar" style="-fx-background-color: transparent;" text="◀" />
+                                 </children>
+                              </HBox>
+                              <Accordion minHeight="0.0" minWidth="0.0" prefHeight="725.0" prefWidth="299.0" style="-fx-border-width: 0;" VBox.vgrow="ALWAYS">
                                 <panes>
                                   <TitledPane animated="false" expanded="true" style="-fx-background-color: #2A2A3C;" text="Calories">
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #2A2A3C;">
                                              <children>
-                                                <Label layoutX="14.0" layoutY="14.0" text="Pick An Option:" textFill="#b0b0c0" />
-                                                <Button layoutX="-3.0" layoutY="50.0" mnemonicParsing="false" onAction="#calorieInput" prefHeight="25.0" prefWidth="292.0" style="-fx-background-color: #6A4C93;" text="Add New Data" />
-                                                <Button layoutX="-1.0" layoutY="75.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="290.0" style="-fx-background-color: #6A4C93;" text="View Calories Breakdown" />
+                                                <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <Label text="Pick An Option:" textFill="#b0b0c0">
+                                                         <VBox.margin>
+                                                            <Insets bottom="20.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Button mnemonicParsing="false" onAction="#calorieInput" prefHeight="25.0" prefWidth="292.0" styleClass="nav-button" text="• Add Calorie Data 🍎" />
+                                                      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Today's Calories  📅" />
+                                                   </children>
+                                                </VBox>
                                              </children>
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
                                           </AnchorPane>
                                     </content>
                                   </TitledPane>
@@ -161,6 +186,21 @@
                                                 <Label layoutX="12.0" layoutY="14.0" text="Pick An Option: " />
                                                 <Button layoutX="-1.0" layoutY="49.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="290.0" style="-fx-background-color: #6A4C93;" text="Add New Workout Data" />
                                                 <Button layoutX="-1.0" layoutY="72.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="290.0" style="-fx-background-color: #6A4C93;" text="View Workout Breakdown" />
+                                                <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <Label text="Pick An Option: ">
+                                                         <VBox.margin>
+                                                            <Insets bottom="20.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Button mnemonicParsing="false" onAction="#ShowAddNewWorkout" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• Add Workout Data 🏋️">
+                                                         <padding>
+                                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                         </padding>
+                                                      </Button>
+                                                      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Today's Workout  🏋️" />
+                                                   </children>
+                                                </VBox>
                                              </children>
                                           </AnchorPane>
                                     </content>
@@ -169,9 +209,33 @@
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="646.0" prefWidth="278.0" style="-fx-background-color: #2A2A3C;">
                                              <children>
-                                                <Label layoutX="13.0" layoutY="14.0" text="Pick An Option:" />
-                                                <Button layoutX="-1.0" layoutY="46.0" mnemonicParsing="false" onAction="#showCalorieView" prefHeight="25.0" prefWidth="290.0" style="-fx-background-color: #6A4C93;" text="View Today's Calories" />
+                                                <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <Label text="Pick An Option:">
+                                                         <VBox.margin>
+                                                            <Insets bottom="20.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Button mnemonicParsing="false" onAction="#showCalorieView" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Today's Calories  📅">
+                                                         <padding>
+                                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                         </padding>
+                                                      </Button>
+                                                      <Button mnemonicParsing="false" onAction="#showWorkoutView" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Today's Workout  🏋️" />
+                                                      <Button mnemonicParsing="false" onAction="#showMealBreakdown" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Meal Breakdown  🍽️" />
+                                                      <Button mnemonicParsing="false" onAction="#showParticularMealCalories" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Calories of a Particular Meal  🍛" />
+                                                      <Button mnemonicParsing="false" onAction="#showAverageCalories" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Average Calories Per Meal  ⚖️" />
+                                                      <Button mnemonicParsing="false" onAction="#showSnacksVsCalories" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Snacks vs. Foods  🥗" />
+                                                      <Button mnemonicParsing="false" onAction="#showWorkoutVolume" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Workout Volume  🏋️‍" />
+                                                      <Button mnemonicParsing="false" onAction="#showHeaviestLiftPerExercise" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Heaviest Lift Per Exercise  🏋️‍" />
+                                                      <Button mnemonicParsing="false" onAction="#showCaloriesConsumedVsGoal" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Calories Consumed vs. Goal  🎯" />
+                                                      <Button mnemonicParsing="false" onAction="#showPerformanceSummary" prefHeight="25.0" prefWidth="290.0" styleClass="nav-button" text="• View Performance Summary  📊" />
+                                                   </children>
+                                                </VBox>
                                              </children>
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
                                           </AnchorPane>
                                     </content>
                                   </TitledPane>
@@ -179,7 +243,7 @@
                               </Accordion>
                            </children>
                         </VBox>
-                        <AnchorPane fx:id="mainView" layoutX="289.0" layoutY="10.0" prefHeight="760.0" prefWidth="711.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="289.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="mainView" prefHeight="760.0" prefWidth="711.0" HBox.hgrow="ALWAYS">
                            <children>
                               <VBox fx:id="calorieInput" alignment="CENTER" disable="true" fillWidth="false" prefHeight="652.0" prefWidth="712.0" spacing="10.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
@@ -244,13 +308,68 @@
                                       </HBox>
                   
                                                            <TextArea fx:id="exerciseSummary" editable="false" prefHeight="237.0" prefWidth="712.0" />
+                                       <Button mnemonicParsing="false" onAction="#saveNewWorkout" text="Save">
+                                          <VBox.margin>
+                                             <Insets top="10.0" />
+                                          </VBox.margin>
+                                       </Button>
                                   </VBox>
                                  </children>
                               </VBox>
+                              <Button fx:id="toggleSidebarButton" layoutX="18.0" layoutY="16.0" mnemonicParsing="false" onAction="#expandSidebar" text="← Back" visible="false" />
+                              <VBox fx:id="viewMenu" disable="true" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="50.0" />
+                                 </padding></VBox>
+                              <VBox fx:id="showParticularMealView" disable="true" prefHeight="200.0" prefWidth="100.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="50.0" />
+                                 </padding>
+                                 <children>
+                                    <Label styleClass="view-title" text="Calories of A Particular Meal" underline="true">
+                                       <VBox.margin>
+                                          <Insets bottom="30.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <ComboBox fx:id="particularMealComboBox" prefWidth="150.0">
+                                       <VBox.margin>
+                                          <Insets bottom="50.0" />
+                                       </VBox.margin>
+                                    </ComboBox>
+                                    <TextArea fx:id="particularTextArea" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="view-textarea" />
+                                 </children>
+                              </VBox>
+                              <VBox fx:id="caloriesConsumedVsGoalView" disable="true" prefHeight="200.0" prefWidth="100.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="50.0" />
+                                 </padding>
+                                 <children>
+                                    <Label styleClass="view-title" text="Calories Consumed vs. Goal" underline="true">
+                                       <VBox.margin>
+                                          <Insets bottom="30.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="Enter your calories goal">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="caloriesGoalInput" text="0">
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <Button fx:id="goalButton" mnemonicParsing="false" text="Compare" />
+                                    <TextArea fx:id="goalView" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="view-textarea" />
+                                 </children>
+                              </VBox>
                            </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
                         </AnchorPane>
                      </children>
-                </AnchorPane>
+                  </HBox>
                </children>
             </AnchorPane>
          </children>
