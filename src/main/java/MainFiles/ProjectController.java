@@ -951,40 +951,45 @@ public class ProjectController {
 
         // Validate inputs using your existing validation methods
         if (Workout.validateWeightLifted(kgInput) && Workout.validateReps(repsInput)) {
-            float kilograms = Float.parseFloat(kgInput);
-            int reps = Integer.parseInt(repsInput);
-            int sets = Integer.parseInt(setsInput);
+            try {
+                int sets = Integer.parseInt(setsInput);
 
-            ArrayList<Set> setList = new ArrayList<>();
-            for (int i = 0; i < sets; i++) {
-                Set thisSet = new Set(reps, kilograms);
-                setList.add(thisSet);
-            }
-
-            Exercise exercise = new Exercise(name, setList);
-            currentWorkout.getExercises().add(exercise);
-            updateSummary();
-
-            workoutName.clear();
-            workoutKilograms.clear();
-            workoutReps.clear();
-            workoutSets.clear();
-            showStatus(true, "Exercise added!");
-        } else {
-            if (!Workout.validateWeightLifted(kgInput)) {
-                showStatus(false, "Weight lifted not in correct format");
-            } else if (!Workout.validateReps(repsInput)) {
-                showStatus(false, "Reps not in correct format");
-            } else {
-                try {
-                    int sets = Integer.parseInt(setsInput);
-                    if (sets > 0 && sets <= MAX_SET_NUMBER) {
-                    } else {
-                        showStatus(false, "Invalid number of sets. Must be in the range 1-5. Try again.");
-                    }
-                } catch (NumberFormatException e) {
-                    showStatus(false,"Invalid number of sets. Must be a whole number. Try again.");
+                // Check if sets are within the allowed range
+                if (sets <= 0 || sets > MAX_SET_NUMBER) {
+                    showStatus(false, "Invalid number of sets. Must be between 1 and " + MAX_SET_NUMBER + ".");
+                    return;
                 }
+
+                float kilograms = Float.parseFloat(kgInput);
+                int reps = Integer.parseInt(repsInput);
+
+                // Create the list of sets
+                ArrayList<Set> setList = new ArrayList<>();
+                for (int i = 0; i < sets; i++) {
+                    Set thisSet = new Set(reps, kilograms);
+                    setList.add(thisSet);
+                }
+
+                // Add the exercise to the workout
+                Exercise exercise = new Exercise(name, setList);
+                currentWorkout.getExercises().add(exercise);
+                updateSummary();
+
+                // Clear the input fields and display success message
+                workoutName.clear();
+                workoutKilograms.clear();
+                workoutReps.clear();
+                workoutSets.clear();
+                showStatus(true, "Exercise added!");
+            } catch (NumberFormatException e) {
+                showStatus(false, "Invalid number of sets. Must be a whole number.");
+            }
+        } else {
+            // Handle validation errors for weight lifted and reps
+            if (!Workout.validateWeightLifted(kgInput)) {
+                showStatus(false, "Weight lifted not in correct format.");
+            } else if (!Workout.validateReps(repsInput)) {
+                showStatus(false, "Reps not in correct format.");
             }
         }
     }
@@ -1448,4 +1453,3 @@ public class ProjectController {
     }
 
 }
-
