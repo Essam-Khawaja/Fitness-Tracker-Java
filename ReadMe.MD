@@ -1,7 +1,7 @@
 Fitness Tracker App
 
 🧾 Information
-Made by: Ali Gad, Abdullah Al-Dhaibani, Essam Khawaja
+Made by: Ali Gad, Abdullah Al-Dhaibani, Syed Essam Uddin Khawaja
 Course: CPSC 233 - Tutorial 01
 Supervisor: Tarif Ashraf
 
@@ -25,6 +25,13 @@ The Fitness Tracker App provides:
 ------------------------------------------------------------------------------------
 
 ⚙️ How to Run It
+
+Run the following command in your terminal. Make sure to update the module path to where your javafx is downloaded on your device.
+
+```bash 
+java --module-path "C:\Users\abdul\Downloads\openjfx-24_windows-x64_bin-sdk\javafx-sdk-24\lib" --add-modules
+javafx.controls,javafx.fxml -jar CPSC233W25A3.jar
+```
 
 ------------------------------------------------------------------------------------
 
