@@ -33,7 +33,11 @@ public class Save {
             return;
         }
             File file = new File("src/main/java/Save/Save.csv");  // Open the save file
-            File file2 = new File("src/main/java/Save/SaveTemp.csv"); // Create a new temporary save file
+            // Make a new file if there isn't one present
+            if (!file.exists()){
+                file = new File("Save.csv");
+            }
+            File file2 = new File("SaveTemp.csv"); // Create a new temporary save file
             try {
                 boolean saveCreated = file.createNewFile();     // Create new file if it is not there
                 boolean tempCreated = file2.createNewFile();    // Create new file if it is not there
@@ -131,6 +135,12 @@ public class Save {
      */
     public static boolean LoadData(User user, String path){
         File file = new File(path);  // Open the file
+        if (!file.exists()){
+            file = new File("Save.csv");
+            if (!file.exists()){
+                return false;
+            }
+        }
         boolean userFound = false;      // This checks whether we have found the user data
         try {
             FileReader fileReader = new FileReader(file);       // Open the file for reading
@@ -215,7 +225,10 @@ public class Save {
      */
     public static void SaveNewUser(User user){
         File file = new File("src/main/java/Save/UserSave.csv");      // Opens the user save file
-        File file2 = new File("src/main/java/Save/UserTempSave.csv");     // Creates a temporary save user file
+        if (!file.exists()){
+            file = new File("UserSave.csv");
+        }
+        File file2 = new File("UserTempSave.csv");     // Creates a temporary save user file
         try {
             boolean saveCreated = file.createNewFile();     // Create a new file if not present
             boolean tempCreated = file2.createNewFile();    // Create a new file if not present
@@ -299,6 +312,12 @@ public class Save {
      */
     public static int ValidateUser(User user){
         File file = new File("src/main/java/Save/UserSave.csv");  // Open the user save file
+        if (!file.exists()){
+            file = new File("UserSave.csv");
+            if (!file.exists()){
+                return -1;
+            }
+        }
         int exists = -1;
         try {
             FileReader fileReader = new FileReader(file);   // Open the save for reading
