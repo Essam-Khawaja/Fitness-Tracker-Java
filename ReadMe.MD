@@ -30,7 +30,7 @@ Run the following command in your terminal. Make sure to update the module path 
 
 ```bash 
 java --module-path "C:\Users\abdul\Downloads\openjfx-24_windows-x64_bin-sdk\javafx-sdk-24\lib" --add-modules
-javafx.controls,javafx.fxml -jar CPSC233W25A3.jar
+javafx.controls,javafx.fxml -jar CPSC233Project.jar
 ```
 
 ------------------------------------------------------------------------------------
